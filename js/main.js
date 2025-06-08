@@ -100,23 +100,33 @@ waitlistForm?.addEventListener('submit', async (e) => {
     if (!email) return;
 
     try {
-        // Here you would typically send the email to your backend
-        // For now, we'll just show a success message
         const button = waitlistForm.querySelector('button');
         const originalText = button.innerHTML;
         
         button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Joining...';
         button.disabled = true;
 
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        // Send email to backend API
+        const response = await fetch('http://localhost:3000/api/waitlist', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || 'Failed to join waitlist');
+        }
 
         // Show success message
         const successMessage = document.createElement('div');
         successMessage.className = 'success-message';
         successMessage.innerHTML = `
             <i class="fas fa-check-circle"></i>
-            <p>Thanks for joining! We'll keep you updated.</p>
+            <p>${data.message}</p>
         `;
         
         waitlistForm.innerHTML = '';
@@ -135,7 +145,7 @@ waitlistForm?.addEventListener('submit', async (e) => {
         // Show error message
         const errorMessage = document.createElement('div');
         errorMessage.className = 'error-message';
-        errorMessage.textContent = 'Something went wrong. Please try again.';
+        errorMessage.textContent = error.message || 'Something went wrong. Please try again.';
         waitlistForm.appendChild(errorMessage);
     }
 });
