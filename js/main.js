@@ -233,21 +233,50 @@ renderTestimonial(0);
 const waitlistForm = document.getElementById('waitlistForm');
 const emailInput = document.getElementById('email');
 
-waitlistForm.addEventListener('submit', async (e) => {
+waitlistForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
     
-    const email = emailInput.value;
-    if (!email.includes('@')) {
-        showToast('Please enter a valid email address');
-        return;
-    }
-    
+    const email = emailInput.value.trim();
+    if (!email) return;
+
     try {
-        // In a real implementation, this would be an API call
-        showToast('Thanks for joining our waitlist!');
-        emailInput.value = '';
+        // Here you would typically send the email to your backend
+        // For now, we'll just show a success message
+        const button = waitlistForm.querySelector('button');
+        const originalText = button.innerHTML;
+        
+        button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Joining...';
+        button.disabled = true;
+
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 1500));
+
+        // Show success message
+        const successMessage = document.createElement('div');
+        successMessage.className = 'success-message';
+        successMessage.innerHTML = `
+            <i class="fas fa-check-circle"></i>
+            <p>Thanks for joining! We'll keep you updated.</p>
+        `;
+        
+        waitlistForm.innerHTML = '';
+        waitlistForm.appendChild(successMessage);
+
+        // Animate success message
+        gsap.from(successMessage, {
+            duration: 0.5,
+            scale: 0.8,
+            opacity: 0,
+            ease: 'back.out(1.7)'
+        });
+
     } catch (error) {
-        showToast('Something went wrong. Please try again.');
+        console.error('Error:', error);
+        // Show error message
+        const errorMessage = document.createElement('div');
+        errorMessage.className = 'error-message';
+        errorMessage.textContent = 'Something went wrong. Please try again.';
+        waitlistForm.appendChild(errorMessage);
     }
 });
 
@@ -837,57 +866,6 @@ gsap.utils.toArray('.testimonial-card').forEach((card, i) => {
     });
 });
 
-// Waitlist form handling
-const waitlistForm = document.getElementById('waitlistForm');
-const emailInput = document.getElementById('email');
-
-waitlistForm?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const email = emailInput.value.trim();
-    if (!email) return;
-
-    try {
-        // Here you would typically send the email to your backend
-        // For now, we'll just show a success message
-        const button = waitlistForm.querySelector('button');
-        const originalText = button.innerHTML;
-        
-        button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Joining...';
-        button.disabled = true;
-
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500));
-
-        // Show success message
-        const successMessage = document.createElement('div');
-        successMessage.className = 'success-message';
-        successMessage.innerHTML = `
-            <i class="fas fa-check-circle"></i>
-            <p>Thanks for joining! We'll keep you updated.</p>
-        `;
-        
-        waitlistForm.innerHTML = '';
-        waitlistForm.appendChild(successMessage);
-
-        // Animate success message
-        gsap.from(successMessage, {
-            duration: 0.5,
-            scale: 0.8,
-            opacity: 0,
-            ease: 'back.out(1.7)'
-        });
-
-    } catch (error) {
-        console.error('Error:', error);
-        // Show error message
-        const errorMessage = document.createElement('div');
-        errorMessage.className = 'error-message';
-        errorMessage.textContent = 'Something went wrong. Please try again.';
-        waitlistForm.appendChild(errorMessage);
-    }
-});
-
 // Navbar scroll effect
 const navbar = document.querySelector('.navbar');
 let lastScroll = 0;
@@ -969,4 +947,126 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.feature-card, .step, .testimonial-card').forEach(el => {
         el.classList.add('animate-on-scroll');
     });
-}); 
+});
+
+// === Particle Swarm Avatar Silhouette ===
+function createAvatarSilhouettePoints(width, height) {
+    // Returns an array of points (x, y) forming a simple human silhouette
+    // Head (circle), body (ellipse), arms (lines), legs (lines)
+    const points = [];
+    const cx = width / 2;
+    const cy = height / 2 + 20;
+    // Head
+    const headRadius = 38;
+    for (let a = 0; a < Math.PI * 2; a += Math.PI / 24) {
+        points.push({
+            x: cx + Math.cos(a) * headRadius,
+            y: cy - 90 + Math.sin(a) * headRadius
+        });
+    }
+    // Body (ellipse)
+    for (let a = Math.PI * 0.9; a < Math.PI * 2.1; a += Math.PI / 32) {
+        points.push({
+            x: cx + Math.cos(a) * 30,
+            y: cy - 50 + Math.sin(a) * 60
+        });
+    }
+    // Arms (lines)
+    for (let t = 0; t <= 1; t += 0.05) {
+        // Left arm
+        points.push({
+            x: cx - 30 - t * 60,
+            y: cy - 50 + t * 40
+        });
+        // Right arm
+        points.push({
+            x: cx + 30 + t * 60,
+            y: cy - 50 + t * 40
+        });
+    }
+    // Legs (lines)
+    for (let t = 0; t <= 1; t += 0.05) {
+        // Left leg
+        points.push({
+            x: cx - 15 - t * 20,
+            y: cy + 10 + t * 80
+        });
+        // Right leg
+        points.push({
+            x: cx + 15 + t * 20,
+            y: cy + 10 + t * 80
+        });
+    }
+    return points;
+}
+
+function startAvatarParticleSwarm() {
+    const canvas = document.getElementById('avatar-particles-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width;
+    let height = canvas.height;
+
+    // Responsive resize
+    function resizeCanvas() {
+        const parent = canvas.parentElement;
+        width = parent.offsetWidth;
+        height = parent.offsetHeight;
+        canvas.width = width;
+        canvas.height = height;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Silhouette points
+    let silhouette = createAvatarSilhouettePoints(width, height);
+
+    // Particle swarm
+    const PARTICLE_COUNT = 120;
+    const particles = [];
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+        const target = silhouette[i % silhouette.length];
+        particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            tx: target.x,
+            ty: target.y,
+            vx: 0,
+            vy: 0,
+            color: `rgba(${100+Math.random()*100},${120+Math.random()*100},255,0.85)`
+        });
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, width, height);
+        // Animate silhouette points on resize
+        silhouette = createAvatarSilhouettePoints(width, height);
+        // Animate particles
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+            const p = particles[i];
+            const target = silhouette[i % silhouette.length];
+            // Swarm movement toward target
+            const dx = target.x - p.x;
+            const dy = target.y - p.y;
+            p.vx += dx * 0.02 + (Math.random() - 0.5) * 0.2;
+            p.vy += dy * 0.02 + (Math.random() - 0.5) * 0.2;
+            p.vx *= 0.85;
+            p.vy *= 0.85;
+            p.x += p.vx;
+            p.y += p.vy;
+            // Draw particle
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
+            ctx.fillStyle = p.color;
+            ctx.shadowColor = p.color;
+            ctx.shadowBlur = 12;
+            ctx.fill();
+            ctx.shadowBlur = 0;
+        }
+        requestAnimationFrame(animate);
+    }
+    animate();
+}
+
+// Start the avatar particle swarm animation on DOMContentLoaded
+window.addEventListener('DOMContentLoaded', startAvatarParticleSwarm); 
