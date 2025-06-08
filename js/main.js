@@ -18,6 +18,7 @@ function typeText() {
 window.addEventListener('load', () => {
     typingText.textContent = '';
     typeText();
+    initializeAvatarParticles();
     initializeParticleSystem();
     initializeDataFlow();
     if (window.innerWidth > MOBILE_WIDTH_THRESHOLD) {
@@ -608,193 +609,6 @@ window.addEventListener('resize', () => {
     }
 });
 
-// Loading Sequence
-const funFacts = [
-    "Did you know? Humans make about 35,000 decisions every day.",
-    "Your brain processes information faster than the fastest supercomputer.",
-    "Pattern recognition is one of the most powerful aspects of human intelligence.",
-    "The average person spends 6 months of their lifetime waiting for red lights.",
-    "Your digital footprint grows by 1.7MB every second."
-];
-
-const loadingMessages = [
-    "Analyzing your patterns...",
-    "Mapping your behavior genome...",
-    "Calculating future probabilities...",
-    "Building your digital twin...",
-    "Almost ready..."
-];
-
-let currentProgress = 0;
-let isOffline = false;
-let progressAnimationFrame;
-
-// Start loading sequence when page loads
-document.addEventListener('DOMContentLoaded', () => {
-    // Check if offline
-    if (!navigator.onLine) {
-        isOffline = true;
-        const errorState = document.querySelector('.error-state');
-        if (errorState) {
-            errorState.classList.add('visible');
-        }
-    } else {
-        // Initialize loading sequence
-        initializeLoading();
-    }
-});
-
-// Initialize loading sequence
-function initializeLoading() {
-    const container = document.querySelector('.avatar-container');
-    const progressElement = document.querySelector('.loading-progress');
-    const messageElement = document.querySelector('.loading-message');
-    const funFactElement = document.querySelector('.fun-fact');
-    const errorState = document.querySelector('.error-state');
-    
-    if (!container || !progressElement) {
-        console.error('Loading elements not found');
-        return;
-    }
-    
-    // Reset progress
-    currentProgress = 0;
-    progressElement.textContent = '0%';
-    
-    // Create particles
-    const particleCount = 100;
-    const particles = [];
-    
-    // Clear existing particles
-    container.innerHTML = '';
-    
-    for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        container.appendChild(particle);
-        particles.push(particle);
-    }
-    
-    // Animate particles to form silhouette
-    gsap.to(particles, {
-        opacity: 1,
-        duration: 0.5,
-        stagger: {
-            amount: 1,
-            from: "random"
-        },
-        ease: "power2.out"
-    });
-    
-    // Position particles in silhouette shape
-    particles.forEach((particle, index) => {
-        const angle = (index / particleCount) * Math.PI * 2;
-        const radius = 80;
-        const x = Math.cos(angle) * radius;
-        const y = Math.sin(angle) * radius;
-        
-        gsap.to(particle, {
-            x: x,
-            y: y,
-            duration: 2,
-            delay: 0.5,
-            ease: "elastic.out(1, 0.5)"
-        });
-    });
-    
-    // Update progress
-    function updateProgress() {
-        if (isOffline) {
-            cancelAnimationFrame(progressAnimationFrame);
-            return;
-        }
-        
-        // Increment progress with easing
-        const increment = (100 - currentProgress) * 0.02;
-        currentProgress = Math.min(currentProgress + increment, 100);
-        
-        // Update progress display
-        progressElement.textContent = `${Math.floor(currentProgress)}%`;
-        
-        // Update message based on progress
-        const messageIndex = Math.floor(currentProgress / 20);
-        if (messageIndex < loadingMessages.length) {
-            messageElement.textContent = loadingMessages[messageIndex];
-            messageElement.classList.add('visible');
-        }
-        
-        // Update fun fact
-        const factIndex = Math.floor(currentProgress / 25);
-        if (factIndex < funFacts.length) {
-            funFactElement.textContent = funFacts[factIndex];
-            funFactElement.classList.add('visible');
-        }
-        
-        if (currentProgress < 100) {
-            progressAnimationFrame = requestAnimationFrame(updateProgress);
-        } else {
-            // Loading complete
-            setTimeout(() => {
-                const loadingOverlay = document.querySelector('.loading-overlay');
-                if (loadingOverlay) {
-                    loadingOverlay.classList.add('hidden');
-                }
-                // Initialize main content
-                initializeMainContent();
-            }, 1000);
-        }
-    }
-    
-    // Start progress animation
-    progressAnimationFrame = requestAnimationFrame(updateProgress);
-    
-    // Handle offline state
-    window.addEventListener('offline', () => {
-        isOffline = true;
-        if (errorState) {
-            errorState.classList.add('visible');
-        }
-        cancelAnimationFrame(progressAnimationFrame);
-    });
-    
-    // Retry button
-    const retryButton = document.querySelector('.retry-button');
-    if (retryButton) {
-        retryButton.addEventListener('click', () => {
-            if (navigator.onLine) {
-                isOffline = false;
-                if (errorState) {
-                    errorState.classList.remove('visible');
-                }
-                currentProgress = 0;
-                progressAnimationFrame = requestAnimationFrame(updateProgress);
-            }
-        });
-    }
-}
-
-// Clean up animation frames on page unload
-window.addEventListener('unload', () => {
-    if (progressAnimationFrame) {
-        cancelAnimationFrame(progressAnimationFrame);
-    }
-});
-
-// Initialize main content after loading
-function initializeMainContent() {
-    // Initialize existing features
-    if (window.innerWidth > 768) {
-        initializeDNAHelix();
-    } else {
-        initializeMobileFeatures();
-    }
-    
-    // Initialize other components
-    initializeParticleSystem();
-    initializeDataFlow();
-    addWaveDividers();
-}
-
 // Custom cursor with trailing particles
 function initializeCustomCursor() {
     const cursor = document.createElement('div');
@@ -819,10 +633,12 @@ function initializeCustomCursor() {
     let mouseY = 0;
     let cursorX = 0;
     let cursorY = 0;
+    let cursorAnimationFrame;
     
     document.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
-    let cursorAnimationFrame;
+        mouseY = e.clientY;
+    });
     
     function updateCursor() {
         // Smooth cursor movement
@@ -848,9 +664,6 @@ function initializeCustomCursor() {
         if (cursorAnimationFrame) {
             cancelAnimationFrame(cursorAnimationFrame);
         }
-    }
-        
-        requestAnimationFrame(updateCursor);
     }
     
     updateCursor();
@@ -887,4 +700,48 @@ function initializeStatusBar() {
 function initializeLuxuryFeatures() {
     initializeCustomCursor();
     initializeStatusBar();
+}
+
+function initializeAvatarParticles() {
+    const container = document.querySelector('.avatar-particles');
+    if (!container) return;
+    container.innerHTML = '';
+    const particleCount = 90;
+    const centerX = 50; // SVG coordinate system
+    const centerY = 90;
+    const headRadius = 22;
+    const bodyRadiusX = 30;
+    const bodyRadiusY = 55;
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        let x, y;
+        if (i < 30) { // Head
+            const angle = (i / 30) * Math.PI * 2;
+            x = centerX + Math.cos(angle) * headRadius + (Math.random() - 0.5) * 2;
+            y = centerY + Math.sin(angle) * headRadius - 30 + (Math.random() - 0.5) * 2;
+        } else { // Body/shoulders
+            const t = (i - 30) / 60;
+            const angle = Math.PI * (0.15 + 0.7 * t); // arc for shoulders/body
+            x = centerX + Math.cos(angle) * bodyRadiusX + (Math.random() - 0.5) * 3;
+            y = centerY + 30 + Math.sin(angle) * bodyRadiusY + (Math.random() - 0.5) * 3;
+        }
+        particle.style.left = `${x}%`;
+        particle.style.top = `${y}%`;
+        particle.style.opacity = 0.7 + Math.random() * 0.3;
+        particle.style.width = particle.style.height = (Math.random() * 3 + 2) + 'px';
+        // Animate scale/opacity for subtle movement
+        particle.animate([
+            { transform: 'scale(1)', opacity: particle.style.opacity },
+            { transform: 'scale(1.2)', opacity: 1 },
+            { transform: 'scale(1)', opacity: particle.style.opacity }
+        ], {
+            duration: 2200 + Math.random() * 1200,
+            iterations: Infinity,
+            direction: 'alternate',
+            easing: 'ease-in-out',
+            delay: Math.random() * 1000
+        });
+        container.appendChild(particle);
+    }
 } 
