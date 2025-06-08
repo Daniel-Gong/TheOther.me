@@ -141,7 +141,25 @@ body {
 .hero-cta {
     display: flex;
     gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.app-downloads {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
     margin-bottom: 3rem;
+}
+
+.app-store-button img,
+.play-store-button img {
+    height: 40px;
+    transition: transform 0.3s ease;
+}
+
+.app-store-button:hover img,
+.play-store-button:hover img {
+    transform: translateY(-2px);
 }
 
 .primary-button {
@@ -602,6 +620,17 @@ body {
 
     .form-group {
         flex-direction: column;
+    }
+
+    .app-downloads {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+    }
+    
+    .app-store-button img,
+    .play-store-button img {
+        height: 36px;
     }
 }
 
