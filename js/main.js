@@ -627,6 +627,7 @@ const loadingMessages = [
 
 let currentProgress = 0;
 let isOffline = false;
+let progressAnimationFrame;
 
 // Initialize loading sequence
 function initializeLoading() {
@@ -635,6 +636,8 @@ function initializeLoading() {
     const messageElement = document.querySelector('.loading-message');
     const funFactElement = document.querySelector('.fun-fact');
     const errorState = document.querySelector('.error-state');
+    
+    if (!container || !progressElement) return;
     
     // Create particles
     const particleCount = 100;
@@ -676,11 +679,16 @@ function initializeLoading() {
     
     // Update progress
     function updateProgress() {
-        if (isOffline) return;
+        if (isOffline) {
+            cancelAnimationFrame(progressAnimationFrame);
+            return;
+        }
         
-        currentProgress += Math.random() * 5;
-        if (currentProgress > 100) currentProgress = 100;
+        // Increment progress with easing
+        const increment = (100 - currentProgress) * 0.02;
+        currentProgress = Math.min(currentProgress + increment, 100);
         
+        // Update progress display
         progressElement.textContent = `${Math.floor(currentProgress)}%`;
         
         // Update message based on progress
@@ -698,7 +706,7 @@ function initializeLoading() {
         }
         
         if (currentProgress < 100) {
-            requestAnimationFrame(updateProgress);
+            progressAnimationFrame = requestAnimationFrame(updateProgress);
         } else {
             // Loading complete
             setTimeout(() => {
@@ -710,12 +718,13 @@ function initializeLoading() {
     }
     
     // Start progress animation
-    requestAnimationFrame(updateProgress);
+    progressAnimationFrame = requestAnimationFrame(updateProgress);
     
     // Handle offline state
     window.addEventListener('offline', () => {
         isOffline = true;
         errorState.classList.add('visible');
+        cancelAnimationFrame(progressAnimationFrame);
     });
     
     // Retry button
@@ -725,10 +734,17 @@ function initializeLoading() {
             isOffline = false;
             errorState.classList.remove('visible');
             currentProgress = 0;
-            requestAnimationFrame(updateProgress);
+            progressAnimationFrame = requestAnimationFrame(updateProgress);
         }
     });
 }
+
+// Clean up animation frames on page unload
+window.addEventListener('unload', () => {
+    if (progressAnimationFrame) {
+        cancelAnimationFrame(progressAnimationFrame);
+    }
+});
 
 // Initialize main content after loading
 function initializeMainContent() {
