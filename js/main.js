@@ -170,65 +170,6 @@ function getIconPath(icon) {
     return paths[icon] || '';
 }
 
-// Testimonials with glassmorphism
-const testimonials = [
-    {
-        text: "TheOther.me has completely changed how I understand my daily habits and patterns.",
-        author: "Sarah Johnson",
-        title: "Product Manager",
-        avatar: "assets/avatar1.jpg"
-    },
-    {
-        text: "I've never seen such accurate predictions about my behavior. It's like having a personal AI coach.",
-        author: "Michael Chen",
-        title: "Software Engineer",
-        avatar: "assets/avatar2.jpg"
-    },
-    {
-        text: "The insights I've gained have helped me make better decisions in both my personal and professional life.",
-        author: "Emma Davis",
-        title: "Marketing Director",
-        avatar: "assets/avatar3.jpg"
-    }
-];
-
-// Testimonial carousel with glassmorphism
-let currentTestimonial = 0;
-const testimonialCarousel = document.querySelector('.testimonial-carousel');
-
-function renderTestimonial(index) {
-    const testimonial = testimonials[index];
-    testimonialCarousel.innerHTML = `
-        <div class="testimonial glass">
-            <div class="testimonial-avatar"></div>
-            <p class="testimonial-text">${testimonial.text}</p>
-            <div class="testimonial-author">
-                <strong>${testimonial.author}</strong>
-                <span>${testimonial.title}</span>
-            </div>
-        </div>
-        <div class="testimonial-dots">
-            ${testimonials.map((_, i) => `
-                <button class="dot ${i === index ? 'active' : ''}" onclick="showTestimonial(${i})"></button>
-            `).join('')}
-        </div>
-    `;
-}
-
-function showTestimonial(index) {
-    currentTestimonial = index;
-    renderTestimonial(index);
-}
-
-// Auto-rotate testimonials with smooth transitions
-setInterval(() => {
-    currentTestimonial = (currentTestimonial + 1) % testimonials.length;
-    showTestimonial(currentTestimonial);
-}, 5000);
-
-// Initialize first testimonial
-renderTestimonial(0);
-
 // Waitlist form with glassmorphism
 const waitlistForm = document.getElementById('waitlistForm');
 const emailInput = document.getElementById('email');
