@@ -629,6 +629,21 @@ let currentProgress = 0;
 let isOffline = false;
 let progressAnimationFrame;
 
+// Start loading sequence when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    // Check if offline
+    if (!navigator.onLine) {
+        isOffline = true;
+        const errorState = document.querySelector('.error-state');
+        if (errorState) {
+            errorState.classList.add('visible');
+        }
+    } else {
+        // Initialize loading sequence
+        initializeLoading();
+    }
+});
+
 // Initialize loading sequence
 function initializeLoading() {
     const container = document.querySelector('.avatar-container');
@@ -637,11 +652,21 @@ function initializeLoading() {
     const funFactElement = document.querySelector('.fun-fact');
     const errorState = document.querySelector('.error-state');
     
-    if (!container || !progressElement) return;
+    if (!container || !progressElement) {
+        console.error('Loading elements not found');
+        return;
+    }
+    
+    // Reset progress
+    currentProgress = 0;
+    progressElement.textContent = '0%';
     
     // Create particles
     const particleCount = 100;
     const particles = [];
+    
+    // Clear existing particles
+    container.innerHTML = '';
     
     for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
@@ -710,7 +735,10 @@ function initializeLoading() {
         } else {
             // Loading complete
             setTimeout(() => {
-                document.querySelector('.loading-overlay').classList.add('hidden');
+                const loadingOverlay = document.querySelector('.loading-overlay');
+                if (loadingOverlay) {
+                    loadingOverlay.classList.add('hidden');
+                }
                 // Initialize main content
                 initializeMainContent();
             }, 1000);
@@ -723,20 +751,26 @@ function initializeLoading() {
     // Handle offline state
     window.addEventListener('offline', () => {
         isOffline = true;
-        errorState.classList.add('visible');
+        if (errorState) {
+            errorState.classList.add('visible');
+        }
         cancelAnimationFrame(progressAnimationFrame);
     });
     
     // Retry button
     const retryButton = document.querySelector('.retry-button');
-    retryButton.addEventListener('click', () => {
-        if (navigator.onLine) {
-            isOffline = false;
-            errorState.classList.remove('visible');
-            currentProgress = 0;
-            progressAnimationFrame = requestAnimationFrame(updateProgress);
-        }
-    });
+    if (retryButton) {
+        retryButton.addEventListener('click', () => {
+            if (navigator.onLine) {
+                isOffline = false;
+                if (errorState) {
+                    errorState.classList.remove('visible');
+                }
+                currentProgress = 0;
+                progressAnimationFrame = requestAnimationFrame(updateProgress);
+            }
+        });
+    }
 }
 
 // Clean up animation frames on page unload
@@ -760,17 +794,6 @@ function initializeMainContent() {
     initializeDataFlow();
     addWaveDividers();
 }
-
-// Start loading sequence when page loads
-window.addEventListener('load', () => {
-    // Check if offline
-    if (!navigator.onLine) {
-        isOffline = true;
-        document.querySelector('.error-state').classList.add('visible');
-    } else {
-        initializeLoading();
-    }
-});
 
 // Custom cursor with trailing particles
 function initializeCustomCursor() {
