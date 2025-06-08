@@ -1,35 +1,3 @@
-// Typing animation
-const typingText = document.getElementById('typingText');
-const text = "Know yourself. Predict your future.";
-let charIndex = 0;
-
-// Screen width threshold for mobile
-const MOBILE_WIDTH_THRESHOLD = 768;
-
-function typeText() {
-    if (charIndex < text.length) {
-        typingText.textContent += text.charAt(charIndex);
-        charIndex++;
-        setTimeout(typeText, 100);
-    }
-}
-
-// Start typing animation when page loads
-window.addEventListener('load', () => {
-    typingText.textContent = '';
-    typeText();
-    initializeAvatarParticles();
-    initializeParticleSystem();
-    initializeDataFlow();
-    if (window.innerWidth > MOBILE_WIDTH_THRESHOLD) {
-        initializeDNAHelix();
-    } else {
-        initializeMobileFeatures();
-    }
-    resetIdleState();
-    initializeLuxuryFeatures();
-});
-
 // Particle system
 function initializeParticleSystem() {
     const container = document.querySelector('.particle-system');
@@ -603,52 +571,20 @@ function initializeLuxuryFeatures() {
     initializeStatusBar();
 }
 
-function initializeAvatarParticles() {
-    const container = document.querySelector('.avatar-particles');
-    if (!container) return;
-    container.innerHTML = '';
-    const particleCount = 90;
-    const centerX = 50; // SVG coordinate system
-    const centerY = 90;
-    const headRadius = 22;
-    const bodyRadiusX = 30;
-    const bodyRadiusY = 55;
-    for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        let x, y;
-        if (i < 30) { // Head
-            const angle = (i / 30) * Math.PI * 2;
-            x = centerX + Math.cos(angle) * headRadius + (Math.random() - 0.5) * 2;
-            y = centerY + Math.sin(angle) * headRadius - 30 + (Math.random() - 0.5) * 2;
-        } else { // Body/shoulders
-            const t = (i - 30) / 60;
-            const angle = Math.PI * (0.15 + 0.7 * t); // arc for shoulders/body
-            x = centerX + Math.cos(angle) * bodyRadiusX + (Math.random() - 0.5) * 3;
-            y = centerY + 30 + Math.sin(angle) * bodyRadiusY + (Math.random() - 0.5) * 3;
-        }
-        particle.style.left = `${x}%`;
-        particle.style.top = `${y}%`;
-        particle.style.opacity = 0.7 + Math.random() * 0.3;
-        particle.style.width = particle.style.height = (Math.random() * 3 + 2) + 'px';
-        // Animate scale/opacity for subtle movement
-        particle.animate([
-            { transform: 'scale(1)', opacity: particle.style.opacity },
-            { transform: 'scale(1.2)', opacity: 1 },
-            { transform: 'scale(1)', opacity: particle.style.opacity }
-        ], {
-            duration: 2200 + Math.random() * 1200,
-            iterations: Infinity,
-            direction: 'alternate',
-            easing: 'ease-in-out',
-            delay: Math.random() * 1000
-        });
-        container.appendChild(particle);
-    }
-}
-
-// Initialize GSAP ScrollTrigger
-gsap.registerPlugin(ScrollTrigger);
+// Initialize features
+document.addEventListener('DOMContentLoaded', () => {
+    initializeParticleSystem();
+    initializeDataFlow();
+    updateParallax();
+    initializeDNAHelix();
+    initializeMobileNav();
+    initializePullToRefresh();
+    initializeTouchCarousel();
+    initializeMobileFeatures();
+    initializeCustomCursor();
+    initializeStatusBar();
+    initializeLuxuryFeatures();
+});
 
 // Mobile menu toggle
 const mobileMenu = document.querySelector('.mobile-menu');
@@ -819,154 +755,4 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.feature-card, .step, .testimonial-card').forEach(el => {
         el.classList.add('animate-on-scroll');
     });
-});
-
-// === Particle Swarm Avatar Silhouette ===
-function createAvatarSilhouettePoints(width, height) {
-    const points = [];
-    const centerX = width / 2;
-    const centerY = height / 2;
-    
-    // Head (organic oval shape)
-    for (let t = 0; t < Math.PI * 2; t += 0.15) {
-        const radiusX = 35 + Math.sin(t * 3) * 5; // Slight irregularity
-        const radiusY = 45 + Math.cos(t * 2) * 5;
-        points.push({
-            x: centerX + Math.cos(t) * radiusX,
-            y: centerY - 120 + Math.sin(t) * radiusY
-        });
-    }
-
-    // Neck (smooth transition)
-    for (let t = 0; t <= 1; t += 0.1) {
-        points.push({
-            x: centerX,
-            y: centerY - 80 + t * -20
-        });
-    }
-
-    // Shoulders and torso (natural curve)
-    for (let t = 0; t <= 1; t += 0.05) {
-        // Bezier curve control points for torso
-        const shoulderWidth = 80;
-        const waistWidth = 60;
-        const torsoHeight = 150;
-        
-        const x = centerX + (t - 0.5) * (shoulderWidth - t * (shoulderWidth - waistWidth));
-        const y = centerY - 60 + t * torsoHeight;
-        
-        // Add slight natural curve variation
-        const curveOffset = Math.sin(t * Math.PI) * 10;
-        
-        points.push({
-            x: x + curveOffset,
-            y: y
-        });
-    }
-
-    // Arms (natural hanging position)
-    for (let t = 0; t <= 1; t += 0.05) {
-        // Left arm
-        const leftArmX = centerX - 40 - t * 70;
-        const leftArmY = centerY - 50 + t * 100 + Math.sin(t * Math.PI) * 30;
-        points.push({ x: leftArmX, y: leftArmY });
-
-        // Right arm
-        const rightArmX = centerX + 40 + t * 70;
-        const rightArmY = centerY - 50 + t * 100 + Math.sin(t * Math.PI) * 30;
-        points.push({ x: rightArmX, y: rightArmY });
-    }
-
-    // Legs (natural stance)
-    for (let t = 0; t <= 1; t += 0.05) {
-        // Left leg
-        const leftLegX = centerX - 20 - t * 15;
-        const leftLegY = centerY + 60 + t * 180;
-        points.push({ x: leftLegX, y: leftLegY });
-
-        // Right leg
-        const rightLegX = centerX + 20 + t * 15;
-        const rightLegY = centerY + 60 + t * 180;
-        points.push({ x: rightLegX, y: rightLegY });
-    }
-
-    // Add some randomness for organic feel
-    return points.map(p => ({
-        x: p.x + (Math.random() * 4 - 2), // ±2px variation
-        y: p.y + (Math.random() * 4 - 2),
-        size: 1 + Math.random() * 3,      // Variable particle size
-        color: `hsl(${200 + Math.random() * 40}, 80%, 60%)` // Cool color palette
-    }));
-}
-
-function startAvatarParticleSwarm() {
-    console.log('Swarm running');
-    const canvas = document.getElementById('avatar-particles-canvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    let width = canvas.width;
-    let height = canvas.height;
-
-    // Responsive resize
-    function resizeCanvas() {
-        const parent = canvas.parentElement;
-        width = parent.offsetWidth;
-        height = parent.offsetHeight;
-        canvas.width = width;
-        canvas.height = height;
-    }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    // Silhouette points
-    let silhouette = createAvatarSilhouettePoints(width, height);
-
-    // Particle swarm
-    const PARTICLE_COUNT = 120;
-    const particles = [];
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
-        const target = silhouette[i % silhouette.length];
-        particles.push({
-            x: Math.random() * width,
-            y: Math.random() * height,
-            tx: target.x,
-            ty: target.y,
-            vx: 0,
-            vy: 0,
-            color: `rgba(${100+Math.random()*100},${120+Math.random()*100},255,0.85)`
-        });
-    }
-
-    function animate() {
-        ctx.clearRect(0, 0, width, height);
-        // Animate silhouette points on resize
-        silhouette = createAvatarSilhouettePoints(width, height);
-        // Animate particles
-        for (let i = 0; i < PARTICLE_COUNT; i++) {
-            const p = particles[i];
-            const target = silhouette[i % silhouette.length];
-            // Swarm movement toward target
-            const dx = target.x - p.x;
-            const dy = target.y - p.y;
-            p.vx += dx * 0.02 + (Math.random() - 0.5) * 0.2;
-            p.vy += dy * 0.02 + (Math.random() - 0.5) * 0.2;
-            p.vx *= 0.85;
-            p.vy *= 0.85;
-            p.x += p.vx;
-            p.y += p.vy;
-            // Draw particle
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
-            ctx.fillStyle = p.color;
-            ctx.shadowColor = p.color;
-            ctx.shadowBlur = 12;
-            ctx.fill();
-            ctx.shadowBlur = 0;
-        }
-        requestAnimationFrame(animate);
-    }
-    animate();
-}
-
-// Start the avatar particle swarm animation on DOMContentLoaded
-window.addEventListener('DOMContentLoaded', startAvatarParticleSwarm); 
+}); 
