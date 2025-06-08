@@ -116,6 +116,7 @@ waitlistForm?.addEventListener('submit', async (e) => {
         });
 
         const data = await response.json();
+        console.log('Server response:', data);
 
         if (!response.ok) {
             throw new Error(data.error || 'Failed to join waitlist');
@@ -141,12 +142,26 @@ waitlistForm?.addEventListener('submit', async (e) => {
         });
 
     } catch (error) {
-        console.error('Error:', error);
+        console.error('Error submitting form:', error);
         // Show error message
         const errorMessage = document.createElement('div');
         errorMessage.className = 'error-message';
         errorMessage.textContent = error.message || 'Something went wrong. Please try again.';
+        
+        // Remove any existing error messages
+        const existingError = waitlistForm.querySelector('.error-message');
+        if (existingError) {
+            existingError.remove();
+        }
+        
         waitlistForm.appendChild(errorMessage);
+        
+        // Reset button
+        const button = waitlistForm.querySelector('button');
+        if (button) {
+            button.innerHTML = originalText;
+            button.disabled = false;
+        }
     }
 });
 

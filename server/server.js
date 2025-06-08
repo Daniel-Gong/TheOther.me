@@ -105,55 +105,72 @@ const authenticateAdmin = async (req, res, next) => {
 // Routes
 app.post('/api/waitlist', async (req, res) => {
     try {
+        console.log('Received waitlist submission:', req.body);
         const { email } = req.body;
         
         if (!email) {
+            console.log('No email provided');
             return res.status(400).json({ error: 'Email is required' });
         }
 
         // Validate email
         if (!validator.isEmail(email)) {
+            console.log('Invalid email format:', email);
             return res.status(400).json({ error: 'Invalid email address' });
         }
 
         // Check if email already exists
         const existingEmail = await Waitlist.findOne({ email });
         if (existingEmail) {
+            console.log('Email already exists:', email);
             return res.status(200).json({ message: 'You are already on the waitlist!' });
         }
 
         // Create new waitlist entry
         const waitlistEntry = new Waitlist({ email });
         await waitlistEntry.save();
+        console.log('Successfully saved email to waitlist:', email);
 
         // Send confirmation email
-        await transporter.sendMail({
-            from: process.env.EMAIL_USER,
-            to: email,
-            subject: 'Welcome to TheOther.me Waitlist!',
-            html: `
-                <h1>Welcome to TheOther.me!</h1>
-                <p>Thank you for joining our waitlist. We'll keep you updated on our progress and let you know when we launch.</p>
-                <p>Best regards,<br>TheOther.me Team</p>
-            `
-        });
+        try {
+            await transporter.sendMail({
+                from: process.env.EMAIL_USER,
+                to: email,
+                subject: 'Welcome to TheOther.me Waitlist!',
+                html: `
+                    <h1>Welcome to TheOther.me!</h1>
+                    <p>Thank you for joining our waitlist. We'll keep you updated on our progress and let you know when we launch.</p>
+                    <p>Best regards,<br>TheOther.me Team</p>
+                `
+            });
+            console.log('Confirmation email sent to:', email);
+        } catch (emailError) {
+            console.error('Error sending confirmation email:', emailError);
+            // Don't fail the request if email fails
+        }
 
         // Send notification to admin
-        await transporter.sendMail({
-            from: process.env.EMAIL_USER,
-            to: process.env.ADMIN_EMAIL,
-            subject: 'New Waitlist Signup',
-            html: `
-                <h1>New Waitlist Signup</h1>
-                <p>Email: ${email}</p>
-                <p>Time: ${new Date().toLocaleString()}</p>
-            `
-        });
+        try {
+            await transporter.sendMail({
+                from: process.env.EMAIL_USER,
+                to: process.env.ADMIN_EMAIL,
+                subject: 'New Waitlist Signup',
+                html: `
+                    <h1>New Waitlist Signup</h1>
+                    <p>Email: ${email}</p>
+                    <p>Time: ${new Date().toLocaleString()}</p>
+                `
+            });
+            console.log('Admin notification sent');
+        } catch (emailError) {
+            console.error('Error sending admin notification:', emailError);
+            // Don't fail the request if email fails
+        }
 
         res.status(201).json({ message: 'Successfully joined the waitlist!' });
     } catch (error) {
         console.error('Error adding to waitlist:', error);
-        res.status(500).json({ error: 'Failed to join waitlist' });
+        res.status(500).json({ error: 'Failed to join waitlist: ' + error.message });
     }
 });
 
