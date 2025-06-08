@@ -121,36 +121,6 @@ function updateParallax() {
     requestAnimationFrame(updateParallax);
 }
 
-updateParallax();
-
-// Render features with staggered animations
-const featuresGrid = document.querySelector('.features-grid');
-features.forEach((feature, index) => {
-    const featureCard = document.createElement('div');
-    featureCard.className = 'feature-card glass';
-    featureCard.style.animationDelay = (index * 0.1) + 's';
-    
-    featureCard.innerHTML = `
-        <svg class="icon icon-${feature.icon}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            ${getIconPath(feature.icon)}
-        </svg>
-        <h3>${feature.title}</h3>
-        <p>${feature.description}</p>
-    `;
-    
-    featuresGrid.appendChild(featureCard);
-});
-
-// Icon paths
-function getIconPath(icon) {
-    const paths = {
-        brain: '<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>',
-        'light-bulb': '<path d="M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7zm0 14h-2v-1h2v1zm0-2h-2v-1h2v1zm0-2h-2v-1h2v1zm0-2h-2V8h2v1z"/>',
-        'shield-check': '<path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>'
-    };
-    return paths[icon] || '';
-}
-
 // Waitlist form with glassmorphism
 const waitlistForm = document.getElementById('waitlistForm');
 const emailInput = document.getElementById('email');
