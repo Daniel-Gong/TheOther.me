@@ -123,25 +123,6 @@ function updateParallax() {
 
 updateParallax();
 
-// Staggered animations for features
-const features = [
-    {
-        icon: 'brain',
-        title: 'Behavior Prediction',
-        description: 'AI-powered analysis of your patterns to predict future actions'
-    },
-    {
-        icon: 'light-bulb',
-        title: 'Smart Insights',
-        description: 'Get personalized recommendations based on your behavior'
-    },
-    {
-        icon: 'shield-check',
-        title: 'Privacy First',
-        description: 'Your data is encrypted and never shared with third parties'
-    }
-];
-
 // Render features with staggered animations
 const featuresGrid = document.querySelector('.features-grid');
 features.forEach((feature, index) => {
@@ -239,26 +220,6 @@ function showToast(message) {
         }, 300);
     }, 3000);
 }
-
-// Add wave dividers between sections
-function addWaveDividers() {
-    const sections = document.querySelectorAll('section');
-    sections.forEach((section, index) => {
-        if (index < sections.length - 1) {
-            const divider = document.createElement('div');
-            divider.className = 'wave-divider';
-            divider.innerHTML = `
-                <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
-                    <path class="wave-path" d="M0,50 C150,100 350,0 500,50 C650,100 850,0 1000,50 C1150,100 1350,0 1440,50 L1440,100 L0,100 Z"></path>
-                </svg>
-            `;
-            section.appendChild(divider);
-        }
-    });
-}
-
-// Initialize wave dividers
-addWaveDividers();
 
 // DNA Helix Visualization
 function initializeDNAHelix() {
