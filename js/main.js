@@ -853,53 +853,80 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // === Particle Swarm Avatar Silhouette ===
 function createAvatarSilhouettePoints(width, height) {
-    // Returns an array of points (x, y) forming a simple human silhouette
-    // Head (circle), body (ellipse), arms (lines), legs (lines)
     const points = [];
-    const cx = width / 2;
-    const cy = height / 2 + 20;
-    // Head
-    const headRadius = 38;
-    for (let a = 0; a < Math.PI * 2; a += Math.PI / 24) {
+    const centerX = width / 2;
+    const centerY = height / 2;
+    
+    // Head (organic oval shape)
+    for (let t = 0; t < Math.PI * 2; t += 0.15) {
+        const radiusX = 35 + Math.sin(t * 3) * 5; // Slight irregularity
+        const radiusY = 45 + Math.cos(t * 2) * 5;
         points.push({
-            x: cx + Math.cos(a) * headRadius,
-            y: cy - 90 + Math.sin(a) * headRadius
+            x: centerX + Math.cos(t) * radiusX,
+            y: centerY - 120 + Math.sin(t) * radiusY
         });
     }
-    // Body (ellipse)
-    for (let a = Math.PI * 0.9; a < Math.PI * 2.1; a += Math.PI / 32) {
+
+    // Neck (smooth transition)
+    for (let t = 0; t <= 1; t += 0.1) {
         points.push({
-            x: cx + Math.cos(a) * 30,
-            y: cy - 50 + Math.sin(a) * 60
+            x: centerX,
+            y: centerY - 80 + t * -20
         });
     }
-    // Arms (lines)
+
+    // Shoulders and torso (natural curve)
+    for (let t = 0; t <= 1; t += 0.05) {
+        // Bezier curve control points for torso
+        const shoulderWidth = 80;
+        const waistWidth = 60;
+        const torsoHeight = 150;
+        
+        const x = centerX + (t - 0.5) * (shoulderWidth - t * (shoulderWidth - waistWidth));
+        const y = centerY - 60 + t * torsoHeight;
+        
+        // Add slight natural curve variation
+        const curveOffset = Math.sin(t * Math.PI) * 10;
+        
+        points.push({
+            x: x + curveOffset,
+            y: y
+        });
+    }
+
+    // Arms (natural hanging position)
     for (let t = 0; t <= 1; t += 0.05) {
         // Left arm
-        points.push({
-            x: cx - 30 - t * 60,
-            y: cy - 50 + t * 40
-        });
+        const leftArmX = centerX - 40 - t * 70;
+        const leftArmY = centerY - 50 + t * 100 + Math.sin(t * Math.PI) * 30;
+        points.push({ x: leftArmX, y: leftArmY });
+
         // Right arm
-        points.push({
-            x: cx + 30 + t * 60,
-            y: cy - 50 + t * 40
-        });
+        const rightArmX = centerX + 40 + t * 70;
+        const rightArmY = centerY - 50 + t * 100 + Math.sin(t * Math.PI) * 30;
+        points.push({ x: rightArmX, y: rightArmY });
     }
-    // Legs (lines)
+
+    // Legs (natural stance)
     for (let t = 0; t <= 1; t += 0.05) {
         // Left leg
-        points.push({
-            x: cx - 15 - t * 20,
-            y: cy + 10 + t * 80
-        });
+        const leftLegX = centerX - 20 - t * 15;
+        const leftLegY = centerY + 60 + t * 180;
+        points.push({ x: leftLegX, y: leftLegY });
+
         // Right leg
-        points.push({
-            x: cx + 15 + t * 20,
-            y: cy + 10 + t * 80
-        });
+        const rightLegX = centerX + 20 + t * 15;
+        const rightLegY = centerY + 60 + t * 180;
+        points.push({ x: rightLegX, y: rightLegY });
     }
-    return points;
+
+    // Add some randomness for organic feel
+    return points.map(p => ({
+        x: p.x + (Math.random() * 4 - 2), // ±2px variation
+        y: p.y + (Math.random() * 4 - 2),
+        size: 1 + Math.random() * 3,      // Variable particle size
+        color: `hsl(${200 + Math.random() * 40}, 80%, 60%)` // Cool color palette
+    }));
 }
 
 function startAvatarParticleSwarm() {
