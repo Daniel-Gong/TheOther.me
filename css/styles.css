@@ -562,4 +562,5 @@ body {
     height: 100%;
     pointer-events: none;
     z-index: 2;
+    border: 2px solid red !important; /* DEBUG: Remove after confirming visibility */
 } 

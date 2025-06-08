@@ -1001,6 +1001,7 @@ function createAvatarSilhouettePoints(width, height) {
 }
 
 function startAvatarParticleSwarm() {
+    console.log('Swarm running');
     const canvas = document.getElementById('avatar-particles-canvas');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
