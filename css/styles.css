@@ -488,7 +488,7 @@ body {
     }
 
     .avatar-video {
-        max-width: 150px;
+        max-width: 200px;
     }
 
     .gradient-text {
@@ -627,7 +627,7 @@ body {
 
 .avatar-video {
     width: 100%;
-    max-width: 150px;
+    max-width: 200px;
     height: auto;
     border-radius: 20px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
