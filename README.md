@@ -1,3 +1,3 @@
 # TheOther.me
 
-Where your digital self evolves.
+[TheOther.me](TheOther.me) is Where your digital self evolves.
