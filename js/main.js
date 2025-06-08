@@ -81,7 +81,7 @@ function renderTestimonial(index) {
     const testimonial = testimonials[index];
     testimonialCarousel.innerHTML = `
         <div class="testimonial">
-            <img src="${testimonial.avatar}" alt="${testimonial.author}" class="testimonial-avatar" loading="lazy">
+            <div class="testimonial-avatar"></div>
             <p class="testimonial-text">${testimonial.text}</p>
             <div class="testimonial-author">
                 <strong>${testimonial.author}</strong>

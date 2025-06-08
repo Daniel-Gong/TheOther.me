@@ -37,6 +37,8 @@ body {
     color: white;
     position: relative;
     overflow: hidden;
+    display: flex;
+    align-items: center;
 }
 
 .hero::before {
@@ -48,6 +50,7 @@ body {
     bottom: 0;
     background: linear-gradient(45deg, rgba(37, 99, 235, 0.9), rgba(16, 185, 129, 0.9));
     animation: gradientShift 10s ease infinite;
+    background-size: 200% 200%;
 }
 
 @keyframes gradientShift {
@@ -64,13 +67,14 @@ body {
     align-items: center;
     padding: 4rem 1rem;
     text-align: center;
+    width: 100%;
 }
 
 @media (min-width: 768px) {
     .hero-content {
         flex-direction: row;
         text-align: left;
-        gap: 2rem;
+        gap: 4rem;
     }
 }
 
@@ -79,7 +83,7 @@ body {
 }
 
 .hero-text h1 {
-    font-size: 3rem;
+    font-size: 3.5rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
     line-height: 1.2;
@@ -103,10 +107,71 @@ body {
     }
 }
 
-.hero-mockup img {
-    max-width: 100%;
-    height: auto;
+.mockup-frame {
+    background: white;
     border-radius: 1rem;
+    padding: 1rem;
+    box-shadow: var(--shadow-md);
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.mockup-content {
+    background: var(--bg-light);
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.mockup-header {
+    height: 40px;
+    background: var(--primary);
+    border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.mockup-body {
+    padding: 1rem;
+    display: grid;
+    gap: 1rem;
+}
+
+.mockup-chart {
+    height: 200px;
+    background: linear-gradient(45deg, var(--primary), var(--accent));
+    border-radius: 0.5rem;
+    opacity: 0.8;
+}
+
+.mockup-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.mockup-stats::before,
+.mockup-stats::after {
+    content: '';
+    height: 60px;
+    background: var(--primary);
+    border-radius: 0.5rem;
+    opacity: 0.6;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: var(--accent);
+    color: white;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: var(--transition);
+    border: none;
+    cursor: pointer;
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
     box-shadow: var(--shadow-md);
 }
 
@@ -136,12 +201,13 @@ body {
     box-shadow: var(--shadow-sm);
     transition: var(--transition);
     text-align: center;
+    border: 2px solid transparent;
 }
 
 .feature-card:hover {
     transform: translateY(-5px);
     box-shadow: var(--shadow-md);
-    border: 2px solid var(--primary);
+    border-color: var(--primary);
 }
 
 .feature-icon {
@@ -237,6 +303,8 @@ body {
     border-radius: 50%;
     margin-bottom: 1.5rem;
     object-fit: cover;
+    background: var(--primary);
+    opacity: 0.8;
 }
 
 .testimonial-text {
@@ -311,24 +379,6 @@ body {
     border-color: var(--primary);
 }
 
-.cta-button {
-    display: inline-block;
-    padding: 1rem 2rem;
-    background: var(--accent);
-    color: white;
-    text-decoration: none;
-    border-radius: 0.5rem;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.cta-button:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-}
-
 /* Toast notification */
 .toast {
     position: fixed;
@@ -362,7 +412,7 @@ body {
 /* Responsive adjustments */
 @media (max-width: 640px) {
     .hero-text h1 {
-        font-size: 2rem;
+        font-size: 2.5rem;
     }
     
     .typing-text {
