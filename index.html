@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TheOther.me - Your AI-powered digital twin</title>
+    <meta name="description" content="TheOther.me helps you understand yourself better through AI-powered behavior prediction and personal insights.">
+    
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    
+    <!-- Open Graph tags -->
+    <meta property="og:title" content="TheOther.me - Your AI-powered digital twin">
+    <meta property="og:description" content="Understand yourself better through AI-powered behavior prediction and personal insights.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://theother.me">
+    <meta property="og:image" content="https://theother.me/assets/og-image.jpg">
+    
+    <!-- Critical CSS -->
+    <style>
+        :root {
+            --primary: #2563EB;
+            --accent: #10B981;
+            --bg-light: #F9FAFB;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #1F2937;
+            background: var(--bg-light);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        /* Hero section styles */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 4rem 1rem;
+            text-align: center;
+        }
+        
+        @media (min-width: 768px) {
+            .hero-content {
+                flex-direction: row;
+                text-align: left;
+                gap: 2rem;
+            }
+        }
+        
+        .hero-text {
+            flex: 1;
+        }
+        
+        .hero-mockup {
+            flex: 1;
+            display: none;
+        }
+        
+        @media (min-width: 768px) {
+            .hero-mockup {
+                display: block;
+            }
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .typing-text {
+            font-size: 1.5rem;
+            margin: 1rem 0;
+            min-height: 2em;
+        }
+    </style>
+    
+    <!-- JSON-LD Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "TheOther.me",
+        "applicationCategory": "AI Application",
+        "operatingSystem": "Web",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "description": "AI-powered digital twin platform for personal behavior prediction and insights."
+    }
+    </script>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Your AI-powered digital twin</h1>
+                    <div class="typing-text" id="typingText"></div>
+                    <a href="#waitlist" class="cta-button">Join Waitlist</a>
+                </div>
+                <div class="hero-mockup">
+                    <!-- Placeholder for mockup image -->
+                    <img src="assets/mockup.png" alt="TheOther.me platform mockup" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                <!-- Features will be added here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Video Section -->
+    <section class="demo">
+        <div class="container">
+            <div class="video-container">
+                <!-- Video placeholder will be added here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="testimonial-carousel">
+                <!-- Testimonials will be added here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Waitlist Section -->
+    <section id="waitlist" class="waitlist">
+        <div class="container">
+            <form id="waitlistForm" class="waitlist-form">
+                <input type="email" id="email" placeholder="Enter your email" required>
+                <button type="submit" class="cta-button">Join Waitlist</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Main JavaScript -->
+    <script src="js/main.js" defer></script>
+</body>
+</html> 
