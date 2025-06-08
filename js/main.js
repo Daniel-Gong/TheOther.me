@@ -744,4 +744,229 @@ function initializeAvatarParticles() {
         });
         container.appendChild(particle);
     }
-} 
+}
+
+// Initialize GSAP ScrollTrigger
+gsap.registerPlugin(ScrollTrigger);
+
+// Mobile menu toggle
+const mobileMenu = document.querySelector('.mobile-menu');
+const navLinks = document.querySelector('.nav-links');
+
+mobileMenu?.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+});
+
+// Smooth scroll for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+            // Close mobile menu if open
+            navLinks.classList.remove('active');
+        }
+    });
+});
+
+// Hero section animations
+gsap.from('.hero-text', {
+    duration: 1,
+    y: 50,
+    opacity: 0,
+    ease: 'power3.out'
+});
+
+gsap.from('.hero-visual', {
+    duration: 1,
+    x: 50,
+    opacity: 0,
+    delay: 0.3,
+    ease: 'power3.out'
+});
+
+// Features section animations
+gsap.utils.toArray('.feature-card').forEach((card, i) => {
+    gsap.from(card, {
+        scrollTrigger: {
+            trigger: card,
+            start: 'top bottom-=100',
+            toggleActions: 'play none none reverse'
+        },
+        duration: 0.8,
+        y: 50,
+        opacity: 0,
+        delay: i * 0.2,
+        ease: 'power3.out'
+    });
+});
+
+// How it works section animations
+gsap.utils.toArray('.step').forEach((step, i) => {
+    gsap.from(step, {
+        scrollTrigger: {
+            trigger: step,
+            start: 'top bottom-=100',
+            toggleActions: 'play none none reverse'
+        },
+        duration: 0.8,
+        y: 30,
+        opacity: 0,
+        delay: i * 0.2,
+        ease: 'power3.out'
+    });
+});
+
+// Testimonials section animations
+gsap.utils.toArray('.testimonial-card').forEach((card, i) => {
+    gsap.from(card, {
+        scrollTrigger: {
+            trigger: card,
+            start: 'top bottom-=100',
+            toggleActions: 'play none none reverse'
+        },
+        duration: 0.8,
+        y: 30,
+        opacity: 0,
+        delay: i * 0.2,
+        ease: 'power3.out'
+    });
+});
+
+// Waitlist form handling
+const waitlistForm = document.getElementById('waitlistForm');
+const emailInput = document.getElementById('email');
+
+waitlistForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const email = emailInput.value.trim();
+    if (!email) return;
+
+    try {
+        // Here you would typically send the email to your backend
+        // For now, we'll just show a success message
+        const button = waitlistForm.querySelector('button');
+        const originalText = button.innerHTML;
+        
+        button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Joining...';
+        button.disabled = true;
+
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 1500));
+
+        // Show success message
+        const successMessage = document.createElement('div');
+        successMessage.className = 'success-message';
+        successMessage.innerHTML = `
+            <i class="fas fa-check-circle"></i>
+            <p>Thanks for joining! We'll keep you updated.</p>
+        `;
+        
+        waitlistForm.innerHTML = '';
+        waitlistForm.appendChild(successMessage);
+
+        // Animate success message
+        gsap.from(successMessage, {
+            duration: 0.5,
+            scale: 0.8,
+            opacity: 0,
+            ease: 'back.out(1.7)'
+        });
+
+    } catch (error) {
+        console.error('Error:', error);
+        // Show error message
+        const errorMessage = document.createElement('div');
+        errorMessage.className = 'error-message';
+        errorMessage.textContent = 'Something went wrong. Please try again.';
+        waitlistForm.appendChild(errorMessage);
+    }
+});
+
+// Navbar scroll effect
+const navbar = document.querySelector('.navbar');
+let lastScroll = 0;
+
+window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+    
+    if (currentScroll <= 0) {
+        navbar.classList.remove('scroll-up');
+        return;
+    }
+    
+    if (currentScroll > lastScroll && !navbar.classList.contains('scroll-down')) {
+        // Scroll down
+        navbar.classList.remove('scroll-up');
+        navbar.classList.add('scroll-down');
+    } else if (currentScroll < lastScroll && navbar.classList.contains('scroll-down')) {
+        // Scroll up
+        navbar.classList.remove('scroll-down');
+        navbar.classList.add('scroll-up');
+    }
+    
+    lastScroll = currentScroll;
+});
+
+// AI Avatar animation
+const avatarContainer = document.querySelector('.avatar-container');
+if (avatarContainer) {
+    // Create particles
+    for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        avatarContainer.appendChild(particle);
+        
+        // Random position and animation
+        gsap.set(particle, {
+            x: gsap.utils.random(-50, 50),
+            y: gsap.utils.random(-50, 50),
+            scale: gsap.utils.random(0.5, 1.5)
+        });
+        
+        gsap.to(particle, {
+            duration: gsap.utils.random(2, 4),
+            x: gsap.utils.random(-50, 50),
+            y: gsap.utils.random(-50, 50),
+            scale: gsap.utils.random(0.5, 1.5),
+            opacity: gsap.utils.random(0.3, 0.7),
+            repeat: -1,
+            yoyo: true,
+            ease: 'sine.inOut'
+        });
+    }
+}
+
+// Data stream animation
+const dataStream = document.querySelector('.data-stream');
+if (dataStream) {
+    // Create data points
+    for (let i = 0; i < 10; i++) {
+        const point = document.createElement('div');
+        point.className = 'data-point';
+        dataStream.appendChild(point);
+        
+        // Animate data points
+        gsap.to(point, {
+            duration: gsap.utils.random(1, 3),
+            y: -100,
+            opacity: 0,
+            repeat: -1,
+            delay: i * 0.2,
+            ease: 'power1.inOut'
+        });
+    }
+}
+
+// Add CSS classes for animations
+document.addEventListener('DOMContentLoaded', () => {
+    // Add animation classes to elements
+    document.querySelectorAll('.feature-card, .step, .testimonial-card').forEach(el => {
+        el.classList.add('animate-on-scroll');
+    });
+}); 

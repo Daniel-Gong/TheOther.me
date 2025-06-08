@@ -3,77 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TheOther.me - Know Yourself</title>
+    <title>TheOther.me - Your AI Digital Twin</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
 <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="/">TheOther.me</a>
+            </div>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#testimonials">Testimonials</a>
+                <a href="#waitlist" class="cta-button">Join Waitlist</a>
+            </div>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
     <!-- Hero section -->
     <section class="hero">
-        <div class="hero-background"></div>
-        <div class="particles"></div>
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
-                    <h1 id="typingText"></h1>
-                    <p class="subheadline">Discover your digital twin and predict your future behavior with AI.</p>
-                    <a href="#waitlist" class="cta-button">
-                        <span class="button-text">Join Waitlist</span>
-                        <span class="button-glow"></span>
-                    </a>
+                    <h1 class="gradient-text">Meet Your Digital Twin</h1>
+                    <p class="subheadline">Discover yourself through AI. Predict your future behavior and unlock your true potential.</p>
+                    <div class="hero-cta">
+                        <a href="#waitlist" class="primary-button">
+                            <span>Join Waitlist</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <a href="#demo" class="secondary-button">
+                            <i class="fas fa-play"></i>
+                            <span>Watch Demo</span>
+                        </a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <span class="number">10K+</span>
+                            <span class="label">Users</span>
+                        </div>
+                        <div class="stat">
+                            <span class="number">95%</span>
+                            <span class="label">Accuracy</span>
+                        </div>
+                        <div class="stat">
+                            <span class="number">24/7</span>
+                            <span class="label">AI Support</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="hero-visual">
-                    <div class="silhouette-container">
-                        <div class="avatar-particles"></div>
-                        <div class="human-silhouette">
-                            <svg viewBox="0 0 100 200" xmlns="http://www.w3.org/2000/svg">
-                                <path class="silhouette-path" d="M50,20 C70,20 80,40 80,60 C80,80 70,100 50,100 C30,100 20,80 20,60 C20,40 30,20 50,20 Z M30,120 L70,120 L70,180 L30,180 Z"/>
-                            </svg>
+                    <div class="ai-avatar">
+                        <div class="avatar-container">
+                            <div class="avatar-particles"></div>
+                            <div class="avatar-core"></div>
                         </div>
-                        <div class="particle-trail"></div>
-                    </div>
-                    <div class="data-preview">
-                        <div class="preview-chart"></div>
-                        <div class="preview-stats"></div>
+                        <div class="data-stream"></div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="hero-background">
+            <div class="gradient-sphere"></div>
+            <div class="grid-overlay"></div>
         </div>
     </section>
 
     <!-- Features section -->
-    <section class="features">
+    <section class="features" id="features">
         <div class="container">
-            <div class="features-visualization">
-                <div class="dna-helix">
-                    <!-- DNA helix SVG will be added dynamically -->
-                </div>
-                <div class="feature-descriptions">
-                    <!-- Feature descriptions will be added dynamically -->
-                </div>
+            <div class="section-header">
+                <h2>Why Choose TheOther.me?</h2>
+                <p>Experience the future of self-discovery with our cutting-edge AI technology</p>
             </div>
-            <div class="features-grid-mobile">
-                <!-- Mobile feature cards will be added dynamically -->
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>AI-Powered Analysis</h3>
+                    <p>Advanced machine learning algorithms analyze your behavior patterns and predict future actions</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Behavioral Insights</h3>
+                    <p>Get detailed insights into your decision-making patterns and personal growth opportunities</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Privacy First</h3>
+                    <p>Your data is encrypted and protected with enterprise-grade security measures</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Demo section -->
-    <section class="demo">
+    <!-- How it works section -->
+    <section class="how-it-works" id="how-it-works">
         <div class="container">
-            <div class="video-container">
-                <div class="video-placeholder">
-                    <div class="play-button"></div>
+            <div class="section-header">
+                <h2>How It Works</h2>
+                <p>Three simple steps to discover your digital twin</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Connect</h3>
+                    <p>Link your digital footprint and daily activities</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Analyze</h3>
+                    <p>Our AI creates your unique behavioral profile</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Discover</h3>
+                    <p>Get insights and predictions about your future self</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Testimonials section -->
-    <section class="testimonials">
+    <section class="testimonials" id="testimonials">
         <div class="container">
-            <div class="testimonial-carousel">
-                <!-- Testimonials will be added dynamically -->
+            <div class="section-header">
+                <h2>What Our Users Say</h2>
+                <p>Join thousands of satisfied users who discovered their true potential</p>
+            </div>
+            <div class="testimonial-slider">
+                <div class="testimonial-card">
+                    <div class="quote">"TheOther.me helped me understand my decision-making patterns and make better life choices."</div>
+                    <div class="author">
+                        <img src="assets/testimonial-1.jpg" alt="Sarah J.">
+                        <div class="author-info">
+                            <h4>Sarah J.</h4>
+                            <p>Product Manager</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- More testimonials will be added dynamically -->
             </div>
         </div>
     </section>
@@ -81,15 +163,61 @@
     <!-- Waitlist section -->
     <section class="waitlist" id="waitlist">
         <div class="container">
-            <form class="waitlist-form" id="waitlistForm">
-                <input type="email" id="email" placeholder="Enter your email" required>
-                <button type="submit" class="cta-button">
-                    <span class="button-text">Join Waitlist</span>
-                    <span class="button-glow"></span>
-                </button>
-            </form>
+            <div class="waitlist-content">
+                <h2>Be Among the First to Experience TheOther.me</h2>
+                <p>Join our exclusive waitlist and get early access to the future of self-discovery</p>
+                <form class="waitlist-form" id="waitlistForm">
+                    <div class="form-group">
+                        <input type="email" id="email" placeholder="Enter your email" required>
+                        <button type="submit" class="primary-button">
+                            <span>Join Waitlist</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                    <p class="form-note">We respect your privacy. No spam, ever.</p>
+                </form>
+            </div>
         </div>
     </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>TheOther.me</h3>
+                    <p>Discover your true potential with AI</p>
+                </div>
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h4>Product</h4>
+                        <a href="#features">Features</a>
+                        <a href="#how-it-works">How It Works</a>
+                        <a href="#testimonials">Testimonials</a>
+                    </div>
+                    <div class="link-group">
+                        <h4>Company</h4>
+                        <a href="#about">About Us</a>
+                        <a href="#careers">Careers</a>
+                        <a href="#contact">Contact</a>
+                    </div>
+                    <div class="link-group">
+                        <h4>Legal</h4>
+                        <a href="#privacy">Privacy Policy</a>
+                        <a href="#terms">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 TheOther.me. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <script src="js/main.js"></script>
 </body>
