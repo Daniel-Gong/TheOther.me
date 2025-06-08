@@ -7,8 +7,10 @@
     <meta name="description" content="TheOther.me helps you understand yourself better through AI-powered behavior prediction and personal insights.">
     
     <!-- Preload critical fonts -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="preload" href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" as="style">
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
     
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/styles.css">
@@ -35,7 +37,7 @@
         }
         
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Satoshi', sans-serif;
             line-height: 1.6;
             color: #1F2937;
             background: var(--bg-light);
@@ -109,6 +111,119 @@
             margin: 1rem 0;
             min-height: 2em;
         }
+        
+        /* Critical CSS for loading sequence */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--primary-dark);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            transition: opacity 0.5s ease-out;
+        }
+        
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .loading-content {
+            text-align: center;
+            color: white;
+            max-width: 90%;
+        }
+        
+        .avatar-container {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0;
+        }
+        
+        .loading-progress {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-family: 'Satoshi', sans-serif;
+        }
+        
+        .loading-message {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease-out;
+        }
+        
+        .loading-message.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .fun-fact {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 2rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease-out;
+        }
+        
+        .fun-fact.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .error-state {
+            display: none;
+            text-align: center;
+        }
+        
+        .error-state.visible {
+            display: block;
+        }
+        
+        .error-illustration {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 2rem;
+        }
+        
+        .retry-button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease-out;
+        }
+        
+        .retry-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        }
+        
+        .retry-button:active {
+            transform: translateY(0);
+        }
     </style>
     
     <!-- JSON-LD Schema -->
@@ -129,24 +244,57 @@
     </script>
 </head>
 <body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay">
+        <div class="loading-content">
+            <div class="avatar-container">
+                <!-- Particles will be added dynamically -->
+            </div>
+            <div class="loading-progress">0%</div>
+            <div class="loading-message">Analyzing your patterns...</div>
+            <div class="fun-fact">Did you know? Humans make about 35,000 decisions every day.</div>
+            
+            <!-- Error State -->
+            <div class="error-state">
+                <svg class="error-illustration" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="100" cy="100" r="80" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <path d="M60,100 L140,100 M100,60 L100,140" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <h3>Oops! We're having trouble connecting</h3>
+                <p>Don't worry, your data is safe. Let's try again.</p>
+                <button class="retry-button">Retry Connection</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Hero Section -->
     <section class="hero">
+        <div class="hero-background">
+            <div class="particles"></div>
+        </div>
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
-                    <h1>Your AI-powered digital twin</h1>
-                    <div class="typing-text" id="typingText"></div>
-                    <a href="#waitlist" class="cta-button">Join Waitlist</a>
+                    <h1>Meet your digital twin</h1>
+                    <p class="subheadline">AI that mirrors your behavior to predict and improve</p>
+                    <a href="#waitlist" class="cta-button">
+                        <span class="button-text">Join Waitlist</span>
+                        <span class="button-glow"></span>
+                    </a>
                 </div>
-                <div class="hero-mockup">
-                    <div class="mockup-frame">
-                        <div class="mockup-content">
-                            <div class="mockup-header"></div>
-                            <div class="mockup-body">
-                                <div class="mockup-chart"></div>
-                                <div class="mockup-stats"></div>
-                            </div>
+                <div class="hero-visual">
+                    <div class="silhouette-container">
+                        <svg class="human-silhouette" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg">
+                            <path class="silhouette-path" d="M100,50 C130,50 150,70 150,100 C150,130 130,150 100,150 C70,150 50,130 50,100 C50,70 70,50 100,50 Z M50,200 L150,200 L130,350 L70,350 Z" />
+                        </svg>
+                        <div class="particle-trail"></div>
+                    </div>
+                    <div class="data-preview">
+                        <div class="data-flow">
+                            <div class="particle-system"></div>
                         </div>
+                        <div class="preview-chart"></div>
+                        <div class="preview-stats"></div>
                     </div>
                 </div>
             </div>
@@ -156,8 +304,61 @@
     <!-- Features Section -->
     <section class="features">
         <div class="container">
-            <div class="features-grid">
-                <!-- Features will be added here -->
+            <div class="features-visualization">
+                <svg class="dna-helix" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Bezier curves connecting orbs -->
+                    <path class="helix-path" d="M200,300 C300,200 500,400 600,300" />
+                    <path class="helix-path" d="M200,300 C300,400 500,200 600,300" />
+                    
+                    <!-- Feature orbs -->
+                    <g class="feature-orb" data-feature="behavior">
+                        <circle class="orb-circle" cx="200" cy="300" r="40" />
+                        <g class="orb-content">
+                            <path class="feature-icon" d="M180,290 L220,290 M200,270 L200,310" />
+                            <text class="feature-title" x="200" y="340">Behavior Genome</text>
+                        </g>
+                    </g>
+                    
+                    <g class="feature-orb" data-feature="simulation">
+                        <circle class="orb-circle" cx="400" cy="300" r="40" />
+                        <g class="orb-content">
+                            <path class="feature-icon" d="M380,290 L420,290 M400,270 L400,310" />
+                            <text class="feature-title" x="400" y="340">Future Simulation</text>
+                        </g>
+                    </g>
+                    
+                    <g class="feature-orb" data-feature="knowledge">
+                        <circle class="orb-circle" cx="600" cy="300" r="40" />
+                        <g class="orb-content">
+                            <path class="feature-icon" d="M580,290 L620,290 M600,270 L600,310" />
+                            <text class="feature-title" x="600" y="340">Knowledge Mirror</text>
+                        </g>
+                    </g>
+                </svg>
+                
+                <!-- Feature descriptions (hidden by default) -->
+                <div class="feature-descriptions">
+                    <div class="feature-description" data-feature="behavior">
+                        <h3>Behavior Genome</h3>
+                        <p>AI-powered analysis of your patterns to predict future actions</p>
+                        <div class="dna-animation"></div>
+                    </div>
+                    <div class="feature-description" data-feature="simulation">
+                        <h3>Future Simulation</h3>
+                        <p>Get personalized recommendations based on your behavior</p>
+                        <div class="hourglass-animation"></div>
+                    </div>
+                    <div class="feature-description" data-feature="knowledge">
+                        <h3>Knowledge Mirror</h3>
+                        <p>Your data is encrypted and never shared with third parties</p>
+                        <div class="fractal-animation"></div>
+                    </div>
+                </div>
+                
+                <!-- Mobile fallback grid -->
+                <div class="features-grid-mobile">
+                    <!-- Will be populated by JavaScript -->
+                </div>
             </div>
         </div>
     </section>
@@ -165,8 +366,12 @@
     <!-- Demo Video Section -->
     <section class="demo">
         <div class="container">
-            <div class="video-container">
-                <!-- Video placeholder will be added here -->
+            <div class="video-container glass">
+                <div class="video-placeholder">
+                    <button class="play-button">
+                        <span class="play-icon"></span>
+                    </button>
+                </div>
             </div>
         </div>
     </section>
@@ -175,7 +380,7 @@
     <section class="testimonials">
         <div class="container">
             <div class="testimonial-carousel">
-                <!-- Testimonials will be added here -->
+                <!-- Testimonials will be dynamically added here -->
             </div>
         </div>
     </section>
@@ -183,14 +388,18 @@
     <!-- Waitlist Section -->
     <section id="waitlist" class="waitlist">
         <div class="container">
-            <form id="waitlistForm" class="waitlist-form">
+            <form id="waitlistForm" class="waitlist-form glass">
                 <input type="email" id="email" placeholder="Enter your email" required>
-                <button type="submit" class="cta-button">Join Waitlist</button>
+                <button type="submit" class="cta-button">
+                    <span class="button-text">Join Waitlist</span>
+                    <span class="button-glow"></span>
+                </button>
             </form>
         </div>
     </section>
 
     <!-- Main JavaScript -->
     <script src="js/main.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </body>
 </html> 
