@@ -27,22 +27,60 @@ This guide will help you set up Firebase for the waitlist feature.
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Allow anyone to read waitlist entries (optional - remove if you want to restrict)
-    // match /waitlist/{document=**} {
-    //   allow read: if true;
-    // }
-    
-    // Allow anyone to write to waitlist collection (for signups)
+    // Allow anyone to create waitlist entries (for signups)
     match /waitlist/{document=**} {
+      // Allow creating documents with email validation
       allow create: if request.resource.data.email is string &&
                      request.resource.data.email.matches('.*@.*\\..*') &&
-                     request.resource.data.createdAt == request.time;
+                     // createdAt can be serverTimestamp() or a timestamp
+                     (request.resource.data.createdAt == request.time || 
+                      request.resource.data.createdAt is timestamp) &&
+                     // source is optional but must be string if present
+                     (!('source' in request.resource.data) || 
+                      request.resource.data.source is string);
       allow read: if false; // Prevent reading from client (use admin panel)
       allow update, delete: if false; // Only admins can update/delete
     }
   }
 }
 ```
+
+**Alternative simpler rules (if the above doesn't work):**
+
+```javascript
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /waitlist/{document=**} {
+      // Simple: allow creating if email is valid
+      allow create: if request.resource.data.email is string &&
+                     request.resource.data.email.matches('.*@.*\\..*');
+      allow read: if false;
+      allow update, delete: if false;
+    }
+  }
+}
+```
+
+**IMPORTANT: The rules above block reads, but our code needs to check for duplicates. Use this version instead:**
+
+```javascript
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /waitlist/{document=**} {
+      // Allow creating if email is valid
+      allow create: if request.resource.data.email is string &&
+                     request.resource.data.email.matches('.*@.*\\..*');
+      // Allow reading for duplicate check (but only email field)
+      allow read: if true;
+      allow update, delete: if false;
+    }
+  }
+}
+```
+
+**Or, if you want to remove the duplicate check and handle it differently, we can update the code instead.**
 
 3. Click **"Publish"**
 
