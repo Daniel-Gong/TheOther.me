@@ -261,6 +261,11 @@ function initializeDNAHelix() {
     const descriptions = document.querySelectorAll('.feature-description');
     const helixPaths = document.querySelectorAll('.helix-path');
 
+    // Check if elements exist before animating
+    if (!helixPaths || helixPaths.length === 0) {
+        return; // Exit early if elements don't exist
+    }
+
     // Initialize GSAP animations
     gsap.set(helixPaths, {
         strokeDasharray: 1000,
@@ -275,68 +280,70 @@ function initializeDNAHelix() {
     });
 
     // Orb hover animations
-    orbs.forEach((orb, index) => {
-        const description = descriptions[index];
+    if (orbs && orbs.length > 0) {
+        orbs.forEach((orb, index) => {
+            const description = descriptions[index];
 
-        orb.addEventListener('mouseenter', () => {
-            // Animate orb
-            gsap.to(orb.querySelector('.orb-circle'), {
-                scale: 1.2,
-                duration: 0.3,
-                ease: "power2.out"
+            orb.addEventListener('mouseenter', () => {
+                // Animate orb
+                gsap.to(orb.querySelector('.orb-circle'), {
+                    scale: 1.2,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+
+                // Show description
+                gsap.to(description, {
+                    opacity: 1,
+                    scale: 1,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+
+                // Animate connected paths
+                const connectedPaths = Array.from(helixPaths).filter(path => {
+                    const pathElement = path.getBoundingClientRect();
+                    const orbElement = orb.getBoundingClientRect();
+                    return (
+                        pathElement.left <= orbElement.right &&
+                        pathElement.right >= orbElement.left
+                    );
+                });
+
+                gsap.to(connectedPaths, {
+                    stroke: "#2563EB",
+                    filter: "drop-shadow(0 0 10px rgba(37, 99, 235, 0.2))",
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
             });
 
-            // Show description
-            gsap.to(description, {
-                opacity: 1,
-                scale: 1,
-                duration: 0.3,
-                ease: "power2.out"
-            });
+            orb.addEventListener('mouseleave', () => {
+                // Reset orb
+                gsap.to(orb.querySelector('.orb-circle'), {
+                    scale: 1,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
 
-            // Animate connected paths
-            const connectedPaths = Array.from(helixPaths).filter(path => {
-                const pathElement = path.getBoundingClientRect();
-                const orbElement = orb.getBoundingClientRect();
-                return (
-                    pathElement.left <= orbElement.right &&
-                    pathElement.right >= orbElement.left
-                );
-            });
+                // Hide description
+                gsap.to(description, {
+                    opacity: 0,
+                    scale: 0.9,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
 
-            gsap.to(connectedPaths, {
-                stroke: "#2563EB",
-                filter: "drop-shadow(0 0 10px rgba(37, 99, 235, 0.2))",
-                duration: 0.3,
-                ease: "power2.out"
+                // Reset paths
+                gsap.to(helixPaths, {
+                    stroke: "rgba(255, 255, 255, 0.2)",
+                    filter: "none",
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
             });
         });
-
-        orb.addEventListener('mouseleave', () => {
-            // Reset orb
-            gsap.to(orb.querySelector('.orb-circle'), {
-                scale: 1,
-                duration: 0.3,
-                ease: "power2.out"
-            });
-
-            // Hide description
-            gsap.to(description, {
-                opacity: 0,
-                scale: 0.9,
-                duration: 0.3,
-                ease: "power2.out"
-            });
-
-            // Reset paths
-            gsap.to(helixPaths, {
-                stroke: "rgba(255, 255, 255, 0.2)",
-                filter: "none",
-                duration: 0.3,
-                ease: "power2.out"
-            });
-        });
-    });
+    }
 
     // Initialize feature animations
     initializeFeatureAnimations();
@@ -618,8 +625,8 @@ function initializeCustomCursor() {
             const trailX = cursorX - (mouseX - cursorX) * (delay / 100);
             const trailY = cursorY - (mouseY - cursorY) * (delay / 100);
 
-            trail.style.transform = `translate(${trailX}px, ${trailY}px)`;
-            trail.style.opacity = 1 - (index / trailCount);
+            trail.element.style.transform = `translate(${trailX}px, ${trailY}px)`;
+            trail.element.style.opacity = 1 - (index / trailCount);
         });
 
         cursorAnimationFrame = requestAnimationFrame(updateCursor);
