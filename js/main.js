@@ -528,98 +528,7 @@ window.addEventListener('resize', () => {
     }
 });
 
-// Custom cursor with trailing particles
-function initializeCustomCursor() {
-    const cursor = document.createElement('div');
-    cursor.className = 'cursor';
-    document.body.appendChild(cursor);
-
-    const trails = [];
-    const trailCount = 5;
-
-    for (let i = 0; i < trailCount; i++) {
-        const trail = document.createElement('div');
-        trail.className = 'cursor-trail';
-        document.body.appendChild(trail);
-        trails.push({
-            element: trail,
-            x: 0,
-            y: 0
-        });
-    }
-
-    let mouseX = 0;
-    let mouseY = 0;
-    let cursorX = 0;
-    let cursorY = 0;
-    let cursorAnimationFrame;
-
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    });
-
-    function updateCursor() {
-        // Smooth cursor movement
-        cursorX += (mouseX - cursorX) * 0.2;
-        cursorY += (mouseY - cursorY) * 0.2;
-
-        cursor.style.transform = `translate(${cursorX}px, ${cursorY}px)`;
-
-        // Update trails
-        trails.forEach((trail, index) => {
-            const delay = index * 2;
-            const trailX = cursorX - (mouseX - cursorX) * (delay / 100);
-            const trailY = cursorY - (mouseY - cursorY) * (delay / 100);
-
-            trail.element.style.transform = `translate(${trailX}px, ${trailY}px)`;
-            trail.element.style.opacity = 1 - (index / trailCount);
-        });
-
-        cursorAnimationFrame = requestAnimationFrame(updateCursor);
-    }
-
-    function cancelCursorAnimation() {
-        if (cursorAnimationFrame) {
-            cancelAnimationFrame(cursorAnimationFrame);
-        }
-    }
-
-    updateCursor();
-}
-
-// Status bar
-function initializeStatusBar() {
-    const statusBar = document.createElement('div');
-    statusBar.className = 'status-bar';
-
-    const statusContent = document.createElement('div');
-    statusContent.innerHTML = `
-        <span class="status-indicator"></span>
-        <span class="status-text">System nominal</span>
-    `;
-
-    const timestamp = document.createElement('div');
-    timestamp.className = 'status-timestamp';
-
-    function updateTimestamp() {
-        const now = new Date();
-        timestamp.textContent = now.toLocaleTimeString();
-    }
-
-    updateTimestamp();
-    setInterval(updateTimestamp, 1000);
-
-    statusBar.appendChild(statusContent);
-    statusBar.appendChild(timestamp);
-    document.body.appendChild(statusBar);
-}
-
-// Initialize luxury features
-function initializeLuxuryFeatures() {
-    initializeCustomCursor();
-    initializeStatusBar();
-}
+// Luxury features removed (custom cursor and status bar)
 
 // Initialize features
 document.addEventListener('DOMContentLoaded', () => {
@@ -630,9 +539,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initializePullToRefresh();
     initializeTouchCarousel();
     initializeMobileFeatures();
-    initializeCustomCursor();
-    initializeStatusBar();
-    initializeLuxuryFeatures();
 
     // Initialize waitlist form after a short delay to ensure Firebase is loaded
     setTimeout(() => {
