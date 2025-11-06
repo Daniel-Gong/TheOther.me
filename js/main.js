@@ -89,7 +89,101 @@ function updateParallax() {
     requestAnimationFrame(updateParallax);
 }
 
-// Remove the entire waitlist form section since we're using JotForm now
+// Waitlist form submission with Firebase
+function initializeWaitlistForm() {
+    const form = document.getElementById('waitlist-form');
+    const emailInput = document.getElementById('waitlist-email');
+    const submitButton = document.getElementById('waitlist-submit');
+    const messageDiv = document.getElementById('waitlist-message');
+
+    if (!form || !emailInput || !submitButton || !messageDiv) {
+        console.log('Waitlist form elements not found');
+        return;
+    }
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const email = emailInput.value.trim().toLowerCase();
+
+        if (!email) {
+            showWaitlistMessage('Please enter a valid email address', 'error');
+            return;
+        }
+
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            showWaitlistMessage('Please enter a valid email address', 'error');
+            return;
+        }
+
+        // Disable form during submission
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<span>Joining...</span><i class="fas fa-spinner fa-spin"></i>';
+        messageDiv.textContent = '';
+
+        try {
+            // Wait for Firebase to be initialized
+            if (!window.firestoreDb) {
+                throw new Error('Firebase not initialized. Please check your Firebase configuration.');
+            }
+
+            const { collection, addDoc, serverTimestamp, query, where, getDocs } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+
+            // Check if email already exists
+            const waitlistRef = collection(window.firestoreDb, 'waitlist');
+            const q = query(waitlistRef, where('email', '==', email));
+            const querySnapshot = await getDocs(q);
+
+            if (!querySnapshot.empty) {
+                showWaitlistMessage('You are already on the waitlist!', 'success');
+                emailInput.value = '';
+                submitButton.disabled = false;
+                submitButton.innerHTML = '<span>Join Waitlist</span><i class="fas fa-arrow-right"></i>';
+                return;
+            }
+
+            // Add email to Firestore
+            await addDoc(waitlistRef, {
+                email: email,
+                createdAt: serverTimestamp(),
+                source: 'website'
+            });
+
+            // Success message
+            showWaitlistMessage('Successfully joined the waitlist! We\'ll be in touch soon.', 'success');
+            emailInput.value = '';
+
+            // Show toast notification
+            showToast('Welcome to TheOther.me waitlist!');
+
+        } catch (error) {
+            console.error('Error adding to waitlist:', error);
+            showWaitlistMessage('Something went wrong. Please try again later.', 'error');
+        } finally {
+            // Re-enable form
+            submitButton.disabled = false;
+            submitButton.innerHTML = '<span>Join Waitlist</span><i class="fas fa-arrow-right"></i>';
+        }
+    });
+}
+
+function showWaitlistMessage(message, type) {
+    const messageDiv = document.getElementById('waitlist-message');
+    if (!messageDiv) return;
+
+    messageDiv.textContent = message;
+    messageDiv.className = `waitlist-message ${type}`;
+
+    // Remove message after 5 seconds for success messages
+    if (type === 'success') {
+        setTimeout(() => {
+            messageDiv.textContent = '';
+            messageDiv.className = 'waitlist-message';
+        }, 5000);
+    }
+}
 
 // Toast notification with glassmorphism
 function showToast(message) {
@@ -535,6 +629,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeCustomCursor();
     initializeStatusBar();
     initializeLuxuryFeatures();
+    initializeWaitlistForm();
 });
 
 // Mobile menu toggle

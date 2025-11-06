@@ -27,6 +27,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <!-- Firebase SDK -->
+    <script type="module" src="js/firebase-config.js"></script>
 </head>
 
 <body>
@@ -168,7 +170,18 @@
             <div class="waitlist-content">
                 <h2>Be Among the First to Experience TheOther.me</h2>
                 <p>Join our exclusive waitlist and get early access to the future of self-discovery</p>
-                <script type="text/javascript" src="https://form.jotform.com/jsform/252324938552057"></script>
+                <form id="waitlist-form" class="waitlist-form">
+                    <div class="form-group">
+                        <input type="email" id="waitlist-email" name="email" placeholder="Enter your email address"
+                            required autocomplete="email">
+                        <button type="submit" class="primary-button" id="waitlist-submit">
+                            <span>Join Waitlist</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                    <div id="waitlist-message" class="waitlist-message"></div>
+                    <p class="form-note">We respect your privacy. Unsubscribe at any time.</p>
+                </form>
             </div>
         </div>
     </section>

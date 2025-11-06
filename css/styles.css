@@ -1,5 +1,7 @@
 /* Modern CSS Reset */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -111,7 +113,7 @@ body {
     right: 0;
     bottom: 0;
     background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+        linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
     background-size: 20px 20px;
 }
 
@@ -418,6 +420,44 @@ body {
 .form-note {
     font-size: 0.875rem;
     color: var(--text-light);
+    margin-top: 1rem;
+}
+
+.waitlist-form {
+    margin-top: 2rem;
+}
+
+.waitlist-message {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.waitlist-message.success {
+    background-color: #d1fae5;
+    color: #065f46;
+    border: 1px solid #10b981;
+}
+
+.waitlist-message.error {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #ef4444;
+}
+
+.form-group button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
 }
 
 /* Footer */
@@ -494,7 +534,8 @@ body {
     .nav-links {
         display: none;
         position: fixed;
-        top: 70px; /* Height of navbar */
+        top: 70px;
+        /* Height of navbar */
         left: 0;
         right: 0;
         background: rgba(255, 255, 255, 0.95);
@@ -551,7 +592,8 @@ body {
         align-items: center;
     }
 
-    .primary-button, .secondary-button {
+    .primary-button,
+    .secondary-button {
         width: 100%;
         justify-content: center;
         font-size: 1rem;
@@ -632,7 +674,7 @@ body {
         gap: 0.75rem;
         max-width: 100%;
     }
-    
+
     .app-store-button img,
     .play-store-button img {
         height: 38px;
@@ -644,9 +686,11 @@ body {
     0% {
         transform: translateY(0px);
     }
+
     50% {
         transform: translateY(-20px);
     }
+
     100% {
         transform: translateY(0px);
     }
@@ -702,4 +746,4 @@ body {
     height: 100%;
     pointer-events: none;
     z-index: 2;
-} 
+}
