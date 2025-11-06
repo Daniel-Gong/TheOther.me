@@ -97,38 +97,71 @@ function initializeWaitlistForm() {
     const messageDiv = document.getElementById('waitlist-message');
 
     if (!form || !emailInput || !submitButton || !messageDiv) {
-        console.log('Waitlist form elements not found');
+        console.error('Waitlist form elements not found');
         return;
     }
 
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
+    console.log('Waitlist form initialized');
+
+    // Wait for Firebase to be ready
+    function waitForFirebase() {
+        return new Promise((resolve, reject) => {
+            if (window.firestoreDb) {
+                resolve(window.firestoreDb);
+                return;
+            }
+
+            // Check every 100ms for up to 5 seconds
+            let attempts = 0;
+            const maxAttempts = 50;
+            const checkInterval = setInterval(() => {
+                attempts++;
+                if (window.firestoreDb) {
+                    clearInterval(checkInterval);
+                    resolve(window.firestoreDb);
+                } else if (attempts >= maxAttempts) {
+                    clearInterval(checkInterval);
+                    reject(new Error('Firebase initialization timeout. Please check your Firebase configuration.'));
+                }
+            }, 100);
+        });
+    }
+
+    // Handle form submission
+    async function handleSubmit(e) {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        console.log('Form submitted');
 
         const email = emailInput.value.trim().toLowerCase();
 
         if (!email) {
             showWaitlistMessage('Please enter a valid email address', 'error');
-            return;
+            return false;
         }
 
         // Validate email format
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             showWaitlistMessage('Please enter a valid email address', 'error');
-            return;
+            return false;
         }
 
         // Disable form during submission
         submitButton.disabled = true;
+        const originalButtonHTML = submitButton.innerHTML;
         submitButton.innerHTML = '<span>Joining...</span><i class="fas fa-spinner fa-spin"></i>';
         messageDiv.textContent = '';
 
         try {
             // Wait for Firebase to be initialized
-            if (!window.firestoreDb) {
-                throw new Error('Firebase not initialized. Please check your Firebase configuration.');
-            }
+            console.log('Waiting for Firebase...');
+            await waitForFirebase();
+            console.log('Firebase ready');
 
+            // Import Firestore functions
             const { collection, addDoc, serverTimestamp, query, where, getDocs } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
 
             // Check if email already exists
@@ -140,16 +173,19 @@ function initializeWaitlistForm() {
                 showWaitlistMessage('You are already on the waitlist!', 'success');
                 emailInput.value = '';
                 submitButton.disabled = false;
-                submitButton.innerHTML = '<span>Join Waitlist</span><i class="fas fa-arrow-right"></i>';
-                return;
+                submitButton.innerHTML = originalButtonHTML;
+                return false;
             }
 
             // Add email to Firestore
+            console.log('Adding email to Firestore:', email);
             await addDoc(waitlistRef, {
                 email: email,
                 createdAt: serverTimestamp(),
                 source: 'website'
             });
+
+            console.log('Email added successfully');
 
             // Success message
             showWaitlistMessage('Successfully joined the waitlist! We\'ll be in touch soon.', 'success');
@@ -160,12 +196,24 @@ function initializeWaitlistForm() {
 
         } catch (error) {
             console.error('Error adding to waitlist:', error);
-            showWaitlistMessage('Something went wrong. Please try again later.', 'error');
+            showWaitlistMessage('Something went wrong. Please try again later. Error: ' + error.message, 'error');
         } finally {
             // Re-enable form
             submitButton.disabled = false;
-            submitButton.innerHTML = '<span>Join Waitlist</span><i class="fas fa-arrow-right"></i>';
+            submitButton.innerHTML = originalButtonHTML;
         }
+
+        return false;
+    }
+
+    // Add form submit handler
+    form.addEventListener('submit', handleSubmit);
+
+    // Also handle button click as fallback
+    submitButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        handleSubmit(e);
     });
 }
 
@@ -629,7 +677,11 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeCustomCursor();
     initializeStatusBar();
     initializeLuxuryFeatures();
-    initializeWaitlistForm();
+
+    // Initialize waitlist form after a short delay to ensure Firebase is loaded
+    setTimeout(() => {
+        initializeWaitlistForm();
+    }, 100);
 });
 
 // Mobile menu toggle

@@ -15,10 +15,15 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+console.log('Firebase app initialized');
 
 // Initialize Firestore
 const db = getFirestore(app);
 
 // Export db for use in other files
 window.firestoreDb = db;
+console.log('Firestore database ready');
+
+// Dispatch a custom event to signal Firebase is ready
+window.dispatchEvent(new CustomEvent('firebase-ready'));
 
