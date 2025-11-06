@@ -378,6 +378,8 @@ function initializeFeatureAnimations() {
 }
 
 // Mobile Navigation
+const MOBILE_WIDTH_THRESHOLD = 768; // pixels
+
 function initializeMobileNav() {
     if (window.innerWidth > MOBILE_WIDTH_THRESHOLD) return;
 
