@@ -1,3 +1,6 @@
+// Constants
+const MOBILE_WIDTH_THRESHOLD = 768; // pixels
+
 // Particle system
 function initializeParticleSystem() {
     const container = document.querySelector('.particle-system');
@@ -378,8 +381,6 @@ function initializeFeatureAnimations() {
 }
 
 // Mobile Navigation
-const MOBILE_WIDTH_THRESHOLD = 768; // pixels
-
 function initializeMobileNav() {
     if (window.innerWidth > MOBILE_WIDTH_THRESHOLD) return;
 
