@@ -387,59 +387,7 @@ function initializeFeatureAnimations() {
     }
 }
 
-// Mobile Navigation
-function initializeMobileNav() {
-    if (window.innerWidth > MOBILE_WIDTH_THRESHOLD) return;
-
-    const nav = document.createElement('nav');
-    nav.className = 'mobile-nav';
-
-    const navItems = [
-        { icon: 'home', label: 'Home', href: '#hero' },
-        { icon: 'features', label: 'Features', href: '#features' },
-        { icon: 'demo', label: 'Demo', href: '#demo' },
-        { icon: 'waitlist', label: 'Join', href: '#waitlist' }
-    ];
-
-    navItems.forEach(item => {
-        const link = document.createElement('a');
-        link.href = item.href;
-        link.className = 'nav-item touch-target';
-        link.innerHTML = `
-            <svg class="nav-icon" viewBox="0 0 24 24">
-                ${getNavIcon(item.icon)}
-            </svg>
-            <span class="nav-label">${item.label}</span>
-        `;
-
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const target = document.querySelector(item.href);
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth' });
-                // Haptic feedback
-                if (navigator.vibrate) {
-                    navigator.vibrate(50);
-                }
-            }
-        });
-
-        nav.appendChild(link);
-    });
-
-    document.body.appendChild(nav);
-}
-
-// Navigation icons
-function getNavIcon(icon) {
-    const icons = {
-        home: '<path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" stroke="currentColor" fill="none" stroke-width="2"/>',
-        features: '<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" fill="none" stroke-width="2"/>',
-        demo: '<path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" stroke="currentColor" fill="none" stroke-width="2"/>',
-        waitlist: '<path d="M12 4v16m8-8H4" stroke="currentColor" fill="none" stroke-width="2"/>'
-    };
-    return icons[icon] || '';
-}
+// Mobile Navigation - removed (using existing navbar mobile menu instead)
 
 // Pull to refresh
 function initializePullToRefresh() {
@@ -544,7 +492,6 @@ function initializeTouchCarousel() {
 
 // Initialize mobile features
 function initializeMobileFeatures() {
-    initializeMobileNav();
     initializePullToRefresh();
     initializeTouchCarousel();
 }
@@ -680,7 +627,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeDataFlow();
     updateParallax();
     initializeDNAHelix();
-    initializeMobileNav();
     initializePullToRefresh();
     initializeTouchCarousel();
     initializeMobileFeatures();
