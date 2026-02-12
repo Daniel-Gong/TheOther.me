@@ -148,13 +148,20 @@ body {
 
 .app-downloads {
     display: flex;
-    gap: 1.5rem;
+    flex-direction: column;
+    gap: 0.75rem;
     justify-content: center;
     align-items: center;
     margin: 0 auto 3rem auto;
     width: 100%;
     max-width: 400px;
     margin-top: 0;
+}
+
+.app-downloads-note {
+    font-size: 0.875rem;
+    color: var(--text-light);
+    margin: 0;
 }
 
 .app-store-button img,
