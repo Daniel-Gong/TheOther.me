@@ -467,6 +467,50 @@ body {
     box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
 }
 
+/* Community Section */
+.community {
+    padding: 6rem 0;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(16, 185, 129, 0.05));
+}
+
+.community-content {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.community-cta {
+    margin-top: 2rem;
+}
+
+.discord-community-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+}
+
+.discord-community-button i.fab.fa-discord {
+    font-size: 1.5rem;
+}
+
+.community-note {
+    margin-top: 1rem;
+    color: var(--text-light);
+    font-size: 0.875rem;
+}
+
+.discord-button {
+    background: #5865F2;
+    color: white;
+}
+
+.discord-button:hover {
+    background: #4752C4;
+    color: white;
+}
+
 /* Footer */
 .footer {
     background: var(--text-color);
@@ -637,6 +681,19 @@ body {
 
     .step {
         padding: 1.2rem;
+    }
+
+    .community {
+        padding: 3rem 0;
+    }
+
+    .community-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .discord-community-button {
+        width: 100%;
+        justify-content: center;
     }
 
     .waitlist {
