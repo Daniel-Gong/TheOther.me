@@ -144,6 +144,8 @@ body {
     display: flex;
     gap: 1rem;
     margin-bottom: 2rem;
+    flex-wrap: wrap;
+    justify-content: flex-start;
 }
 
 .app-downloads {
@@ -186,6 +188,8 @@ body {
     text-decoration: none;
     font-weight: 500;
     transition: all 0.3s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .primary-button:hover {
@@ -204,6 +208,8 @@ body {
     text-decoration: none;
     font-weight: 500;
     transition: all 0.3s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .secondary-button:hover {
@@ -481,6 +487,10 @@ body {
 
 .community-cta {
     margin-top: 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .discord-community-button {
@@ -499,6 +509,7 @@ body {
     margin-top: 1rem;
     color: var(--text-light);
     font-size: 0.875rem;
+    text-align: center;
 }
 
 .discord-button {
