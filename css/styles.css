@@ -238,6 +238,33 @@ body {
     color: var(--text-light);
 }
 
+/* Problem Section */
+.problem-section {
+    padding: 6rem 0;
+    background: var(--background);
+}
+
+.problem-content {
+    max-width: 720px;
+    margin: 0 auto;
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--text-color);
+}
+
+.problem-content p {
+    margin-bottom: 1.5rem;
+}
+
+.problem-content p:last-child {
+    margin-bottom: 0;
+}
+
+.problem-highlight {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
 /* Features Section */
 .features {
     padding: 6rem 0;
@@ -670,6 +697,14 @@ body {
         flex-direction: column;
         gap: 0.5rem;
         align-items: center;
+    }
+
+    .problem-section {
+        padding: 3rem 0;
+    }
+
+    .problem-content {
+        font-size: 1rem;
     }
 
     .features {
