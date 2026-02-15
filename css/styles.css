@@ -1053,11 +1053,34 @@ body {
 }
 
 .blog-card {
-    background: linear-gradient(135deg, #e8e0f5 0%, #e0f2eb 50%, #d4ede4 100%);
+    position: relative;
+    overflow: hidden;
     padding: 2rem;
     border-radius: 1rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.blog-card::before {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    inset: -100%;
+    background: conic-gradient(
+        from 0deg at 50% 50%,
+        #e8e0f5 0deg,
+        #d4ede4 90deg,
+        #e0f2eb 180deg,
+        #d4c8e8 270deg,
+        #e8e0f5 360deg
+    );
+    animation: fluid-gradient 15s linear infinite;
+    border-radius: 50%;
+}
+
+.blog-card > * {
+    position: relative;
+    z-index: 1;
 }
 
 .blog-card:hover {
@@ -1123,10 +1146,39 @@ body {
 }
 
 .blog-teaser-card {
-    background: linear-gradient(135deg, #e8e0f5 0%, #e0f2eb 50%, #d4ede4 100%);
+    position: relative;
+    overflow: hidden;
     padding: 2rem;
     border-radius: 1rem;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.blog-teaser-card::before {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    inset: -100%;
+    background: conic-gradient(
+        from 0deg at 50% 50%,
+        #e8e0f5 0deg,
+        #d4ede4 90deg,
+        #e0f2eb 180deg,
+        #d4c8e8 270deg,
+        #e8e0f5 360deg
+    );
+    animation: fluid-gradient 15s linear infinite;
+    border-radius: 50%;
+}
+
+.blog-teaser-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes fluid-gradient {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .blog-teaser-card:hover {
