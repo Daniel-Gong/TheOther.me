@@ -59,7 +59,7 @@ const FOOTER = `
                 <p>&copy; 2026 TheOther Intelligence LLC. All rights reserved.</p>
                 <div class="social-links">
                     <a href="https://discord.gg/nCrdPWWB" target="_blank" rel="noopener noreferrer"><i class="fab fa-discord"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="https://x.com/OriaAI_official" target="_blank" rel="noopener noreferrer"><i class="fab fa-x-twitter"></i></a>
                     <a href="https://www.linkedin.com/company/theother-intelligence/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
                     <a href="https://instagram.com/oria.theother.me" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
                 </div>
@@ -72,13 +72,22 @@ function getPostTemplate() {
 <html lang="en">
 
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7YWQHLE5Q0"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-7YWQHLE5Q0');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{titleEsc}} - Oria AI Blog</title>
     <meta name="description" content="{{descriptionEsc}}">
     <link rel="icon" href="../assets/favicon.png" type="image/png">
     <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
 <body>
@@ -114,13 +123,22 @@ function getIndexTemplate() {
 <html lang="en">
 
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7YWQHLE5Q0"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-7YWQHLE5Q0');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog - Oria AI</title>
     <meta name="description" content="Insights on personal AI, well-being, and your evolvable digital self.">
     <link rel="icon" href="../assets/favicon.png" type="image/png">
     <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
 <body>
