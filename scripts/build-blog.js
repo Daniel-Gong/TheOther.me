@@ -6,6 +6,9 @@ const { marked } = require('marked');
 const ROOT = path.resolve(__dirname, '..');
 const POSTS_DIR = path.join(ROOT, 'blog', 'posts');
 const BLOG_DIR = path.join(ROOT, 'blog');
+const INDEX_HTML = path.join(ROOT, 'index.html');
+const BLOG_TEASER_PLACEHOLDER = '                <!-- BLOG_TEASER_POSTS -->';
+const BLOG_TEASER_MAX = 3;
 
 function escapeHtml(s) {
   if (typeof s !== 'string') return '';
@@ -207,6 +210,29 @@ function buildIndex(posts, template) {
   return template.replace(/\{\{postsHtml\}\}/g, cards.join('\n'));
 }
 
+function buildTeaserHtml(posts) {
+  const latest = posts.slice(0, BLOG_TEASER_MAX);
+  return latest
+    .map((p) => {
+      const dateFormatted = formatDate(p.date);
+      const dateIso = isoDate(p.date);
+      const desc = escapeHtml(p.description);
+      const titleEsc = escapeHtml(p.title);
+      const url = `/blog/${p.slug}.html`;
+      return `                <article class="blog-teaser-card">
+                    <div class="blog-teaser-meta">
+                        <time datetime="${dateIso}">${dateFormatted}</time>
+                    </div>
+                    <h3><a href="${url}">${titleEsc}</a></h3>
+                    <p>${desc}</p>
+                    <a href="${url}" class="blog-teaser-link">
+                        Read more <i class="fas fa-arrow-right"></i>
+                    </a>
+                </article>`;
+    })
+    .join('\n');
+}
+
 function main() {
   if (!fs.existsSync(POSTS_DIR)) {
     fs.mkdirSync(POSTS_DIR, { recursive: true });
@@ -251,6 +277,17 @@ function main() {
   const indexHtml = buildIndex(posts, indexTemplate);
   fs.writeFileSync(path.join(BLOG_DIR, 'index.html'), indexHtml, 'utf8');
   console.log('Wrote blog/index.html');
+
+  // Update homepage blog teaser with latest N posts
+  if (fs.existsSync(INDEX_HTML)) {
+    let homeHtml = fs.readFileSync(INDEX_HTML, 'utf8');
+    if (homeHtml.includes(BLOG_TEASER_PLACEHOLDER)) {
+      const teaserHtml = buildTeaserHtml(posts);
+      homeHtml = homeHtml.replace(BLOG_TEASER_PLACEHOLDER, teaserHtml);
+      fs.writeFileSync(INDEX_HTML, homeHtml, 'utf8');
+      console.log('Updated index.html blog teaser with latest', Math.min(posts.length, BLOG_TEASER_MAX), 'posts');
+    }
+  }
 }
 
 main();
