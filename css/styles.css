@@ -607,7 +607,7 @@ body {
 .supporter-item-dark-bg {
     background: #1e3a5f;
     padding: 1rem 1.5rem;
-    border-radius: 8px;
+    border-radius: 0;
 }
 
 .supporter-item-dark-bg a {
