@@ -5,7 +5,6 @@ description: "A technical overview of evolvable digital selves: definition, arch
 slug: what-is-evolvable-digital-self
 lead: "An evolvable digital self is a structured, machine-readable representation of a person that is derived from personal data, updated over time, and supports inference and reflection. This article defines the concept, situates it among related ideas, outlines a conceptual architecture, and discusses ethical and research implications."
 ---
-
 ## Introduction
 
 The term **evolvable digital self** refers to a dynamic, machine-maintained representation of an individual that is built from their own data, revised continuously as new evidence arrives, and used to support reasoning—predictive, explanatory, or reflective—about that individual. Unlike a static profile or a dashboard of metrics, an evolvable digital self is a *model* in the technical sense: a structure that can be queried, updated, and refined. Its value lies in supporting better decisions and self-understanding over time, without presupposing a single application or vendor.
@@ -21,9 +20,7 @@ This article is a technical and conceptual treatment of the idea. We cover: a pr
 We can define an **evolvable digital self** as a structured, machine-readable representation of a user that satisfies three conditions:
 
 1. **Data-derived.** The representation is populated from the user’s own data (behavioral, physiological, contextual, or declarative). It is not hand-authored once and left static; it reflects observations about the person.
-
 2. **Temporally updated.** The representation is revised as new data arrives. Updates may be incremental (event-driven) or batch (e.g., periodic recomputation). The important point is that the “self” is a function of time and evidence, not a fixed snapshot.
-
 3. **Inference-capable.** The representation supports some form of inference or querying—predictions (e.g., “what happens if …”), explanations (e.g., “why did …”), or reflection (e.g., “how have I …”). Raw logs alone do not constitute an evolvable digital self unless they are organized and queried in a way that supports such reasoning.
 
 This definition is deliberately broad. It does not require a specific schema (graphs, time series, embeddings, or hybrid), a specific update algorithm, or a specific interface. It does exclude:
@@ -89,11 +86,8 @@ A system that realizes an evolvable digital self can be thought of in four layer
 The “self” can be modeled in several ways, often in combination:
 
 - **Entities and relations:** A graph of entities (events, places, people, metrics) and relations (attended, occurred_at, correlated_with). Suited to “when did I …?” and “what was going on when …?” style queries.
-
 - **Time series and aggregates:** Sequences or histograms of numerical or categorical variables (e.g., sleep duration, step count, stress level). Suited to trend analysis and simple predictions.
-
 - **Embeddings and latent space:** Dense vector representations of events or periods (e.g., from sequence models or graph embeddings). Suited to similarity, clustering, and semantic search.
-
 - **Narrative or summary layer:** Higher-level abstractions (e.g., “busy week,” “travel,” “recovery”) that are derived from lower-level data. These can be hand-defined rules or learned (e.g., from clustering or LLMs).
 
 No single representation fits all use cases. A realistic architecture will mix at least two of the above (e.g., graph + time series, or graph + embeddings) and expose different views for different inference tasks.
@@ -113,9 +107,7 @@ No single representation fits all use cases. A realistic architecture will mix a
 The representation is queried to support:
 
 - **Predictive queries:** “If I keep this sleep pattern, what might happen?” or “When am I likely to have low energy next week?” These require a model of dynamics (e.g., time series forecasting, causal or correlational models).
-
 - **Explanatory queries:** “Why did I feel worse this week?” or “What was different before and after that trip?” These require access to context and possibly counterfactual or contrastive reasoning.
-
 - **Reflective queries:** “How has my sleep changed over the last year?” or “What patterns show up in my busiest months?” These are often aggregations and comparisons over the representation.
 
 Implementations may use rule-based logic, classical ML, or LLMs over retrieved context; the choice depends on the type of query and the available representation. The important point is that the evolvable digital self is *for* these kinds of use; without a clear inference story, we are back to “dashboard” or “log” rather than “self.”
@@ -127,13 +119,9 @@ Implementations may use rule-based logic, classical ML, or LLMs over retrieved c
 Relevant work spans human–computer interaction, health informatics, knowledge representation, and philosophy. The following is a short, non-exhaustive pointer set.
 
 - **Quantified self and personal informatics:** Swan (2013), Li et al. (e.g., “A stage-based model of personal informatics systems,” CHI 2010), and Epstein et al. (“A lived informatics model of personal informatics,” CHI 2015) discuss self-tracking, stages of engagement, and design implications. These focus on data and reflection rather than a single “evolving model,” but they inform what data exists and how people use it.
-
 - **Digital twin (health):** Barricelli et al. (“Digital twin in healthcare,” 2019), and subsequent survey work, review the use of digital twins for patients (e.g., organ models, treatment simulation). The emphasis is often on clinical fidelity and simulation; the evolvable digital self is a softer, user-centric relative.
-
 - **Personal knowledge graphs and lifelogs:** Doherty et al. (e.g., “Creating a sense of presence,” CIVR 2012), and work on personal semantic data (e.g., “MyLifeBits”-style archives) address integration and retrieval over heterogeneous personal data. PKG papers (e.g., from ISWC, ESWC) discuss schema design and querying for personal data.
-
 - **Extended mind and cognitive augmentation:** Clark & Chalmers, “The extended mind” (1998); Engelbart’s augmentation framework. These provide a conceptual basis for treating external artifacts (including an evolvable digital self) as part of the user’s cognitive system.
-
 - **Ethics and identity:** Floridi’s work on information ethics and the “onlife” experience; Nissenbaum on contextual integrity and privacy. These are relevant when considering who owns the model, how it is used, and how it affects identity and autonomy.
 
 A “Further reading” section on a live blog could link to specific papers and tutorials; the above gives a minimal map.
@@ -176,4 +164,4 @@ Several directions could extend the concept and its implementation.
 
 An evolvable digital self is a structured, data-derived, temporally updated representation of a person that supports inference and reflection. It is not a static profile or a dashboard alone; it is a model that evolves with the user and can answer predictive, explanatory, and reflective questions. It sits among related ideas—quantified self, digital twin, extended mind, personal knowledge graphs—and can be implemented with a variety of technical choices (data sources, schemas, update mechanisms, inference methods). Responsible deployment requires attention to ownership, interpretability, consent, and agency.
 
-Building systems that realize this vision in a way that is useful, transparent, and respectful of the user is an ongoing challenge. At Oria we are working toward that goal; if you are interested in trying an early version, you can [join our beta](https://testflight.apple.com/join/edVXvcNq) or [join the waitlist](/#waitlist) for updates.
+Building systems that realize this vision in a way that is useful, transparent, and respectful of the user is an ongoing challenge. At Oria AI we are working toward that goal; if you are interested in trying an early version, you can [join our beta](https://testflight.apple.com/join/edVXvcNq) or [join the waitlist](/#waitlist) for updates.
