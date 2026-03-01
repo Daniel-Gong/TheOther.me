@@ -65,7 +65,7 @@ const FOOTER = `
                     <a href="https://discord.gg/nCrdPWWB" target="_blank" rel="noopener noreferrer"><i class="fab fa-discord"></i></a>
                     <a href="https://x.com/OriaAI_official" target="_blank" rel="noopener noreferrer"><i class="fab fa-x-twitter"></i></a>
                     <a href="https://www.linkedin.com/company/theother-intelligence/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://instagram.com/oria.theother.me" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                    <a href="https://instagram.com/oriaai.official" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
         </div>
