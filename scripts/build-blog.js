@@ -7,7 +7,8 @@ const ROOT = path.resolve(__dirname, '..');
 const POSTS_DIR = path.join(ROOT, 'blog', 'posts');
 const BLOG_DIR = path.join(ROOT, 'blog');
 const INDEX_HTML = path.join(ROOT, 'index.html');
-const BLOG_TEASER_PLACEHOLDER = '                <!-- BLOG_TEASER_POSTS -->';
+const BLOG_TEASER_START = '                <!-- BLOG_TEASER_START -->';
+const BLOG_TEASER_END = '                <!-- BLOG_TEASER_END -->';
 const BLOG_TEASER_MAX = 3;
 
 function escapeHtml(s) {
@@ -281,9 +282,13 @@ function main() {
   // Update homepage blog teaser with latest N posts
   if (fs.existsSync(INDEX_HTML)) {
     let homeHtml = fs.readFileSync(INDEX_HTML, 'utf8');
-    if (homeHtml.includes(BLOG_TEASER_PLACEHOLDER)) {
+    if (homeHtml.includes(BLOG_TEASER_START) && homeHtml.includes(BLOG_TEASER_END)) {
       const teaserHtml = buildTeaserHtml(posts);
-      homeHtml = homeHtml.replace(BLOG_TEASER_PLACEHOLDER, teaserHtml);
+      const teaserBlock = new RegExp(
+        BLOG_TEASER_START.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '[\\s\\S]*?' + BLOG_TEASER_END.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),
+        'g'
+      );
+      homeHtml = homeHtml.replace(teaserBlock, BLOG_TEASER_START + '\n' + teaserHtml + '\n' + BLOG_TEASER_END);
       fs.writeFileSync(INDEX_HTML, homeHtml, 'utf8');
       console.log('Updated index.html blog teaser with latest', Math.min(posts.length, BLOG_TEASER_MAX), 'posts');
     }
