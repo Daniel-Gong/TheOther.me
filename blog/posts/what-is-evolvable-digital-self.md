@@ -1,6 +1,6 @@
 ---
 title: "What is Evolvable Digital Self?"
-date: 2026-02-14
+date: 2026-02-07
 description: "A technical overview of evolvable digital selves: definition, architecture, related concepts, and implications for identity, agency, and well-being."
 slug: what-is-evolvable-digital-self
 lead: "An evolvable digital self is a structured, machine-readable representation of a person that is derived from personal data, updated over time, and supports inference and reflection. This article defines the concept, situates it among related ideas, outlines a conceptual architecture, and discusses ethical and research implications."
