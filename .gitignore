@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Environment and secrets
+.env
+.env.local
+.env.*.local
+*.env
+
+# Server (backend - not deployed to GitHub Pages)
+server/node_modules/
+
+# OS and editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.sublime-*
+
+# Build output (generated during deploy)
+_site/
+
+# Logs and temp
+*.log
+npm-debug.log*
+.npm
+.cache/
+tmp/
+temp/

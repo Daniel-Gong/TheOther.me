@@ -14,6 +14,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oria AI - Your Evolvable Digital Self</title>
+    <link rel="canonical" href="https://oria.me/" />
     <meta name="description"
         content="Oria is a personal AI companion that helps you understand, organize, and improve your life experience. Get insights from health, calendars, notes, and more.">
     <meta name="keywords"
@@ -23,15 +24,15 @@
     <meta property="og:title" content="Oria AI - Your Evolvable Digital Self">
     <meta property="og:description"
         content="Your personal AI companion for life insights, memories, and meaningful connections.">
-    <meta property="og:image" content="assets/og-image.png">
-    <meta property="og:url" content="https://theother.me">
+    <meta property="og:image" content="https://oria.me/assets/og-image.png">
+    <meta property="og:url" content="https://oria.me/">
     <meta property="og:type" content="website">
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Oria AI - Your Evolvable Digital Self">
     <meta name="twitter:description"
         content="Your personal AI companion for life insights, memories, and meaningful connections.">
-    <meta name="twitter:image" content="assets/og-image.png">
+    <meta name="twitter:image" content="https://oria.me/assets/og-image.png">
     <meta name="google-site-verification" content="SdJLu4zE4e6kL_7AZPhLSUtyqqS8FudulPq9qn_w4m4" />
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -39,6 +40,30 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <!-- Firebase SDK -->
     <script type="module" src="js/firebase-config.js"></script>
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "name": "Oria AI",
+          "url": "https://oria.me",
+          "logo": "https://oria.me/assets/favicon.png"
+        },
+        {
+          "@type": "WebSite",
+          "name": "Oria AI",
+          "url": "https://oria.me",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://oria.me/blog/?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        }
+      ]
+    }
+    </script>
 </head>
 
 <body>

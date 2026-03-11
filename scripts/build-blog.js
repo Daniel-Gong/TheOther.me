@@ -10,6 +10,7 @@ const INDEX_HTML = path.join(ROOT, 'index.html');
 const BLOG_TEASER_START = '                <!-- BLOG_TEASER_START -->';
 const BLOG_TEASER_END = '                <!-- BLOG_TEASER_END -->';
 const BLOG_TEASER_MAX = 3;
+const BASE_URL = 'https://oria.me';
 
 function escapeHtml(s) {
   if (typeof s !== 'string') return '';
@@ -89,9 +90,23 @@ function getPostTemplate() {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{titleEsc}} - Oria AI Blog</title>
     <meta name="description" content="{{descriptionEsc}}">
+    <link rel="canonical" href="{{postUrl}}">
     <link rel="icon" href="../assets/favicon.png" type="image/png">
+    <!-- Open Graph -->
+    <meta property="og:url" content="{{postUrl}}">
+    <meta property="og:title" content="{{titleEsc}}">
+    <meta property="og:description" content="{{descriptionEsc}}">
+    <meta property="og:image" content="{{baseUrl}}/assets/og-image.png">
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="{{dateIso}}">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{titleEsc}}">
+    <meta name="twitter:description" content="{{descriptionEsc}}">
+    <meta name="twitter:image" content="{{baseUrl}}/assets/og-image.png">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script type="application/ld+json">{{blogPostingSchema}}</script>
 </head>
 
 <body>
@@ -140,6 +155,16 @@ function getIndexTemplate() {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog - Oria AI</title>
     <meta name="description" content="Insights on personal AI, well-being, and your evolvable digital self.">
+    <link rel="canonical" href="${BASE_URL}/blog/">
+    <meta property="og:url" content="${BASE_URL}/blog/">
+    <meta property="og:title" content="Blog - Oria AI">
+    <meta property="og:description" content="Insights on personal AI, well-being, and your evolvable digital self.">
+    <meta property="og:image" content="${BASE_URL}/assets/og-image.png">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Blog - Oria AI">
+    <meta name="twitter:description" content="Insights on personal AI, well-being, and your evolvable digital self.">
+    <meta name="twitter:image" content="${BASE_URL}/assets/og-image.png">
     <link rel="icon" href="../assets/favicon.png" type="image/png">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -179,6 +204,17 @@ function buildPost(post, template) {
   const dateIso = isoDate(post.date);
   const lead = post.lead != null ? escapeHtml(post.lead) : descriptionEsc;
   const body = marked.parse(post.content);
+  const postUrl = `${BASE_URL}/blog/${post.slug}.html`;
+
+  const blogPostingSchema = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.description,
+    datePublished: dateIso,
+    url: postUrl,
+    author: { '@type': 'Organization', name: 'Oria AI' },
+  });
 
   return template
     .replace(/\{\{titleEsc\}\}/g, titleEsc)
@@ -187,7 +223,10 @@ function buildPost(post, template) {
     .replace(/\{\{dateIso\}\}/g, dateIso)
     .replace(/\{\{lead\}\}/g, lead)
     .replace(/\{\{title\}\}/g, post.title)
-    .replace(/\{\{body\}\}/g, body);
+    .replace(/\{\{body\}\}/g, body)
+    .replace(/\{\{postUrl\}\}/g, postUrl)
+    .replace(/\{\{baseUrl\}\}/g, BASE_URL)
+    .replace(/\{\{blogPostingSchema\}\}/g, blogPostingSchema);
 }
 
 function buildIndex(posts, template) {
@@ -209,6 +248,39 @@ function buildIndex(posts, template) {
                 </article>`;
   });
   return template.replace(/\{\{postsHtml\}\}/g, cards.join('\n'));
+}
+
+function buildSitemap(posts) {
+  const urls = [
+    { loc: `${BASE_URL}/`, changefreq: 'weekly', priority: '1.0' },
+    { loc: `${BASE_URL}/blog/`, changefreq: 'weekly', priority: '0.9' },
+    { loc: `${BASE_URL}/privacy.html`, changefreq: 'monthly', priority: '0.5' },
+    { loc: `${BASE_URL}/terms.html`, changefreq: 'monthly', priority: '0.5' },
+  ];
+
+  for (const post of posts) {
+    urls.push({
+      loc: `${BASE_URL}/blog/${post.slug}.html`,
+      changefreq: 'monthly',
+      priority: '0.8',
+      lastmod: isoDate(post.date),
+    });
+  }
+
+  const urlEntries = urls
+    .map((u) => {
+      let entry = `  <url>\n    <loc>${u.loc}</loc>\n    <changefreq>${u.changefreq}</changefreq>\n    <priority>${u.priority}</priority>`;
+      if (u.lastmod) {
+        entry += `\n    <lastmod>${u.lastmod}</lastmod>`;
+      }
+      return entry + '\n  </url>';
+    })
+    .join('\n');
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urlEntries}
+</urlset>`;
 }
 
 function buildTeaserHtml(posts) {
@@ -278,6 +350,10 @@ function main() {
   const indexHtml = buildIndex(posts, indexTemplate);
   fs.writeFileSync(path.join(BLOG_DIR, 'index.html'), indexHtml, 'utf8');
   console.log('Wrote blog/index.html');
+
+  const sitemapXml = buildSitemap(posts);
+  fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemapXml, 'utf8');
+  console.log('Wrote sitemap.xml');
 
   // Update homepage blog teaser with latest N posts
   if (fs.existsSync(INDEX_HTML)) {
