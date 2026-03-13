@@ -21,6 +21,12 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://oria.me/blog/human-centered-digital-self.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <lastmod>2026-03-07</lastmod>
+  </url>
+  <url>
     <loc>https://oria.me/blog/bio-digital-synthesis-frontier-of-health.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -30,7 +36,7 @@
     <loc>https://oria.me/blog/life-flow.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <lastmod>2026-02-15</lastmod>
+    <lastmod>2026-02-21</lastmod>
   </url>
   <url>
     <loc>https://oria.me/blog/intentional-living.html</loc>
@@ -42,6 +48,6 @@
     <loc>https://oria.me/blog/what-is-evolvable-digital-self.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <lastmod>2026-02-14</lastmod>
+    <lastmod>2026-02-07</lastmod>
   </url>
 </urlset>
