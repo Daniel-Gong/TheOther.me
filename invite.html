@@ -113,6 +113,25 @@
         .hidden {
             display: none;
         }
+
+        .wechat-notice {
+            margin-bottom: 16px;
+            padding: 12px 14px;
+            background: rgba(255, 193, 7, 0.12);
+            border: 1px solid rgba(255, 193, 7, 0.35);
+            border-radius: 10px;
+            color: #fef3c7;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .wechat-notice strong { color: #fde68a; }
+
+        button.btn {
+            cursor: pointer;
+            font: inherit;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -122,13 +141,16 @@
         <p id="status-text">Trying to open Oria app...</p>
         <div id="code-chip" class="code hidden"></div>
 
+        <div id="wechat-notice" class="wechat-notice hidden"></div>
+
         <div id="fallback-actions" class="actions hidden">
             <a id="open-app-btn" class="btn btn-primary" href="#">Open App</a>
+            <button type="button" id="copy-link-btn" class="btn hidden">Copy link</button>
             <a id="testflight-btn" class="btn" href="https://testflight.apple.com/join/edVXvcNq" target="_blank" rel="noopener noreferrer">Install via TestFlight</a>
             <a id="home-btn" class="btn" href="/">Continue on Website</a>
         </div>
 
-        <p class="hint">If the app is installed, it should open automatically.</p>
+        <p class="hint" id="hint-text">If the app is installed, it should open automatically.</p>
     </main>
 
     <script src="js/invite.js"></script>
