@@ -1,5 +1,25 @@
 // Constants
 const MOBILE_WIDTH_THRESHOLD = 768; // pixels
+const REFERRAL_STORAGE_KEY = 'oria_referral_code';
+
+function sanitizeReferralCode(rawCode) {
+    if (!rawCode) return null;
+    const normalized = String(rawCode).trim().toUpperCase();
+    const safe = normalized.replace(/[^A-Z0-9]/g, '');
+    if (safe.length < 4 || safe.length > 16) return null;
+    return safe;
+}
+
+function getReferralCodeForAttribution() {
+    const queryCode = sanitizeReferralCode(new URLSearchParams(window.location.search).get('ref'));
+    if (queryCode) return queryCode;
+
+    const pathMatch = window.location.pathname.match(/^\/invite\/([^/?#]+)/i);
+    const pathCode = sanitizeReferralCode(pathMatch ? pathMatch[1] : null);
+    if (pathCode) return pathCode;
+
+    return sanitizeReferralCode(localStorage.getItem(REFERRAL_STORAGE_KEY));
+}
 
 // Particle system
 function initializeParticleSystem() {
@@ -182,10 +202,12 @@ function initializeWaitlistForm() {
 
             // Add email to Firestore
             console.log('Adding email to Firestore:', email);
+            const referralCode = getReferralCodeForAttribution();
             await addDoc(waitlistRef, {
                 email: email,
                 createdAt: serverTimestamp(),
-                source: 'website'
+                source: 'website',
+                referralCode: referralCode || null
             });
 
             console.log('Email added successfully');

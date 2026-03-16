@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+</head>
+<body>
+    <script>
+        (function () {
+            var path = window.location.pathname || "";
+            var match = path.match(/^\/invite\/([^/?#]+)/i);
+            if (match && match[1]) {
+                var code = encodeURIComponent(match[1]);
+                window.location.replace("/invite.html?code=" + code);
+                return;
+            }
+            window.location.replace("/");
+        })();
+    </script>
+</body>
+</html>

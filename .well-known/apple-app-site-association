@@ -1,0 +1,19 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": [
+          "75LHV35PKA.me.theother.TheOtherME",
+          "75LHV35PKA.me.theother.TheOtherME.dev"
+        ],
+        "components": [
+          {
+            "/": "/invite/*",
+            "comment": "Referral invite links"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7YWQHLE5Q0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag("js", new Date());
+        gtag("config", "G-7YWQHLE5Q0");
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You are invited to Oria AI</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Open Oria AI with your invite code or continue on web.">
+    <link rel="icon" href="assets/favicon.png" type="image/png">
+    <style>
+        :root {
+            color-scheme: light;
+            --bg: #070b14;
+            --panel: #111826;
+            --text: #ecf2ff;
+            --muted: #9fb0cc;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --line: #273347;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: radial-gradient(1200px 600px at 20% -10%, #193566 0%, transparent 55%), var(--bg);
+            color: var(--text);
+            display: grid;
+            place-items: center;
+            padding: 24px;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 520px;
+            border: 1px solid var(--line);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+            border-radius: 18px;
+            padding: 28px 22px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+        }
+
+        h1 {
+            font-size: 28px;
+            margin: 8px 0 8px;
+            line-height: 1.2;
+        }
+
+        p {
+            color: var(--muted);
+            margin: 0 0 12px;
+            line-height: 1.5;
+        }
+
+        .code {
+            display: inline-flex;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 8px 12px;
+            letter-spacing: 1px;
+            font-weight: 700;
+            margin: 8px 0 20px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .actions {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            min-height: 44px;
+            border-radius: 10px;
+            border: 1px solid var(--line);
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 600;
+            padding: 0 14px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            border-color: transparent;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+        }
+
+        .hint {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 10px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <main class="card">
+        <p>Oria AI Invite</p>
+        <h1>You are invited</h1>
+        <p id="status-text">Trying to open Oria app...</p>
+        <div id="code-chip" class="code hidden"></div>
+
+        <div id="fallback-actions" class="actions hidden">
+            <a id="open-app-btn" class="btn btn-primary" href="#">Open App</a>
+            <a id="testflight-btn" class="btn" href="https://testflight.apple.com/join/edVXvcNq" target="_blank" rel="noopener noreferrer">Install via TestFlight</a>
+            <a id="home-btn" class="btn" href="/">Continue on Website</a>
+        </div>
+
+        <p class="hint">If the app is installed, it should open automatically.</p>
+    </main>
+
+    <script src="js/invite.js"></script>
+</body>
+</html>

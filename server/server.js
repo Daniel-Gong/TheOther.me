@@ -16,6 +16,7 @@ app.use(express.json());
 
 // Serve static files from the admin directory
 app.use('/admin', express.static(path.join(__dirname, '../admin')));
+app.use(express.static(path.join(__dirname, '..')));
 
 // MongoDB connection
 console.log('Attempting to connect to MongoDB...');
@@ -274,6 +275,14 @@ app.get('/api/waitlist/export', authenticateAdmin, async (req, res) => {
 // Serve admin panel
 app.get('/admin', (req, res) => {
     res.sendFile(path.join(__dirname, '../admin/index.html'));
+});
+
+app.get('/invite/:code', (req, res) => {
+    res.sendFile(path.join(__dirname, '../invite.html'));
+});
+
+app.get('/invite', (req, res) => {
+    res.sendFile(path.join(__dirname, '../invite.html'));
 });
 
 const PORT = process.env.PORT || 3000;
