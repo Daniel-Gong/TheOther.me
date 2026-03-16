@@ -128,7 +128,7 @@ function fallbackCopyLink(url, btn) {
         document.execCommand("copy");
         btn.textContent = "Copied!";
         setTimeout(() => { btn.textContent = "Copy link"; }, 2000);
-    } catch (e) {}
+    } catch (e) { }
     document.body.removeChild(input);
 }
 
