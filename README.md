@@ -1,3 +1,3 @@
-# TheOther.me
+# Oria.me
 
-[TheOther.me](https://TheOther.me) is Where your digital self evolves.
+[Oria.me](https://Oria.me) is Where your digital self evolves.
