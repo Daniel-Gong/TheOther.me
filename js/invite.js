@@ -135,7 +135,7 @@ function fallbackCopyLink(url, btn) {
 function runInviteFlow() {
     const code = getCodeFromLocation();
     const deeplinkUrl = code ? `theotherme://invite/${code}` : null;
-    const canonicalPath = code ? `/invite/${code}` : "/invite";
+    const canonicalPath = code ? `/invite.html?code=${encodeURIComponent(code)}` : "/invite.html";
     const canonicalUrl = new URL(canonicalPath, window.location.origin).toString();
     const wechat = isWeChatBrowser();
 
