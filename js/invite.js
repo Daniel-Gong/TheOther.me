@@ -3,6 +3,11 @@ const REFERRAL_TS_STORAGE_KEY = "oria_referral_code_ts";
 const APP_STORE_URL = "https://testflight.apple.com/join/edVXvcNq";
 const DEEPLINK_FALLBACK_DELAY_MS = 1500;
 
+function isWeChatBrowser() {
+    const ua = typeof navigator !== "undefined" ? navigator.userAgent : "";
+    return /MicroMessenger/i.test(ua);
+}
+
 function sanitizeReferralCode(rawCode) {
     if (!rawCode) return null;
     const normalized = String(rawCode).trim().toUpperCase();
@@ -34,17 +39,35 @@ function trackEvent(eventName, params = {}) {
     }
 }
 
-function showFallbackUI(code) {
+let fallbackUIBound = false;
+
+function showFallbackUI(code, options) {
+    const { wechat = false } = options || {};
     const statusText = document.getElementById("status-text");
     const codeChip = document.getElementById("code-chip");
     const actions = document.getElementById("fallback-actions");
     const openAppBtn = document.getElementById("open-app-btn");
     const testflightBtn = document.getElementById("testflight-btn");
+    const copyLinkBtn = document.getElementById("copy-link-btn");
+    const wechatNotice = document.getElementById("wechat-notice");
+    const hintText = document.getElementById("hint-text");
+
+    if (wechat && wechatNotice) {
+        wechatNotice.innerHTML = "<strong>在微信内无法直接打开 App。</strong>请点击右上角 <strong>⋯</strong> 选择「在 Safari 中打开」或「在浏览器中打开」，然后即可打开 Oria；或复制下方链接到 Safari 打开。";
+        wechatNotice.classList.remove("hidden");
+    }
+    if (hintText && wechat) {
+        hintText.classList.add("hidden");
+    }
 
     if (statusText) {
-        statusText.textContent = code
-            ? "Could not open app automatically. You can open it manually or install it first."
-            : "Invalid invite link. You can still install the app and join the waitlist.";
+        if (wechat && code) {
+            statusText.textContent = "请用 Safari 或系统浏览器打开此链接以打开 Oria App。";
+        } else {
+            statusText.textContent = code
+                ? "Could not open app automatically. You can open it manually or install it first."
+                : "Invalid invite link. You can still install the app and join the waitlist.";
+        }
     }
 
     if (code && codeChip) {
@@ -54,27 +77,67 @@ function showFallbackUI(code) {
 
     if (openAppBtn) {
         openAppBtn.href = code ? `theotherme://invite/${code}` : "theotherme://chat";
-        openAppBtn.addEventListener("click", () => {
-            trackEvent("invite_cta_clicked", { cta: "open_app", code: code || "none" });
-        });
+        if (!fallbackUIBound) {
+            openAppBtn.addEventListener("click", () => {
+                trackEvent("invite_cta_clicked", { cta: "open_app", code: code || "none" });
+            });
+        }
+    }
+
+    if (copyLinkBtn) {
+        copyLinkBtn.classList.remove("hidden");
+        if (!fallbackUIBound) {
+            copyLinkBtn.addEventListener("click", () => {
+                const url = window.location.href;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(url).then(() => {
+                        copyLinkBtn.textContent = "Copied!";
+                        setTimeout(() => { copyLinkBtn.textContent = "Copy link"; }, 2000);
+                    }).catch(() => fallbackCopyLink(url, copyLinkBtn));
+                } else {
+                    fallbackCopyLink(url, copyLinkBtn);
+                }
+                trackEvent("invite_cta_clicked", { cta: "copy_link", code: code || "none" });
+            });
+        }
     }
 
     if (testflightBtn) {
         const installUrl = code ? `${APP_STORE_URL}?ref=${encodeURIComponent(code)}` : APP_STORE_URL;
         testflightBtn.href = installUrl;
-        testflightBtn.addEventListener("click", () => {
-            trackEvent("invite_cta_clicked", { cta: "install_testflight", code: code || "none" });
-        });
+        if (!fallbackUIBound) {
+            testflightBtn.addEventListener("click", () => {
+                trackEvent("invite_cta_clicked", { cta: "install_testflight", code: code || "none" });
+            });
+        }
     }
 
+    fallbackUIBound = true;
     if (actions) actions.classList.remove("hidden");
+}
+
+function fallbackCopyLink(url, btn) {
+    const input = document.createElement("input");
+    input.value = url;
+    input.setAttribute("readonly", "");
+    input.style.position = "absolute";
+    input.style.left = "-9999px";
+    document.body.appendChild(input);
+    input.select();
+    try {
+        document.execCommand("copy");
+        btn.textContent = "Copied!";
+        setTimeout(() => { btn.textContent = "Copy link"; }, 2000);
+    } catch (e) { }
+    document.body.removeChild(input);
 }
 
 function runInviteFlow() {
     const code = getCodeFromLocation();
     const deeplinkUrl = code ? `theotherme://invite/${code}` : null;
-    const canonicalPath = code ? `/invite/${code}` : "/invite";
+    const canonicalPath = code ? `/invite.html?code=${encodeURIComponent(code)}` : "/invite.html";
     const canonicalUrl = new URL(canonicalPath, window.location.origin).toString();
+    const wechat = isWeChatBrowser();
 
     if (window.location.href !== canonicalUrl) {
         window.history.replaceState({}, "", canonicalUrl);
@@ -82,12 +145,18 @@ function runInviteFlow() {
 
     if (!code) {
         trackEvent("invite_landing_viewed", { valid_code: false });
-        showFallbackUI(null);
+        showFallbackUI(null, { wechat });
         return;
     }
 
     setStoredReferralCode(code);
-    trackEvent("invite_landing_viewed", { valid_code: true, code });
+    trackEvent("invite_landing_viewed", { valid_code: true, code, wechat });
+
+    if (wechat) {
+        trackEvent("invite_wechat_in_app", { code });
+        showFallbackUI(code, { wechat: true });
+        return;
+    }
 
     document.addEventListener("visibilitychange", () => {
         if (document.hidden) {

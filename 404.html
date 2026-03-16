@@ -1,10 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirecting...</title>
+    <!-- Open Graph for /invite/* links (crawlers get 404.html before redirect) -->
+    <meta property="og:title" content="You are invited to Oria AI">
+    <meta property="og:description" content="Open Oria AI with your invite code or continue on web.">
+    <meta property="og:image" content="https://oria.me/assets/og-image.png">
+    <meta property="og:url" content="https://oria.me/invite.html">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="You are invited to Oria AI">
+    <meta name="twitter:description" content="Open Oria AI with your invite code or continue on web.">
+    <meta name="twitter:image" content="https://oria.me/assets/og-image.png">
 </head>
+
 <body>
     <script>
         (function () {
@@ -19,4 +31,5 @@
         })();
     </script>
 </body>
+
 </html>

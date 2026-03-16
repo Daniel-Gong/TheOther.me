@@ -1,8 +1,5 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
-Disallow: /invite
-Disallow: /invite/
-Disallow: /invite.html
 
 Sitemap: https://oria.me/sitemap.xml

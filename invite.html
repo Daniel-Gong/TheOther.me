@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7YWQHLE5Q0"></script>
     <script>
@@ -14,6 +15,17 @@
     <meta name="robots" content="noindex, nofollow">
     <meta name="description" content="Open Oria AI with your invite code or continue on web.">
     <link rel="icon" href="assets/favicon.png" type="image/png">
+    <!-- Open Graph (iMessage, WhatsApp, etc.) -->
+    <meta property="og:title" content="You are invited to Oria AI">
+    <meta property="og:description" content="Open Oria AI with your invite code or continue on web.">
+    <meta property="og:image" content="https://oria.me/assets/og-image.png">
+    <meta property="og:url" content="https://oria.me/invite.html">
+    <meta property="og:type" content="website">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="You are invited to Oria AI">
+    <meta name="twitter:description" content="Open Oria AI with your invite code or continue on web.">
+    <meta name="twitter:image" content="https://oria.me/assets/og-image.png">
     <style>
         :root {
             color-scheme: light;
@@ -93,11 +105,16 @@
             color: var(--text);
             font-weight: 600;
             padding: 0 14px;
+            background: rgba(255, 255, 255, 0.04);
         }
 
         .btn-primary {
             background: var(--primary);
             border-color: transparent;
+        }
+
+        .btn:not(.btn-primary):hover {
+            background: rgba(255, 255, 255, 0.08);
         }
 
         .btn-primary:hover {
@@ -113,8 +130,30 @@
         .hidden {
             display: none;
         }
+
+        .wechat-notice {
+            margin-bottom: 16px;
+            padding: 12px 14px;
+            background: rgba(255, 193, 7, 0.12);
+            border: 1px solid rgba(255, 193, 7, 0.35);
+            border-radius: 10px;
+            color: #fef3c7;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .wechat-notice strong {
+            color: #fde68a;
+        }
+
+        button.btn {
+            cursor: pointer;
+            font: inherit;
+            width: 100%;
+        }
     </style>
 </head>
+
 <body>
     <main class="card">
         <p>Oria AI Invite</p>
@@ -122,15 +161,20 @@
         <p id="status-text">Trying to open Oria app...</p>
         <div id="code-chip" class="code hidden"></div>
 
+        <div id="wechat-notice" class="wechat-notice hidden"></div>
+
         <div id="fallback-actions" class="actions hidden">
             <a id="open-app-btn" class="btn btn-primary" href="#">Open App</a>
-            <a id="testflight-btn" class="btn" href="https://testflight.apple.com/join/edVXvcNq" target="_blank" rel="noopener noreferrer">Install via TestFlight</a>
+            <button type="button" id="copy-link-btn" class="btn hidden">Copy link</button>
+            <a id="testflight-btn" class="btn" href="https://testflight.apple.com/join/edVXvcNq" target="_blank"
+                rel="noopener noreferrer">Install via TestFlight</a>
             <a id="home-btn" class="btn" href="/">Continue on Website</a>
         </div>
 
-        <p class="hint">If the app is installed, it should open automatically.</p>
+        <p class="hint" id="hint-text">If the app is installed, it should open automatically.</p>
     </main>
 
     <script src="js/invite.js"></script>
 </body>
+
 </html>

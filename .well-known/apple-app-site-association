@@ -10,7 +10,12 @@
         "components": [
           {
             "/": "/invite/*",
-            "comment": "Referral invite links"
+            "comment": "Referral invite links (legacy)"
+          },
+          {
+            "/": "/invite.html",
+            "?": { "code": "*" },
+            "comment": "Referral invite links (canonical)"
           }
         ]
       }
