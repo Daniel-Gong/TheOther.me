@@ -1,6 +1,6 @@
 const REFERRAL_STORAGE_KEY = "oria_referral_code";
 const REFERRAL_TS_STORAGE_KEY = "oria_referral_code_ts";
-const APP_STORE_URL = "https://testflight.apple.com/join/edVXvcNq";
+const APP_STORE_URL = "https://apps.apple.com/us/app/oria-ai-evolvable-personal-ai/id6758279152";
 const DEEPLINK_FALLBACK_DELAY_MS = 1500;
 
 function isWeChatBrowser() {
@@ -103,7 +103,7 @@ function showFallbackUI(code, options) {
         testflightBtn.href = installUrl;
         if (!fallbackUIBound) {
             testflightBtn.addEventListener("click", () => {
-                trackEvent("invite_cta_clicked", { cta: "install_testflight", code: code || "none" });
+                trackEvent("invite_cta_clicked", { cta: "install_app_store", code: code || "none" });
             });
         }
     }

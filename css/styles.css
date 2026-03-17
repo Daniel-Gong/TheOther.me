@@ -252,6 +252,22 @@ h1, h2, h3, h4, h5, h6 {
     transform: scale(0.98);
 }
 
+.hero-app-store-link {
+    padding: 0;
+    border: none;
+}
+
+.app-store-badge {
+    height: 40px;
+    display: block;
+}
+
+.app-store-badge-small {
+    height: 36px;
+    display: block;
+    vertical-align: middle;
+}
+
 .scroll-indicator {
     position: absolute;
     bottom: 3rem;
@@ -1045,6 +1061,17 @@ h1, h2, h3, h4, h5, h6 {
 
 .invite-btn:not(.invite-btn-primary):hover {
     background: rgba(17,17,17,0.03);
+}
+
+.invite-app-store-btn {
+    padding: 0.5rem;
+    border: none;
+    background: transparent;
+}
+
+.invite-app-store-btn:hover {
+    background: transparent;
+    opacity: 0.9;
 }
 
 .invite-btn-primary:hover {
