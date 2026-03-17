@@ -48,8 +48,6 @@ const NAV = `
                 <a href="/#waitlist" class="nav-item">Waitlist</a>
                 <a href="/blog/" class="nav-item">Journal</a>
             </div>
-            <a href="https://testflight.apple.com/join/edVXvcNq" class="nav-button" target="_blank"
-                rel="noopener noreferrer">Beta Access</a>
             <div class="mobile-toggle"><i class="fas fa-bars"></i></div>
         </div>
     </nav>`;
