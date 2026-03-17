@@ -117,6 +117,12 @@ function getPostTemplate() {
 </head>
 
 <body>
+    <div class="background-canvas">
+        <div class="gradient-orb orb-sage"></div>
+        <div class="gradient-orb orb-gold"></div>
+        <div class="gradient-orb orb-blue"></div>
+        <div class="noise-overlay"></div>
+    </div>
     <!-- Navigation -->
 ${NAV}
 
@@ -178,6 +184,12 @@ function getIndexTemplate() {
 </head>
 
 <body>
+    <div class="background-canvas">
+        <div class="gradient-orb orb-sage"></div>
+        <div class="gradient-orb orb-gold"></div>
+        <div class="gradient-orb orb-blue"></div>
+        <div class="noise-overlay"></div>
+    </div>
     <!-- Navigation -->
 ${NAV}
 

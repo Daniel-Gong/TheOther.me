@@ -121,6 +121,7 @@ h1, h2, h3, h4, h5, h6 {
     padding: 1rem 0;
     background: rgba(253, 252, 251, 0.85);
     backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(17, 17, 17, 0.05);
 }
 
@@ -694,7 +695,7 @@ h1, h2, h3, h4, h5, h6 {
     padding: 12rem 4vw 6rem;
     max-width: 900px;
     margin: 0 auto;
-    background-color: var(--bg-canvas);
+    background-color: transparent;
 }
 
 .legal-page h1 {
@@ -779,7 +780,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Blog Listing */
 .blog-listing {
     padding: 12rem 0 6rem;
-    background-color: var(--bg-canvas);
+    background-color: transparent;
 }
 
 .section-header {
@@ -866,7 +867,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Blog Post */
 .blog-post {
     padding: 12rem 0 6rem;
-    background-color: var(--bg-canvas);
+    background-color: transparent;
 }
 
 .container-narrow {
