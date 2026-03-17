@@ -19,113 +19,22 @@
     <link rel="icon" href="assets/favicon.png" type="image/png">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <style>
-        .legal-page {
-            padding: 8rem 2rem 4rem;
-            max-width: 900px;
-            margin: 0 auto;
-            line-height: 1.8;
-        }
-
-        .legal-page h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .legal-page .last-updated {
-            color: var(--text-light);
-            font-size: 0.875rem;
-            margin-bottom: 3rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .legal-page h2 {
-            font-size: 1.75rem;
-            font-weight: 600;
-            margin-top: 3rem;
-            margin-bottom: 1rem;
-            color: var(--text-color);
-        }
-
-        .legal-page h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-top: 2rem;
-            margin-bottom: 0.75rem;
-            color: var(--text-color);
-        }
-
-        .legal-page p {
-            margin-bottom: 1rem;
-            color: var(--text-color);
-        }
-
-        .legal-page ul,
-        .legal-page ol {
-            margin-bottom: 1.5rem;
-            padding-left: 2rem;
-        }
-
-        .legal-page li {
-            margin-bottom: 0.5rem;
-            color: var(--text-color);
-        }
-
-        .legal-page a {
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-
-        .legal-page a:hover {
-            text-decoration: underline;
-        }
-
-        .legal-page .highlight-box {
-            background: var(--background-alt);
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            border-left: 4px solid var(--primary-color);
-            margin: 2rem 0;
-        }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--primary-color);
-            text-decoration: none;
-            margin-bottom: 2rem;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .back-link:hover {
-            color: var(--primary-dark);
-        }
-    </style>
 </head>
 
 <body>
-    <!-- Navigation -->
+    <!-- Minimal Navigation -->
     <nav class="navbar">
-        <div class="container">
-            <div class="logo">
-                <a href="/">Oria AI</a>
-            </div>
+        <div class="container nav-container">
+            <a href="/" class="brand-logo">ORIA AI</a>
             <div class="nav-links">
-                <a href="/#features">Features</a>
-                <a href="/#how-it-works">How It Works</a>
-                <a href="https://testflight.apple.com/join/edVXvcNq" class="cta-button" target="_blank"
-                    rel="noopener noreferrer">Join Beta</a>
+                <a href="/#vision" class="nav-item">Vision</a>
+                <a href="/#ecosystem" class="nav-item">Ecosystem</a>
+                <a href="/#waitlist" class="nav-item">Waitlist</a>
+                <a href="/blog/" class="nav-item">Journal</a>
             </div>
-            <div class="mobile-menu">
-                <i class="fas fa-bars"></i>
-            </div>
+            <a href="https://testflight.apple.com/join/edVXvcNq" class="nav-button" target="_blank"
+                rel="noopener noreferrer">Beta Access</a>
+            <div class="mobile-toggle"><i class="fas fa-bars"></i></div>
         </div>
     </nav>
 
@@ -244,39 +153,25 @@
         </ul>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <h3>Oria AI</h3>
-                    <p>Your personal AI companion</p>
-                </div>
-                <div class="footer-links">
-                    <div class="link-group">
-                        <h4>Product</h4>
-                        <a href="/#features">Features</a>
-                        <a href="/#how-it-works">How It Works</a>
-                    </div>
-                    <div class="link-group">
-                        <h4>Company</h4>
-                        <a href="/#about">About Us</a>
-                        <a href="/#contact">Contact</a>
-                    </div>
-                    <div class="link-group">
-                        <h4>Legal</h4>
-                        <a href="/privacy.html">Privacy Policy</a>
-                        <a href="/terms.html">Terms of Service</a>
-                    </div>
+    <!-- Refined Footer -->
+    <footer class="minimal-footer">
+        <div class="container footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">ORIA AI</div>
+                <div class="footer-social">
+                    <a href="https://discord.gg/Vxzb2NW9nx" target="_blank" rel="noopener noreferrer">Discord</a>
+                    <a href="https://x.com/OriaAI_official" target="_blank" rel="noopener noreferrer">Twitter</a>
+                    <a href="https://www.linkedin.com/company/theother-intelligence/" target="_blank"
+                        rel="noopener noreferrer">LinkedIn</a>
+                    <a href="https://instagram.com/oriaai.official" target="_blank"
+                        rel="noopener noreferrer">Instagram</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 TheOther Intelligence LLC. All rights reserved.</p>
-                <div class="social-links">
-                    <a href="https://discord.gg/Vxzb2NW9nx" target="_blank" rel="noopener noreferrer"><i class="fab fa-discord"></i></a>
-                    <a href="https://x.com/OriaAI_official" target="_blank" rel="noopener noreferrer"><i class="fab fa-x-twitter"></i></a>
-                    <a href="https://www.linkedin.com/company/theother-intelligence/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://instagram.com/oriaai.official" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                <div class="footer-copy">&copy; 2026 TheOther Intelligence LLC.</div>
+                <div class="footer-legal">
+                    <a href="/privacy.html">Privacy</a>
+                    <a href="/terms.html">Terms</a>
                 </div>
             </div>
         </div>
