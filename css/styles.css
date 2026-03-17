@@ -16,11 +16,11 @@
     /* Palette: Minimalist Gallery / Zen Garden */
     --bg-canvas: #FDFCFB;
     --bg-alt: #F7F7F5;
-    
+
     --text-primary: #111111;
     --text-secondary: #555555;
     --text-tertiary: #888888;
-    
+
     /* Muted Accents */
     --accent-sage: #A3B19B;
     --accent-gold: #F4EBD0;
@@ -49,7 +49,10 @@ body {
 /* Abstract Background Touches */
 .background-canvas {
     position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     z-index: -1;
     overflow: hidden;
     pointer-events: none;
@@ -64,28 +67,39 @@ body {
 }
 
 .orb-sage {
-    width: 600px; height: 600px;
+    width: 600px;
+    height: 600px;
     background: var(--accent-sage);
-    top: -200px; left: -100px;
+    top: -200px;
+    left: -100px;
 }
 
 .orb-gold {
-    width: 500px; height: 500px;
+    width: 500px;
+    height: 500px;
     background: var(--accent-gold);
-    bottom: -100px; right: -100px;
+    bottom: -100px;
+    right: -100px;
     animation-delay: -5s;
 }
 
 .orb-blue {
-    width: 400px; height: 400px;
+    width: 400px;
+    height: 400px;
     background: var(--accent-blue);
-    top: 40%; left: 60%;
+    top: 40%;
+    left: 60%;
     animation-delay: -10s;
 }
 
 @keyframes floatOrb {
-    0% { transform: translate(0, 0) scale(1); }
-    100% { transform: translate(50px, -50px) scale(1.1); }
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(50px, -50px) scale(1.1);
+    }
 }
 
 .noise-overlay {
@@ -104,14 +118,21 @@ body {
     padding: 0 4vw;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: var(--font-heading);
 }
 
 /* Navbar */
 .navbar {
     position: fixed;
-    top: 0; left: 0; right: 0;
+    top: 0;
+    left: 0;
+    right: 0;
     padding: 2rem 0;
     z-index: 100;
     transition: all 0.4s ease;
@@ -226,7 +247,7 @@ h1, h2, h3, h4, h5, h6 {
 .hero-primary-btn:hover {
     transform: scale(0.98);
     background: var(--accent-dark);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .hero-beta-note {
@@ -258,7 +279,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .app-store-badge {
-    height: 80px;
+    height: 70px;
     display: block;
 }
 
@@ -479,7 +500,9 @@ h1, h2, h3, h4, h5, h6 {
 .editorial-link::after {
     content: '';
     position: absolute;
-    bottom: -4px; right: 0; left: 0;
+    bottom: -4px;
+    right: 0;
+    left: 0;
     height: 1px;
     background: currentColor;
     transform: scaleX(0);
@@ -591,8 +614,13 @@ h1, h2, h3, h4, h5, h6 {
     transition: opacity 0.3s ease;
 }
 
-.waitlist-message.success { color: var(--accent-sage); }
-.waitlist-message.error { color: #d9534f; }
+.waitlist-message.success {
+    color: var(--accent-sage);
+}
+
+.waitlist-message.error {
+    color: #d9534f;
+}
 
 .supporters-minimal {
     margin-top: 6rem;
@@ -623,7 +651,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Footer (Minimal) */
 .minimal-footer {
     padding: 4rem 0;
-    border-top: 1px solid rgba(17,17,17,0.05);
+    border-top: 1px solid rgba(17, 17, 17, 0.05);
 }
 
 .footer-top {
@@ -680,33 +708,42 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Responsive */
 @media (max-width: 768px) {
-    .nav-links, .nav-button {
+
+    .nav-links,
+    .nav-button {
         display: none;
     }
+
     .mobile-toggle {
         display: block;
     }
-    
+
     .hero {
         padding-top: 8rem;
     }
-    
+
     .hero-actions {
         flex-direction: column;
         align-items: flex-start;
         gap: 1rem;
     }
-    
-    .vision, .ecosystem, .journey, .philosophy, .resolution {
+
+    .vision,
+    .ecosystem,
+    .journey,
+    .philosophy,
+    .resolution {
         padding: 8rem 0;
     }
-    
-    .footer-top, .footer-bottom {
+
+    .footer-top,
+    .footer-bottom {
         flex-direction: column;
         align-items: flex-start;
         gap: 2rem;
     }
 }
+
 /* Global Pages (Blog, Privacy, Terms) */
 .legal-page {
     padding: 12rem 4vw 6rem;
@@ -743,14 +780,17 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 1rem;
 }
 
-.legal-page p, .legal-page ul, .legal-page ol {
+.legal-page p,
+.legal-page ul,
+.legal-page ol {
     margin-bottom: 1.5rem;
     font-size: 1.125rem;
     line-height: 1.6;
     color: var(--text-secondary);
 }
 
-.legal-page ul, .legal-page ol {
+.legal-page ul,
+.legal-page ol {
     padding-left: 2rem;
 }
 
@@ -868,7 +908,9 @@ h1, h2, h3, h4, h5, h6 {
 .blog-read-more::after {
     content: '';
     position: absolute;
-    bottom: -4px; right: 0; left: 0;
+    bottom: -4px;
+    right: 0;
+    left: 0;
     height: 1px;
     background: currentColor;
     transform: scaleX(0);
@@ -917,7 +959,7 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--text-secondary);
     line-height: 1.6;
     padding-bottom: 2rem;
-    border-bottom: 1px solid rgba(17,17,17,0.1);
+    border-bottom: 1px solid rgba(17, 17, 17, 0.1);
 }
 
 .blog-post-body {
@@ -944,7 +986,8 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 1rem;
 }
 
-.blog-post-body ul, .blog-post-body ol {
+.blog-post-body ul,
+.blog-post-body ol {
     margin-bottom: 1.5rem;
     padding-left: 2rem;
 }
@@ -990,10 +1033,10 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 8px;
     padding: 4rem 3rem;
     text-align: center;
-    border: 1px solid rgba(17,17,17,0.05);
+    border: 1px solid rgba(17, 17, 17, 0.05);
 }
 
-.invite-card > p:first-child {
+.invite-card>p:first-child {
     font-size: 0.875rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -1017,7 +1060,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .invite-code {
     display: inline-flex;
-    border: 1px solid rgba(17,17,17,0.1);
+    border: 1px solid rgba(17, 17, 17, 0.1);
     border-radius: 4px;
     padding: 0.75rem 2rem;
     letter-spacing: 0.2em;
@@ -1042,7 +1085,7 @@ h1, h2, h3, h4, h5, h6 {
     gap: 0.5rem;
     min-height: 54px;
     border-radius: 4px;
-    border: 1px solid rgba(17,17,17,0.15);
+    border: 1px solid rgba(17, 17, 17, 0.15);
     text-decoration: none;
     color: var(--text-primary);
     font-weight: 400;
@@ -1060,7 +1103,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .invite-btn:not(.invite-btn-primary):hover {
-    background: rgba(17,17,17,0.03);
+    background: rgba(17, 17, 17, 0.03);
 }
 
 .invite-app-store-btn {
@@ -1101,4 +1144,7 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--text-primary);
     font-weight: 500;
 }
-.hidden { display: none !important; }
+
+.hidden {
+    display: none !important;
+}
