@@ -22,82 +22,86 @@ function getReferralCodeForAttribution() {
 
 // GSAP Animations (Soft Precision)
 function initializeAnimations() {
-    gsap.registerPlugin(ScrollTrigger);
+    if (typeof gsap !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
 
-    // Initial Hero Reveal
-    const tl = gsap.timeline();
-    
-    tl.fromTo('.hero-title .line-1', 
-        { y: 40, opacity: 0 }, 
-        { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out', delay: 0.2 }
-    )
-    .fromTo('.hero-title .line-2', 
-        { y: 40, opacity: 0 }, 
-        { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out' }, 
-        "-=0.9"
-    )
-    .fromTo('.hero-subtitle',
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1, ease: 'power2.out' },
-        "-=0.6"
-    )
-    .fromTo('.hero-actions',
-        { opacity: 0 },
-        { opacity: 1, duration: 1, ease: 'power2.out' },
-        "-=0.4"
-    )
-    .fromTo('.scroll-indicator',
-        { opacity: 0 },
-        { opacity: 0.5, duration: 1, ease: 'power2.out' },
-        "-=0.2"
-    );
-
-    // Subtle parallax for gradient orbs
-    gsap.utils.toArray('.gradient-orb').forEach((orb, i) => {
-        gsap.to(orb, {
-            y: "30%",
-            ease: "none",
-            scrollTrigger: {
-                trigger: "body",
-                start: "top top",
-                end: "bottom bottom",
-                scrub: 1.5
-            }
-        });
-    });
-
-    // Scroll Reveal Elements
-    const revealElements = [
-        '.vision-container .section-title',
-        '.vision-content p',
-        '.ecosystem-container .section-title',
-        '.ecosystem-container .section-subtitle',
-        '.app-category',
-        '.journey-step',
-        '.editorial-card',
-        '.resolution-title',
-        '.resolution-desc',
-        '.minimal-form'
-    ];
-
-    revealElements.forEach(selector => {
-        gsap.utils.toArray(selector).forEach(el => {
-            gsap.fromTo(el, 
-                { y: 50, opacity: 0 },
-                {
-                    y: 0, 
-                    opacity: 1, 
-                    duration: 1, 
-                    ease: 'power3.out',
-                    scrollTrigger: {
-                        trigger: el,
-                        start: "top 85%",
-                        toggleActions: "play none none none"
-                    }
-                }
+        // Initial Hero Reveal
+        const tl = gsap.timeline();
+        
+        if (document.querySelector('.hero-title')) {
+            tl.fromTo('.hero-title .line-1', 
+                { y: 40, opacity: 0 }, 
+                { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out', delay: 0.2 }
+            )
+            .fromTo('.hero-title .line-2', 
+                { y: 40, opacity: 0 }, 
+                { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out' }, 
+                "-=0.9"
+            )
+            .fromTo('.hero-subtitle',
+                { y: 20, opacity: 0 },
+                { y: 0, opacity: 1, duration: 1, ease: 'power2.out' },
+                "-=0.6"
+            )
+            .fromTo('.hero-actions',
+                { opacity: 0 },
+                { opacity: 1, duration: 1, ease: 'power2.out' },
+                "-=0.4"
+            )
+            .fromTo('.scroll-indicator',
+                { opacity: 0 },
+                { opacity: 0.5, duration: 1, ease: 'power2.out' },
+                "-=0.2"
             );
+        }
+
+        // Subtle parallax for gradient orbs
+        gsap.utils.toArray('.gradient-orb').forEach((orb, i) => {
+            gsap.to(orb, {
+                y: "30%",
+                ease: "none",
+                scrollTrigger: {
+                    trigger: "body",
+                    start: "top top",
+                    end: "bottom bottom",
+                    scrub: 1.5
+                }
+            });
         });
-    });
+
+        // Scroll Reveal Elements
+        const revealElements = [
+            '.vision-container .section-title',
+            '.vision-content p',
+            '.ecosystem-container .section-title',
+            '.ecosystem-container .section-subtitle',
+            '.app-category',
+            '.journey-step',
+            '.editorial-card',
+            '.resolution-title',
+            '.resolution-desc',
+            '.minimal-form'
+        ];
+
+        revealElements.forEach(selector => {
+            gsap.utils.toArray(selector).forEach(el => {
+                gsap.fromTo(el, 
+                    { y: 50, opacity: 0 },
+                    {
+                        y: 0, 
+                        opacity: 1, 
+                        duration: 1, 
+                        ease: 'power3.out',
+                        scrollTrigger: {
+                            trigger: el,
+                            start: "top 85%",
+                            toggleActions: "play none none none"
+                        }
+                    }
+                );
+            });
+        });
+    }
 
     // Navbar Scroll Effect
     const navbar = document.querySelector('.navbar');

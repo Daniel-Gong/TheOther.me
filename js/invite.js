@@ -61,13 +61,9 @@ function showFallbackUI(code, options) {
     }
 
     if (statusText) {
-        if (wechat && code) {
-            statusText.textContent = "请用 Safari 或系统浏览器打开此链接以打开 Oria App。";
-        } else {
-            statusText.textContent = code
-                ? "Could not open app automatically. You can open it manually or install it first."
-                : "Invalid invite link. You can still install the app and join the waitlist.";
-        }
+        statusText.textContent = code
+            ? "Could not open app automatically. You can open it manually or install it first."
+            : "Invalid invite link. You can still install the app and join the waitlist.";
     }
 
     if (code && codeChip) {
