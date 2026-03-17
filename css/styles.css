@@ -1110,17 +1110,14 @@ h6 {
 .invite-app-store-btn {
     min-height: 54px;
     padding: 0.5rem 1rem;
-    border: 1px solid rgba(17, 17, 17, 0.15);
-    border-radius: 4px;
-    background: transparent;
+    border: none;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.invite-app-store-btn:hover {
-    background: rgba(17, 17, 17, 0.03);
-    opacity: 1;
+.invite-app-store-btn .app-store-badge-small {
+    filter: brightness(0) invert(1);
 }
 
 .invite-btn-primary:hover {
