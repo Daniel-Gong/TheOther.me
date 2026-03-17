@@ -289,18 +289,12 @@ function buildTeaserHtml(posts) {
     .map((p) => {
       const dateFormatted = formatDate(p.date);
       const dateIso = isoDate(p.date);
-      const desc = escapeHtml(p.description);
       const titleEsc = escapeHtml(p.title);
       const url = `/blog/${p.slug}.html`;
-      return `                <article class="blog-teaser-card">
-                    <div class="blog-teaser-meta">
-                        <time datetime="${dateIso}">${dateFormatted}</time>
-                    </div>
-                    <h3><a href="${url}">${titleEsc}</a></h3>
-                    <p>${desc}</p>
-                    <a href="${url}" class="blog-teaser-link">
-                        Read more <i class="fas fa-arrow-right"></i>
-                    </a>
+      return `                <article class="editorial-card">
+                    <div class="editorial-meta">${dateFormatted}</div>
+                    <h3 class="editorial-title"><a href="${url}">${titleEsc}</a></h3>
+                    <a href="${url}" class="editorial-link">Read essay</a>
                 </article>`;
     })
     .join('\n');
