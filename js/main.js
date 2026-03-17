@@ -111,11 +111,15 @@ function initializeAnimations() {
     // Mobile Menu
     const mobileToggle = document.querySelector('.mobile-toggle');
     const navLinks = document.querySelector('.nav-links');
+    const menuIcon = mobileToggle?.querySelector('i');
     
-    if (mobileToggle) {
+    if (mobileToggle && menuIcon) {
         mobileToggle.addEventListener('click', () => {
-            if (navLinks.style.display === 'flex') {
+            const isOpen = navLinks.style.display === 'flex';
+            if (isOpen) {
                 navLinks.style.display = 'none';
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
             } else {
                 navLinks.style.display = 'flex';
                 navLinks.style.flexDirection = 'column';
@@ -126,6 +130,8 @@ function initializeAnimations() {
                 navLinks.style.background = 'var(--bg-canvas)';
                 navLinks.style.padding = '2rem';
                 navLinks.style.borderBottom = '1px solid rgba(17,17,17,0.05)';
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-times');
             }
         });
     }
