@@ -284,7 +284,7 @@ h6 {
 }
 
 .app-store-badge-small {
-    height: 36px;
+    height: 50px;
     display: block;
     vertical-align: middle;
 }
@@ -1074,6 +1074,7 @@ h6 {
 
 .invite-actions {
     display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 1rem;
     margin-top: 1.5rem;
 }
@@ -1107,14 +1108,19 @@ h6 {
 }
 
 .invite-app-store-btn {
-    padding: 0.5rem;
-    border: none;
+    min-height: 54px;
+    padding: 0.5rem 1rem;
+    border: 1px solid rgba(17, 17, 17, 0.15);
+    border-radius: 4px;
     background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .invite-app-store-btn:hover {
-    background: transparent;
-    opacity: 0.9;
+    background: rgba(17, 17, 17, 0.03);
+    opacity: 1;
 }
 
 .invite-btn-primary:hover {
