@@ -1,5 +1,4 @@
 // Constants
-const MOBILE_WIDTH_THRESHOLD = 768; // pixels
 const REFERRAL_STORAGE_KEY = 'oria_referral_code';
 
 function sanitizeReferralCode(rawCode) {
@@ -21,95 +20,116 @@ function getReferralCodeForAttribution() {
     return sanitizeReferralCode(localStorage.getItem(REFERRAL_STORAGE_KEY));
 }
 
-// Particle system
-function initializeParticleSystem() {
-    const container = document.querySelector('.particle-system');
-    if (!container) return;
+// GSAP Animations (Soft Precision)
+function initializeAnimations() {
+    gsap.registerPlugin(ScrollTrigger);
 
-    for (let i = 0; i < 50; i++) {
-        createParticle(container);
+    // Initial Hero Reveal
+    const tl = gsap.timeline();
+    
+    tl.fromTo('.hero-title .line-1', 
+        { y: 40, opacity: 0 }, 
+        { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out', delay: 0.2 }
+    )
+    .fromTo('.hero-title .line-2', 
+        { y: 40, opacity: 0 }, 
+        { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out' }, 
+        "-=0.9"
+    )
+    .fromTo('.hero-subtitle',
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, ease: 'power2.out' },
+        "-=0.6"
+    )
+    .fromTo('.hero-actions',
+        { opacity: 0 },
+        { opacity: 1, duration: 1, ease: 'power2.out' },
+        "-=0.4"
+    )
+    .fromTo('.scroll-indicator',
+        { opacity: 0 },
+        { opacity: 0.5, duration: 1, ease: 'power2.out' },
+        "-=0.2"
+    );
+
+    // Subtle parallax for gradient orbs
+    gsap.utils.toArray('.gradient-orb').forEach((orb, i) => {
+        gsap.to(orb, {
+            y: "30%",
+            ease: "none",
+            scrollTrigger: {
+                trigger: "body",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1.5
+            }
+        });
+    });
+
+    // Scroll Reveal Elements
+    const revealElements = [
+        '.vision-container .section-title',
+        '.vision-content p',
+        '.ecosystem-container .section-title',
+        '.ecosystem-container .section-subtitle',
+        '.app-category',
+        '.journey-step',
+        '.editorial-card',
+        '.resolution-title',
+        '.resolution-desc',
+        '.minimal-form'
+    ];
+
+    revealElements.forEach(selector => {
+        gsap.utils.toArray(selector).forEach(el => {
+            gsap.fromTo(el, 
+                { y: 50, opacity: 0 },
+                {
+                    y: 0, 
+                    opacity: 1, 
+                    duration: 1, 
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 85%",
+                        toggleActions: "play none none none"
+                    }
+                }
+            );
+        });
+    });
+
+    // Navbar Scroll Effect
+    const navbar = document.querySelector('.navbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+
+    // Mobile Menu
+    const mobileToggle = document.querySelector('.mobile-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    
+    if (mobileToggle) {
+        mobileToggle.addEventListener('click', () => {
+            if (navLinks.style.display === 'flex') {
+                navLinks.style.display = 'none';
+            } else {
+                navLinks.style.display = 'flex';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '100%';
+                navLinks.style.left = '0';
+                navLinks.style.width = '100%';
+                navLinks.style.background = 'var(--bg-canvas)';
+                navLinks.style.padding = '2rem';
+                navLinks.style.borderBottom = '1px solid rgba(17,17,17,0.05)';
+            }
+        });
     }
-}
-
-function createParticle(container) {
-    const particle = document.createElement('div');
-    particle.className = 'particle';
-
-    // Random position
-    particle.style.left = Math.random() * 100 + '%';
-    particle.style.top = Math.random() * 100 + '%';
-
-    // Random size
-    const size = Math.random() * 4 + 2;
-    particle.style.width = size + 'px';
-    particle.style.height = size + 'px';
-
-    // Random color between primary and accent
-    const color = Math.random() > 0.5 ? '#2563EB' : '#10B981';
-    particle.style.background = color;
-
-    // Random animation duration
-    particle.style.animationDuration = (Math.random() * 3 + 2) + 's';
-
-    container.appendChild(particle);
-
-    // Remove and recreate particle after animation
-    setTimeout(() => {
-        particle.remove();
-        createParticle(container);
-    }, 5000);
-}
-
-// Data flow visualization
-function initializeDataFlow() {
-    const container = document.querySelector('.data-flow');
-    if (!container) return;
-
-    // Create flowing lines
-    for (let i = 0; i < 5; i++) {
-        createFlowLine(container, i);
-    }
-}
-
-function createFlowLine(container, index) {
-    const line = document.createElement('div');
-    line.className = 'flow-line';
-
-    // Random position and angle
-    line.style.top = (index * 20 + Math.random() * 10) + '%';
-    line.style.transform = `rotate(${Math.random() * 10 - 5}deg)`;
-
-    // Random animation delay
-    line.style.animationDelay = (index * 0.5) + 's';
-
-    container.appendChild(line);
-}
-
-// Parallax effect with inertia
-let currentX = 0;
-let currentY = 0;
-let targetX = 0;
-let targetY = 0;
-
-document.addEventListener('mousemove', (e) => {
-    targetX = (e.clientX / window.innerWidth - 0.5) * 20;
-    targetY = (e.clientY / window.innerHeight - 0.5) * 20;
-});
-
-function updateParallax() {
-    // Smooth interpolation with inertia
-    currentX += (targetX - currentX) * 0.1;
-    currentY += (targetY - currentY) * 0.1;
-
-    const particles = document.querySelector('.particles');
-    const silhouette = document.querySelector('.human-silhouette');
-
-    if (particles && silhouette) {
-        particles.style.transform = `translate(${currentX}px, ${currentY}px)`;
-        silhouette.style.transform = `translate(-50%, -50%) rotateY(${currentX * 0.5}deg) rotateX(${-currentY * 0.5}deg)`;
-    }
-
-    requestAnimationFrame(updateParallax);
 }
 
 // Waitlist form submission with Firebase
@@ -124,8 +144,6 @@ function initializeWaitlistForm() {
         return;
     }
 
-    console.log('Waitlist form initialized');
-
     // Wait for Firebase to be ready
     function waitForFirebase() {
         return new Promise((resolve, reject) => {
@@ -134,7 +152,6 @@ function initializeWaitlistForm() {
                 return;
             }
 
-            // Check every 100ms for up to 5 seconds
             let attempts = 0;
             const maxAttempts = 50;
             const checkInterval = setInterval(() => {
@@ -144,19 +161,17 @@ function initializeWaitlistForm() {
                     resolve(window.firestoreDb);
                 } else if (attempts >= maxAttempts) {
                     clearInterval(checkInterval);
-                    reject(new Error('Firebase initialization timeout. Please check your Firebase configuration.'));
+                    reject(new Error('Firebase initialization timeout. Please check your configuration.'));
                 }
             }, 100);
         });
     }
 
-    // Handle form submission
     async function handleSubmit(e) {
         if (e) {
             e.preventDefault();
             e.stopPropagation();
         }
-        console.log('Form submitted');
 
         const email = emailInput.value.trim().toLowerCase();
 
@@ -165,43 +180,33 @@ function initializeWaitlistForm() {
             return false;
         }
 
-        // Validate email format
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             showWaitlistMessage('Please enter a valid email address', 'error');
             return false;
         }
 
-        // Disable form during submission
         submitButton.disabled = true;
         const originalButtonHTML = submitButton.innerHTML;
-        submitButton.innerHTML = '<span>Joining...</span><i class="fas fa-spinner fa-spin"></i>';
+        submitButton.innerHTML = '<span>Processing...</span>';
         messageDiv.textContent = '';
 
         try {
-            // Wait for Firebase to be initialized
-            console.log('Waiting for Firebase...');
             await waitForFirebase();
-            console.log('Firebase ready');
-
-            // Import Firestore functions
             const { collection, addDoc, serverTimestamp, query, where, getDocs } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
 
-            // Check if email already exists
             const waitlistRef = collection(window.firestoreDb, 'waitlist');
             const q = query(waitlistRef, where('email', '==', email));
             const querySnapshot = await getDocs(q);
 
             if (!querySnapshot.empty) {
-                showWaitlistMessage('You are already on the waitlist!', 'success');
+                showWaitlistMessage('You are already on the waitlist.', 'success');
                 emailInput.value = '';
                 submitButton.disabled = false;
                 submitButton.innerHTML = originalButtonHTML;
                 return false;
             }
 
-            // Add email to Firestore
-            console.log('Adding email to Firestore:', email);
             const referralCode = getReferralCodeForAttribution();
             await addDoc(waitlistRef, {
                 email: email,
@@ -210,20 +215,13 @@ function initializeWaitlistForm() {
                 referralCode: referralCode || null
             });
 
-            console.log('Email added successfully');
-
-            // Success message
-            showWaitlistMessage('Successfully joined the waitlist! We\'ll be in touch soon.', 'success');
+            showWaitlistMessage('Access requested over secure channel.', 'success');
             emailInput.value = '';
-
-            // Show toast notification
-            showToast('Welcome to TheOther.me waitlist!');
 
         } catch (error) {
             console.error('Error adding to waitlist:', error);
-            showWaitlistMessage('Something went wrong. Please try again later. Error: ' + error.message, 'error');
+            showWaitlistMessage('A connection error occurred. Please try again.', 'error');
         } finally {
-            // Re-enable form
             submitButton.disabled = false;
             submitButton.innerHTML = originalButtonHTML;
         }
@@ -231,10 +229,7 @@ function initializeWaitlistForm() {
         return false;
     }
 
-    // Add form submit handler
     form.addEventListener('submit', handleSubmit);
-
-    // Also handle button click as fallback
     submitButton.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -249,492 +244,24 @@ function showWaitlistMessage(message, type) {
     messageDiv.textContent = message;
     messageDiv.className = `waitlist-message ${type}`;
 
-    // Remove message after 5 seconds for success messages
     if (type === 'success') {
         setTimeout(() => {
-            messageDiv.textContent = '';
-            messageDiv.className = 'waitlist-message';
+            messageDiv.style.opacity = '0';
+            setTimeout(() => {
+                messageDiv.textContent = '';
+                messageDiv.className = 'waitlist-message';
+                messageDiv.style.opacity = '1';
+            }, 300);
         }, 5000);
     }
 }
 
-// Toast notification with glassmorphism
-function showToast(message) {
-    const toast = document.createElement('div');
-    toast.className = 'toast glass';
-    toast.textContent = message;
-    document.body.appendChild(toast);
-
-    setTimeout(() => {
-        toast.classList.add('show');
-    }, 100);
-
-    setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => {
-            document.body.removeChild(toast);
-        }, 300);
-    }, 3000);
-}
-
-// DNA Helix Visualization
-function initializeDNAHelix() {
-    const orbs = document.querySelectorAll('.feature-orb');
-    const descriptions = document.querySelectorAll('.feature-description');
-    const helixPaths = document.querySelectorAll('.helix-path');
-
-    // Check if elements exist before animating
-    if (!helixPaths || helixPaths.length === 0) {
-        return; // Exit early if elements don't exist
-    }
-
-    // Initialize GSAP animations
-    gsap.set(helixPaths, {
-        strokeDasharray: 1000,
-        strokeDashoffset: 1000
-    });
-
-    gsap.to(helixPaths, {
-        strokeDashoffset: 0,
-        duration: 20,
-        ease: "none",
-        repeat: -1
-    });
-
-    // Orb hover animations
-    if (orbs && orbs.length > 0) {
-        orbs.forEach((orb, index) => {
-            const description = descriptions[index];
-
-            orb.addEventListener('mouseenter', () => {
-                // Animate orb
-                gsap.to(orb.querySelector('.orb-circle'), {
-                    scale: 1.2,
-                    duration: 0.3,
-                    ease: "power2.out"
-                });
-
-                // Show description
-                gsap.to(description, {
-                    opacity: 1,
-                    scale: 1,
-                    duration: 0.3,
-                    ease: "power2.out"
-                });
-
-                // Animate connected paths
-                const connectedPaths = Array.from(helixPaths).filter(path => {
-                    const pathElement = path.getBoundingClientRect();
-                    const orbElement = orb.getBoundingClientRect();
-                    return (
-                        pathElement.left <= orbElement.right &&
-                        pathElement.right >= orbElement.left
-                    );
-                });
-
-                gsap.to(connectedPaths, {
-                    stroke: "#2563EB",
-                    filter: "drop-shadow(0 0 10px rgba(37, 99, 235, 0.2))",
-                    duration: 0.3,
-                    ease: "power2.out"
-                });
-            });
-
-            orb.addEventListener('mouseleave', () => {
-                // Reset orb
-                gsap.to(orb.querySelector('.orb-circle'), {
-                    scale: 1,
-                    duration: 0.3,
-                    ease: "power2.out"
-                });
-
-                // Hide description
-                gsap.to(description, {
-                    opacity: 0,
-                    scale: 0.9,
-                    duration: 0.3,
-                    ease: "power2.out"
-                });
-
-                // Reset paths
-                gsap.to(helixPaths, {
-                    stroke: "rgba(255, 255, 255, 0.2)",
-                    filter: "none",
-                    duration: 0.3,
-                    ease: "power2.out"
-                });
-            });
-        });
-    }
-
-    // Initialize feature animations
-    initializeFeatureAnimations();
-}
-
-function initializeFeatureAnimations() {
-    // DNA Animation
-    const dnaAnimation = document.querySelector('.dna-animation');
-    if (dnaAnimation) {
-        gsap.to(dnaAnimation, {
-            backgroundPosition: "-200% 0",
-            duration: 3,
-            ease: "power2.inOut",
-            repeat: -1
-        });
-    }
-
-    // Hourglass Animation
-    const hourglassAnimation = document.querySelector('.hourglass-animation');
-    if (hourglassAnimation) {
-        gsap.to(hourglassAnimation, {
-            scaleY: 0.5,
-            duration: 1.5,
-            ease: "power2.inOut",
-            yoyo: true,
-            repeat: -1
-        });
-    }
-
-    // Fractal Animation
-    const fractalAnimation = document.querySelector('.fractal-animation');
-    if (fractalAnimation) {
-        gsap.to(fractalAnimation, {
-            scale: 1.2,
-            opacity: 0.8,
-            duration: 1.5,
-            ease: "power2.inOut",
-            yoyo: true,
-            repeat: -1
-        });
-    }
-}
-
-// Mobile Navigation - removed (using existing navbar mobile menu instead)
-
-// Pull to refresh
-function initializePullToRefresh() {
-    if (window.innerWidth > 768) return;
-
-    const pullToRefresh = document.createElement('div');
-    pullToRefresh.className = 'pull-to-refresh';
-    pullToRefresh.innerHTML = '<div class="pull-to-refresh-icon"></div>';
-    document.body.insertBefore(pullToRefresh, document.body.firstChild);
-
-    let startY = 0;
-    let currentY = 0;
-    let isPulling = false;
-
-    document.addEventListener('touchstart', (e) => {
-        if (window.scrollY === 0) {
-            startY = e.touches[0].clientY;
-            isPulling = true;
-        }
-    });
-
-    document.addEventListener('touchmove', (e) => {
-        if (!isPulling) return;
-
-        currentY = e.touches[0].clientY;
-        const pull = currentY - startY;
-
-        if (pull > 0) {
-            e.preventDefault();
-            pullToRefresh.style.transform = `translateY(${Math.min(pull * 0.5, 60)}px)`;
-
-            if (pull > 100) {
-                pullToRefresh.classList.add('active');
-            }
-        }
-    });
-
-    document.addEventListener('touchend', () => {
-        if (!isPulling) return;
-
-        isPulling = false;
-        pullToRefresh.style.transform = '';
-
-        if (currentY - startY > 100) {
-            // Trigger refresh
-            if (navigator.vibrate) {
-                navigator.vibrate([50, 50, 50]);
-            }
-            location.reload();
-        }
-    });
-}
-
-// Touch carousel
-function initializeTouchCarousel() {
-    if (window.innerWidth > 768) return;
-
-    const carousel = document.querySelector('.testimonial-carousel');
-    if (!carousel) return;
-
-    let startX = 0;
-    let currentX = 0;
-    let isDragging = false;
-
-    carousel.addEventListener('touchstart', (e) => {
-        startX = e.touches[0].clientX;
-        isDragging = true;
-    });
-
-    carousel.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-
-        currentX = e.touches[0].clientX;
-        const diff = currentX - startX;
-
-        carousel.style.transform = `translateX(${diff}px)`;
-    });
-
-    carousel.addEventListener('touchend', () => {
-        if (!isDragging) return;
-
-        isDragging = false;
-        const diff = currentX - startX;
-
-        if (Math.abs(diff) > 100) {
-            // Change testimonial
-            if (diff > 0) {
-                showTestimonial((currentTestimonial - 1 + testimonials.length) % testimonials.length);
-            } else {
-                showTestimonial((currentTestimonial + 1) % testimonials.length);
-            }
-
-            // Haptic feedback
-            if (navigator.vibrate) {
-                navigator.vibrate(50);
-            }
-        }
-
-        carousel.style.transform = '';
-    });
-}
-
-// Initialize mobile features
-function initializeMobileFeatures() {
-    initializePullToRefresh();
-    initializeTouchCarousel();
-}
-
-// Performance optimization
-let isIdle = true;
-let idleTimeout;
-
-function resetIdleState() {
-    isIdle = true;
-    clearTimeout(idleTimeout);
-    idleTimeout = setTimeout(() => {
-        if (isIdle) {
-            // Pause heavy animations when idle
-            gsap.globalTimeline.pause();
-        }
-    }, 5000);
-}
-
-document.addEventListener('mousemove', () => {
-    if (isIdle) {
-        isIdle = false;
-        gsap.globalTimeline.play();
-    }
-    resetIdleState();
-});
-
-// Handle resize
-window.addEventListener('resize', () => {
-    if (window.innerWidth > 768) {
-        initializeDNAHelix();
-    } else {
-        initializeMobileFeatures();
-    }
-});
-
-// Luxury features removed (custom cursor and status bar)
-
 // Initialize features
 document.addEventListener('DOMContentLoaded', () => {
-    initializeParticleSystem();
-    initializeDataFlow();
-    updateParallax();
-    initializeDNAHelix();
-    initializePullToRefresh();
-    initializeTouchCarousel();
-    initializeMobileFeatures();
-
-    // Initialize waitlist form after a short delay to ensure Firebase is loaded
+    initializeAnimations();
+    
+    // Initialize waitlist
     setTimeout(() => {
         initializeWaitlistForm();
     }, 100);
 });
-
-// Mobile menu toggle
-const mobileMenu = document.querySelector('.mobile-menu');
-const navLinks = document.querySelector('.nav-links');
-
-mobileMenu?.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-});
-
-// Smooth scroll for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-            // Close mobile menu if open
-            navLinks.classList.remove('active');
-        }
-    });
-});
-
-// Hero section animations
-gsap.from('.hero-text', {
-    duration: 1,
-    y: 50,
-    opacity: 0,
-    ease: 'power3.out'
-});
-
-gsap.from('.hero-visual', {
-    duration: 1,
-    x: 50,
-    opacity: 0,
-    delay: 0.3,
-    ease: 'power3.out'
-});
-
-// Features section animations
-gsap.utils.toArray('.feature-card').forEach((card, i) => {
-    gsap.from(card, {
-        scrollTrigger: {
-            trigger: card,
-            start: 'top bottom-=100',
-            toggleActions: 'play none none reverse'
-        },
-        duration: 0.8,
-        y: 50,
-        opacity: 0,
-        delay: i * 0.2,
-        ease: 'power3.out'
-    });
-});
-
-// How it works section animations
-gsap.utils.toArray('.step').forEach((step, i) => {
-    gsap.from(step, {
-        scrollTrigger: {
-            trigger: step,
-            start: 'top bottom-=100',
-            toggleActions: 'play none none reverse'
-        },
-        duration: 0.8,
-        y: 30,
-        opacity: 0,
-        delay: i * 0.2,
-        ease: 'power3.out'
-    });
-});
-
-// Testimonials section animations
-gsap.utils.toArray('.testimonial-card').forEach((card, i) => {
-    gsap.from(card, {
-        scrollTrigger: {
-            trigger: card,
-            start: 'top bottom-=100',
-            toggleActions: 'play none none reverse'
-        },
-        duration: 0.8,
-        y: 30,
-        opacity: 0,
-        delay: i * 0.2,
-        ease: 'power3.out'
-    });
-});
-
-// Navbar scroll effect
-const navbar = document.querySelector('.navbar');
-let lastScroll = 0;
-
-window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
-
-    if (currentScroll <= 0) {
-        navbar.classList.remove('scroll-up');
-        return;
-    }
-
-    if (currentScroll > lastScroll && !navbar.classList.contains('scroll-down')) {
-        // Scroll down
-        navbar.classList.remove('scroll-up');
-        navbar.classList.add('scroll-down');
-    } else if (currentScroll < lastScroll && navbar.classList.contains('scroll-down')) {
-        // Scroll up
-        navbar.classList.remove('scroll-down');
-        navbar.classList.add('scroll-up');
-    }
-
-    lastScroll = currentScroll;
-});
-
-// AI Avatar animation
-const avatarContainer = document.querySelector('.avatar-container');
-if (avatarContainer) {
-    // Create particles
-    for (let i = 0; i < 20; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        avatarContainer.appendChild(particle);
-
-        // Random position and animation
-        gsap.set(particle, {
-            x: gsap.utils.random(-50, 50),
-            y: gsap.utils.random(-50, 50),
-            scale: gsap.utils.random(0.5, 1.5)
-        });
-
-        gsap.to(particle, {
-            duration: gsap.utils.random(2, 4),
-            x: gsap.utils.random(-50, 50),
-            y: gsap.utils.random(-50, 50),
-            scale: gsap.utils.random(0.5, 1.5),
-            opacity: gsap.utils.random(0.3, 0.7),
-            repeat: -1,
-            yoyo: true,
-            ease: 'sine.inOut'
-        });
-    }
-}
-
-// Data stream animation
-const dataStream = document.querySelector('.data-stream');
-if (dataStream) {
-    // Create data points
-    for (let i = 0; i < 10; i++) {
-        const point = document.createElement('div');
-        point.className = 'data-point';
-        dataStream.appendChild(point);
-
-        // Animate data points
-        gsap.to(point, {
-            duration: gsap.utils.random(1, 3),
-            y: -100,
-            opacity: 0,
-            repeat: -1,
-            delay: i * 0.2,
-            ease: 'power1.inOut'
-        });
-    }
-}
-
-// Add CSS classes for animations
-document.addEventListener('DOMContentLoaded', () => {
-    // Add animation classes to elements
-    document.querySelectorAll('.feature-card, .step, .testimonial-card').forEach(el => {
-        el.classList.add('animate-on-scroll');
-    });
-}); 
