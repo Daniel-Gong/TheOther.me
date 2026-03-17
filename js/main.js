@@ -47,11 +47,6 @@ function initializeAnimations() {
                 { opacity: 0 },
                 { opacity: 1, duration: 1, ease: 'power2.out' },
                 "-=0.4"
-            )
-            .fromTo('.scroll-indicator',
-                { opacity: 0 },
-                { opacity: 0.5, duration: 1, ease: 'power2.out' },
-                "-=0.2"
             );
         }
 
