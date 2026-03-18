@@ -519,7 +519,7 @@ h6 {
     grid-column: 1 / -1;
     justify-content: center;
     align-items: center;
-    padding: 3rem 0;
+    padding: 2rem 0 1rem;
     text-align: center;
 }
 
