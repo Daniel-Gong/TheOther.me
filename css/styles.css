@@ -196,7 +196,7 @@ h6 {
 }
 
 .hero-title {
-    font-size: clamp(2.25rem, 8vw, 7.5rem);
+    font-size: clamp(3rem, 8vw, 7.5rem);
     font-weight: 200;
     line-height: 1.05;
     letter-spacing: -0.03em;
