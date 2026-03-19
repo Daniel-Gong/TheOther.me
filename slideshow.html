@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Oria AI Pitch Deck</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <script src="https://picture-search.skywork.ai/aippt/static/tailwindcss.com"></script>
+    <style>
+        * { box-sizing: border-box; }
+        html {
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #FAF7F2;
+            color: #2D2621;
+            overflow-y: scroll;
+        }
+        .slide {
+            min-height: 100vh;
+            width: 100%;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .slide-inner {
+            width: 100%;
+            max-width: 1280px;
+            max-height: calc(100vh - 4rem);
+            overflow: auto;
+            background: inherit;
+        }
+        .font-serif, .serif { font-family: 'Playfair Display', serif; }
+        .accent-coral, .text-bio { color: #D17A61; }
+        .bg-accent-coral, .bg-coral { background-color: #D17A61; }
+        .accent-sage, .text-digital { color: #5F6D5E; }
+        .border-sage { border-color: #4A6741; }
+        .border-sage-light { border-color: #E0E4DE; }
+        .bg-sage { background-color: #5F6D5E; }
+        .bg-sage-light { background-color: #F0F2EF; }
+        .bg-bio-light { background-color: rgba(209, 122, 97, 0.08); }
+        .bg-digital-light { background-color: rgba(95, 109, 94, 0.08); }
+        .card-shadow { box-shadow: 0 4px 20px rgba(45, 38, 33, 0.05); }
+        .cta-card { background-color: white; transition: all 0.3s ease; }
+        .cta-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px -5px rgba(209, 122, 97, 0.1); }
+        .layer-card { transition: all 0.3s ease; }
+        .principle-card {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(95, 109, 94, 0.1);
+            transition: all 0.3s ease;
+        }
+        .oria-card {
+            border: 1px solid rgba(217, 119, 87, 0.2);
+            box-shadow: 0 10px 30px -15px rgba(217, 119, 87, 0.2);
+        }
+        .slide-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at 10% 10%, rgba(209, 122, 97, 0.05) 0%, transparent 40%),
+                        radial-gradient(circle at 90% 90%, rgba(95, 109, 94, 0.08) 0%, transparent 40%);
+        }
+        .slide-frame {
+            aspect-ratio: 16 / 9;
+            width: min(1280px, 100%, calc((100vh - 4rem) * 16 / 9));
+            max-width: 100%;
+        }
+        [data-live-editor-placeholder], [data-live-editor-resize-clone] { display: none !important; }
+        .slide-indicator {
+            position: fixed;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .slide-indicator span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(95, 109, 94, 0.3);
+            transition: all 0.2s ease;
+        }
+        .slide-indicator span.active {
+            background: #D17A61;
+            transform: scale(1.25);
+        }
+        .slide-indicator span {
+            cursor: pointer;
+        }
+        .slide-indicator span:hover {
+            background: rgba(95, 109, 94, 0.5) !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Slide 1: Cover -->
+    <section class="slide" style="background-color: #FAF7F2;">
+        <div class="slide-inner flex flex-col items-center justify-center">
+            <div class="slide-frame slide-container bg-[#FAF7F2] shadow-2xl rounded-2xl flex flex-col justify-center items-center p-20 relative">
+                <div class="absolute top-16 w-full px-20 flex justify-between items-center">
+                    <div class="text-2xl font-serif tracking-widest uppercase text-[#2D2621]">Oria <span class="text-[#D17A61]">AI</span></div>
+                    <div class="text-sm tracking-widest uppercase text-[#5F6D5E] font-semibold">Strategic Pitch 2026</div>
+                </div>
+                <div class="text-center max-w-4xl px-10">
+                    <h1 class="font-serif text-9xl mb-8 tracking-tight text-[#2D2621]">Oria AI</h1>
+                    <h2 class="text-4xl font-light leading-tight text-[#2D2621] mb-6">
+                        Empowering an <span class="text-[#D17A61] font-semibold italic">Intentional Life</span><br/>
+                        Through Your Evolvable Digital Self
+                    </h2>
+                    <div class="h-1 w-24 bg-[#D17A61] mx-auto mb-8 opacity-20"></div>
+                    <p class="text-xl tracking-wide text-[#5F6D5E] max-w-2xl mx-auto leading-relaxed">
+                        Human-Centered Personal AI for a Deeper Understanding of You
+                    </p>
+                </div>
+                <div class="absolute bottom-16 w-full px-20 flex justify-between items-end">
+                    <div class="text-left">
+                        <p class="text-xs uppercase tracking-[0.2em] text-[#5F6D5E] mb-1">Prepared on</p>
+                        <p class="text-lg font-serif text-[#2D2621]">March 18, 2026</p>
+                    </div>
+                    <div class="flex gap-12">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-globe text-[#D17A61]"></i>
+                            <a class="text-lg font-medium hover:text-[#D17A61]" href="https://oria.me/">oria.me</a>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-newspaper text-[#D17A61]"></i>
+                            <a class="text-lg font-medium hover:text-[#D17A61]" href="https://oria.me/blog">oria.me/blog</a>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-xs uppercase tracking-[0.2em] text-[#5F6D5E] mb-1">Philosophy</p>
+                        <p class="text-lg font-serif text-[#2D2621]">Bio-Digital Synthesis</p>
+                    </div>
+                </div>
+                <div class="absolute top-0 right-0 w-96 h-96 bg-[#D17A61] rounded-full blur-[120px] opacity-[0.03] pointer-events-none"></div>
+                <div class="absolute bottom-0 left-0 w-96 h-96 bg-[#5F6D5E] rounded-full blur-[120px] opacity-[0.05] pointer-events-none"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 2: The Problem -->
+    <section class="slide" style="background-color: #FDFBF7;">
+        <div class="slide-inner flex flex-col p-16">
+            <div class="mb-12">
+                <h1 class="serif text-6xl font-semibold mb-4">The Problem: <span class="accent-coral italic">Living by Default</span></h1>
+                <p class="text-2xl text-gray-600 max-w-3xl">The Modern Predicament: We are data-rich, but insight-poor.</p>
+            </div>
+            <div class="grid grid-cols-2 gap-8 flex-grow">
+                <div class="flex items-start p-6 bg-white rounded-xl shadow-sm border-l-4 border-sage">
+                    <i class="fa-solid fa-bell-on text-3xl accent-sage mr-6 mt-1"></i>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Information Overload</h3>
+                        <p class="text-gray-600 leading-relaxed">Constant bombardment from wearables, apps, and notifications creates noise rather than clarity.</p>
+                    </div>
+                </div>
+                <div class="flex items-start p-6 bg-white rounded-xl shadow-sm border-l-4 border-sage">
+                    <i class="fa-solid fa-layer-group text-3xl accent-sage mr-6 mt-1"></i>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Siloed Insights</h3>
+                        <p class="text-gray-600 leading-relaxed">Biological and digital data exist in isolation, preventing a holistic understanding of our well-being.</p>
+                    </div>
+                </div>
+                <div class="flex items-start p-6 bg-white rounded-xl shadow-sm border-l-4 border-sage">
+                    <i class="fa-solid fa-arrow-pointer text-3xl accent-sage mr-6 mt-1"></i>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Reactive Living</h3>
+                        <p class="text-gray-600 leading-relaxed">Algorithms and societal pressures push us toward constant reaction instead of intentional action.</p>
+                    </div>
+                </div>
+                <div class="flex items-start p-6 bg-white rounded-xl shadow-sm border-l-4 border-sage">
+                    <i class="fa-solid fa-robot text-3xl accent-sage mr-6 mt-1"></i>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Task-Centric AI</h3>
+                        <p class="text-gray-600 leading-relaxed">Current AI helps us "do" tasks but lacks the long-term context to help us "understand" ourselves.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 p-8 bg-[#F5F2ED] rounded-2xl flex items-center justify-between border border-gray-200">
+                <div class="flex-1">
+                    <h4 class="serif text-3xl accent-coral font-semibold mb-1">The Consequence</h4>
+                    <p class="text-xl text-gray-700">A life lacking clarity, reflection, and agency—where technology dictates rather than empowers.</p>
+                </div>
+                <div class="ml-12 px-6 py-3 bg-accent-coral text-white rounded-full font-medium shadow-md">Regain Your Agency</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 3: Our Vision -->
+    <section class="slide" style="background-color: #FAF7F2;">
+        <div class="slide-inner flex flex-col p-16 justify-between">
+            <div class="mb-4">
+                <h1 class="font-serif text-6xl text-[#2D2621] mb-4">Our Vision: <span class="text-[#D17A61]">Intentional Living</span></h1>
+                <p class="text-2xl font-light text-[#5F6D5E] max-w-4xl">
+                    We believe technology should strengthen your self-knowledge and agency, moving you from a life lived by default to one lived with purpose.
+                </p>
+            </div>
+            <div class="flex flex-row gap-8 items-stretch flex-grow my-12">
+                <div class="flex-1 flex flex-col p-10 bg-white rounded-2xl card-shadow border-t-4 border-[#D17A61]">
+                    <div class="mb-6 flex items-center justify-center w-16 h-16 rounded-full bg-[#FAF7F2]">
+                        <i class="fa-solid fa-lightbulb text-2xl text-[#D17A61]"></i>
+                    </div>
+                    <h3 class="font-serif text-3xl mb-4">Clarity</h3>
+                    <p class="text-lg text-gray-600 leading-relaxed">Deeply understanding what truly matters—your values, goals, and the necessary trade-offs for a meaningful life.</p>
+                </div>
+                <div class="flex-1 flex flex-col p-10 bg-white rounded-2xl card-shadow border-t-4 border-[#5F6D5E]">
+                    <div class="mb-6 flex items-center justify-center w-16 h-16 rounded-full bg-[#FAF7F2]">
+                        <i class="fa-solid fa-clock-rotate-left text-2xl text-[#5F6D5E]"></i>
+                    </div>
+                    <h3 class="font-serif text-3xl mb-4">Reflection</h3>
+                    <p class="text-lg text-gray-600 leading-relaxed">Actively learning from experience by looking back at what happened, why it happened, and how it shaped you.</p>
+                </div>
+                <div class="flex-1 flex flex-col p-10 bg-white rounded-2xl card-shadow border-t-4 border-[#2D2621]">
+                    <div class="mb-6 flex items-center justify-center w-16 h-16 rounded-full bg-[#FAF7F2]">
+                        <i class="fa-solid fa-feather-pointed text-2xl text-[#2D2621]"></i>
+                    </div>
+                    <h3 class="font-serif text-3xl mb-4">Agency</h3>
+                    <p class="text-lg text-gray-600 leading-relaxed">Being the primary author of your life story, acting from awareness rather than inertia or external pressure.</p>
+                </div>
+            </div>
+            <div class="bg-[#F5F2ED] p-8 rounded-2xl flex items-center border border-[#E8E4DE]">
+                <span class="px-4 py-2 bg-[#D17A61] text-white rounded-lg font-semibold text-sm tracking-widest uppercase mr-8">The Goal</span>
+                <p class="text-xl font-medium text-[#2D2621]">Oria AI builds a foundation for a life lived with <span class="italic font-serif">purpose</span>, not just efficiency.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 4: Evolvable Digital Self -->
+    <section class="slide" style="background-color: #FDFBF7;">
+        <div class="slide-inner flex flex-col p-16">
+            <div class="mb-10 text-center">
+                <h1 class="serif text-5xl font-semibold mb-4">The <span class="accent-coral italic">Evolvable Digital Self</span></h1>
+                <p class="text-xl text-gray-600 max-w-4xl mx-auto italic leading-relaxed">
+                    "A dynamic, machine-maintained representation of an individual, built from their own data, continuously revised, and used to support reasoning about that individual."
+                </p>
+            </div>
+            <div class="flex gap-12 flex-grow">
+                <div class="flex-1 space-y-6">
+                    <h2 class="text-2xl font-semibold accent-sage uppercase tracking-wider mb-4 border-b-2 border-sage-light pb-2">Key Characteristics</h2>
+                    <div class="flex items-center p-5 bg-white rounded-xl shadow-sm border border-gray-100">
+                        <div class="w-14 h-14 bg-sage-light rounded-full flex items-center justify-center mr-5 flex-shrink-0">
+                            <i class="fa-solid fa-database text-xl accent-sage"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">Data-Derived</h3>
+                            <p class="text-sm text-gray-600">Built from behavioral, physiological, and contextual data streams.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center p-5 bg-white rounded-xl shadow-sm border border-gray-100">
+                        <div class="w-14 h-14 bg-sage-light rounded-full flex items-center justify-center mr-5 flex-shrink-0">
+                            <i class="fa-solid fa-arrows-rotate text-xl accent-sage"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">Temporally Updated</h3>
+                            <p class="text-sm text-gray-600">Continuously revised as new data arrives, reflecting your evolution over time.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center p-5 bg-white rounded-xl shadow-sm border border-gray-100">
+                        <div class="w-14 h-14 bg-sage-light rounded-full flex items-center justify-center mr-5 flex-shrink-0">
+                            <i class="fa-solid fa-brain text-xl accent-sage"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">Inference-Capable</h3>
+                            <p class="text-sm text-gray-600">Supports predictive, explanatory, and reflective reasoning about your life.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1">
+                    <div class="bg-gray-800 text-white rounded-2xl p-8 h-full flex flex-col">
+                        <h2 class="serif text-3xl font-semibold mb-6 text-[#D97757]">The EDS Distinction</h2>
+                        <p class="text-gray-300 mb-8 text-sm uppercase tracking-[0.2em]">What it is NOT vs What it IS</p>
+                        <ul class="space-y-6 flex-grow">
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-circle-xmark text-red-400 mt-1 mr-4"></i>
+                                <div>
+                                    <span class="font-bold block">Static Profiles</span>
+                                    <span class="text-sm text-gray-400">Not a fixed demographic list; it is a living model.</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-circle-xmark text-red-400 mt-1 mr-4"></i>
+                                <div>
+                                    <span class="font-bold block">Dashboards Only</span>
+                                    <span class="text-sm text-gray-400">More than visualization; it's a persistent, queryable engine.</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-circle-xmark text-red-400 mt-1 mr-4"></i>
+                                <div>
+                                    <span class="font-bold block">Single-App Models</span>
+                                    <span class="text-sm text-gray-400">Not confined to one tool; it is your reusable digital core.</span>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="mt-8 pt-6 border-t border-gray-700">
+                            <p class="text-sm italic text-gray-400">"EDS provides the external structure for reasoning that current task-centric AI lacks."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 5: Bio-Digital Synthesis -->
+    <section class="slide" style="background-color: #FAF7F2;">
+        <div class="slide-inner flex flex-col p-16">
+            <div class="mb-10 text-center">
+                <h1 class="serif text-6xl mb-4">Our Approach: <span class="text-bio italic">Bio-Digital Synthesis</span></h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">The integration of biological and digital data into a unified, evolving model for real understanding.</p>
+            </div>
+            <div class="flex items-stretch gap-8 mb-12 h-64">
+                <div class="flex-1 p-8 rounded-2xl bg-bio-light border border-[#D17A61] border-opacity-20 flex flex-col justify-center">
+                    <div class="flex items-center gap-4 mb-4">
+                        <i class="fa-solid fa-heart-pulse text-3xl text-bio"></i>
+                        <h3 class="text-2xl font-bold text-bio">Biological Data</h3>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-3 font-semibold uppercase tracking-wider">Physiological Signals</p>
+                    <ul class="text-lg space-y-1">
+                        <li>• Sleep & Heart Rate</li>
+                        <li>• Activity Levels</li>
+                        <li>• Stress Markers</li>
+                    </ul>
+                </div>
+                <div class="flex items-center justify-center"><div class="text-4xl text-gray-300 font-light">+</div></div>
+                <div class="flex-1 p-8 rounded-2xl bg-digital-light border border-[#5F6D5E] border-opacity-20 flex flex-col justify-center">
+                    <div class="flex items-center gap-4 mb-4">
+                        <i class="fa-solid fa-calendar-days text-3xl text-digital"></i>
+                        <h3 class="text-2xl font-bold text-digital">Digital Data</h3>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-3 font-semibold uppercase tracking-wider">Context & Behavior</p>
+                    <ul class="text-lg space-y-1">
+                        <li>• Calendar & Location</li>
+                        <li>• App Usage Patterns</li>
+                        <li>• Notes & Goals</li>
+                    </ul>
+                </div>
+                <div class="flex items-center justify-center"><div class="text-4xl text-gray-300 font-light">=</div></div>
+                <div class="flex-1 p-8 rounded-2xl bg-white shadow-md border border-gray-100 flex flex-col justify-center">
+                    <div class="flex items-center gap-4 mb-4">
+                        <i class="fa-solid fa-brain text-3xl text-[#2D2621]"></i>
+                        <h3 class="text-2xl font-bold">Synthesis</h3>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-3 font-semibold uppercase tracking-wider">Joint Reasoning</p>
+                    <ul class="text-lg space-y-1 italic text-gray-700">
+                        <li>"Why am I tired?"</li>
+                        <li>"What patterns precede burnout?"</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="grid grid-cols-3 gap-10">
+                <div class="space-y-3">
+                    <h4 class="font-bold text-lg border-b-2 border-[#D17A61] w-fit pb-1">Beyond Silos</h4>
+                    <p class="text-gray-600 leading-relaxed">Connects disparate points (e.g., poor sleep + travel) to reveal comprehensive patterns.</p>
+                </div>
+                <div class="space-y-3">
+                    <h4 class="font-bold text-lg border-b-2 border-[#5F6D5E] w-fit pb-1">Contextual Clarity</h4>
+                    <p class="text-gray-600 leading-relaxed">Explains *why* things happen by linking biological states to digital context.</p>
+                </div>
+                <div class="space-y-3">
+                    <h4 class="font-bold text-lg border-b-2 border-gray-400 w-fit pb-1">Whole-Person View</h4>
+                    <p class="text-gray-600 leading-relaxed">Provides a holistic view of your biology within the context of your life.</p>
+                </div>
+            </div>
+            <div class="mt-auto pt-8 border-t border-gray-200">
+                <p class="serif text-2xl text-center italic text-[#2D2621]">"Synthesizing biological reality with digital behavior to empower intentional choices."</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 6: Design Philosophy -->
+    <section class="slide" style="background-color: #FAF7F2;">
+        <div class="slide-inner flex flex-col p-16">
+            <div class="mb-10">
+                <h1 class="font-serif text-5xl mb-3 whitespace-nowrap">Our Design Philosophy: <span class="text-[#D17A61] italic">Human-Centered Personal AI</span></h1>
+                <p class="text-xl text-gray-600 border-l-4 border-[#5F6D5E] pl-4 italic">"We build technology around the person, not the task."</p>
+            </div>
+            <div class="flex gap-10 flex-grow mb-10">
+                <div class="grid grid-cols-2 gap-4 h-full flex-grow">
+                    <div class="bg-gray-100/50 p-6 rounded-xl border border-gray-200">
+                        <div class="flex items-center mb-4">
+                            <i class="fa-solid fa-list-check text-gray-400 mr-3 text-2xl"></i>
+                            <h3 class="text-xl font-semibold uppercase tracking-wider text-gray-500">Task-Centric AI</h3>
+                        </div>
+                        <ul class="space-y-3 text-gray-600">
+                            <li class="flex items-start"><i class="fa-solid fa-circle text-[8px] mt-2 mr-2"></i> Focus: Immediate task completion</li>
+                            <li class="flex items-start"><i class="fa-solid fa-circle text-[8px] mt-2 mr-2"></i> Logic: Stateless, in-the-moment reasoning</li>
+                            <li class="flex items-start"><i class="fa-solid fa-circle text-[8px] mt-2 mr-2"></i> Output: Generic, one-size-fits-all advice</li>
+                            <li class="flex items-start"><i class="fa-solid fa-circle text-[8px] mt-2 mr-2"></i> Goal: Optimization for efficiency</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-[#D17A61]/30">
+                        <div class="flex items-center mb-4">
+                            <i class="fa-solid fa-heart-pulse text-[#D17A61] mr-3 text-2xl"></i>
+                            <h3 class="text-xl font-semibold uppercase tracking-wider text-[#D17A61]">Human-Centered AI</h3>
+                        </div>
+                        <ul class="space-y-3 text-[#2D2621]">
+                            <li class="flex items-start"><i class="fa-solid fa-circle text-[8px] mt-2 mr-2 text-[#D17A61]"></i> Focus: Long-term personal growth</li>
+                            <li class="flex items-start"><i class="fa-solid fa-circle text-[8px] mt-2 mr-2 text-[#D17A61]"></i> Logic: Longitudinal, evolving state (EDS)</li>
+                            <li class="flex items-start"><i class="fa-solid fa-circle text-[8px] mt-2 mr-2 text-[#D17A61]"></i> Output: Contextual, deep personal patterns</li>
+                            <li class="flex items-start"><i class="fa-solid fa-circle text-[8px] mt-2 mr-2 text-[#D17A61]"></i> Goal: Agency and self-understanding</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-4 gap-6">
+                <div class="text-center">
+                    <i class="fa-solid fa-user-gear text-[#5F6D5E] text-2xl mb-2"></i>
+                    <p class="font-semibold text-sm">Unit of Value: Life</p>
+                    <p class="text-xs text-gray-500 mt-1">Success = personal flourishing, not tasks.</p>
+                </div>
+                <div class="text-center">
+                    <i class="fa-solid fa-timeline text-[#5F6D5E] text-2xl mb-2"></i>
+                    <p class="font-semibold text-sm">Longitudinal View</p>
+                    <p class="text-xs text-gray-500 mt-1">Seeing patterns over months and years.</p>
+                </div>
+                <div class="text-center">
+                    <i class="fa-solid fa-lightbulb text-[#5F6D5E] text-2xl mb-2"></i>
+                    <p class="font-semibold text-sm">Reflection First</p>
+                    <p class="text-xs text-gray-500 mt-1">Insight precedes automation.</p>
+                </div>
+                <div class="text-center">
+                    <i class="fa-solid fa-shield-halved text-[#5F6D5E] text-2xl mb-2"></i>
+                    <p class="font-semibold text-sm">User Sovereignty</p>
+                    <p class="text-xs text-gray-500 mt-1">User's goals and boundaries drive design.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 7: Use Cases -->
+    <section class="slide" style="background-color: #FAF7F2;">
+        <div class="slide-inner flex flex-col p-16">
+            <div class="mb-10 text-left">
+                <h1 class="serif text-5xl font-bold mb-2">Use Cases & <span class="accent-coral italic">The Life Flow Social Layer</span></h1>
+                <p class="text-xl text-gray-600 font-light">From personal transformation to authentic social connection.</p>
+            </div>
+            <div class="flex flex-row gap-12 flex-grow">
+                <div class="w-1/2 flex flex-col gap-6">
+                    <h2 class="text-xs uppercase tracking-[0.2em] text-[#5F6D5E] font-bold mb-2">Empowering Use Cases</h2>
+                    <div class="flex items-center p-5 bg-white rounded-xl shadow-sm border-l-4 border-[#D17A61]">
+                        <div class="w-12 h-12 flex items-center justify-center bg-[#FAF7F2] rounded-lg mr-5">
+                            <i class="fa-solid fa-arrows-split-up-and-left text-xl accent-coral"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">Life Transitions</h3>
+                            <p class="text-sm text-gray-500">Navigating patterns during major moves or career changes.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center p-5 bg-white rounded-xl shadow-sm border-l-4 border-[#D17A61]">
+                        <div class="w-12 h-12 flex items-center justify-center bg-[#FAF7F2] rounded-lg mr-5">
+                            <i class="fa-solid fa-heart-pulse text-xl accent-coral"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">Well-being & Prevention</h3>
+                            <p class="text-sm text-gray-500">Identifying early signals of burnout or mood shifts.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center p-5 bg-white rounded-xl shadow-sm border-l-4 border-[#D17A61]">
+                        <div class="w-12 h-12 flex items-center justify-center bg-[#FAF7F2] rounded-lg mr-5">
+                            <i class="fa-solid fa-bullseye text-xl accent-coral"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">Values Alignment</h3>
+                            <p class="text-sm text-gray-500">Closing the gap between stated values and actual time spend.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-1/2 bg-[#F5F1EB] rounded-2xl p-8 flex flex-col justify-between border border-[#E8E1D5]">
+                    <div>
+                        <h2 class="text-xs uppercase tracking-[0.2em] text-[#D17A61] font-bold mb-4">The Social Paradigm</h2>
+                        <h3 class="serif text-3xl font-bold mb-4">Life Flow: Authentic Connection</h3>
+                        <p class="text-gray-700 leading-relaxed mb-6">A permission-based view into how you truly live. Moving away from curated personas to the genuine rhythm of life.</p>
+                        <div class="flex items-center justify-between gap-4 mt-4">
+                            <div class="flex-1 bg-white p-4 rounded-lg text-center shadow-sm">
+                                <span class="block text-xs uppercase font-bold text-gray-400 mb-1">Old</span>
+                                <span class="text-sm font-semibold">Curated Persona</span>
+                            </div>
+                            <div class="text-[#D17A61]"><i class="fa-solid fa-arrow-right"></i></div>
+                            <div class="flex-1 bg-sage p-4 rounded-lg text-center shadow-sm text-white">
+                                <span class="block text-xs uppercase font-bold opacity-70 mb-1">New</span>
+                                <span class="text-sm font-semibold italic">Authentic Flow</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-8 pt-6 border-t border-[#E8E1D5]">
+                        <div class="grid grid-cols-3 gap-4 text-center">
+                            <div><i class="fa-solid fa-user-check text-[#D17A61] text-lg mb-1"></i><p class="text-[10px] uppercase font-bold tracking-wider">Passive</p></div>
+                            <div><i class="fa-solid fa-leaf text-[#D17A61] text-lg mb-1"></i><p class="text-[10px] uppercase font-bold tracking-wider">Genuine</p></div>
+                            <div><i class="fa-solid fa-water text-[#D17A61] text-lg mb-1"></i><p class="text-[10px] uppercase font-bold tracking-wider">Fluid</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 flex items-center justify-center">
+                <p class="text-sm italic text-gray-400">"A GitHub contribution graph for your entire life."</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 8: Technical Architecture -->
+    <section class="slide" style="background-color: #FAF7F2;">
+        <div class="slide-inner p-16 flex flex-col justify-between">
+            <div class="mb-4">
+                <h1 class="font-serif text-5xl mb-2 text-[#2D2621]">Technical Architecture</h1>
+                <p class="text-xl text-[#5F6D5E] tracking-wide">The Four-Layer Foundation of the Evolvable Digital Self</p>
+            </div>
+            <div class="flex flex-col gap-4 flex-grow justify-center">
+                <div class="layer-card bg-white p-5 rounded-xl border border-[#D17A61]/20 shadow-sm flex items-center">
+                    <div class="w-16 h-16 bg-[#D17A61] flex items-center justify-center rounded-lg mr-6 text-white text-2xl"><i class="fa-solid fa-brain"></i></div>
+                    <div class="flex-grow">
+                        <div class="flex justify-between items-center mb-1">
+                            <h3 class="font-bold text-lg uppercase tracking-wider text-[#D17A61]">Layer 4: Inference & Use</h3>
+                            <span class="text-xs bg-[#D17A61]/10 text-[#D17A61] px-2 py-1 rounded">Intelligence</span>
+                        </div>
+                        <p class="text-sm text-[#2D2621]">Supports <span class="font-semibold">Predictive, Explanatory, and Reflective queries</span> using rule-based logic and LLMs over retrieved context.</p>
+                    </div>
+                </div>
+                <div class="layer-card bg-white p-5 rounded-xl border border-[#5F6D5E]/20 shadow-sm flex items-center">
+                    <div class="w-16 h-16 bg-[#5F6D5E] flex items-center justify-center rounded-lg mr-6 text-white text-2xl"><i class="fa-solid fa-arrows-rotate"></i></div>
+                    <div class="flex-grow">
+                        <div class="flex justify-between items-center mb-1">
+                            <h3 class="font-bold text-lg uppercase tracking-wider text-[#5F6D5E]">Layer 3: Evolution (Update)</h3>
+                            <span class="text-xs bg-[#5F6D5E]/10 text-[#5F6D5E] px-2 py-1 rounded">Adaptation</span>
+                        </div>
+                        <p class="text-sm text-[#2D2621]">Manages <span class="font-semibold">concept drift, incremental updates, and privacy controls</span> to keep the model current with user changes.</p>
+                    </div>
+                </div>
+                <div class="layer-card bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex items-center">
+                    <div class="w-16 h-16 bg-[#2D2621] flex items-center justify-center rounded-lg mr-6 text-white text-2xl"><i class="fa-solid fa-diagram-project"></i></div>
+                    <div class="flex-grow">
+                        <div class="flex justify-between items-center mb-1">
+                            <h3 class="font-bold text-lg uppercase tracking-wider text-[#2D2621]">Layer 2: Representation</h3>
+                            <span class="text-xs bg-gray-100 text-[#2D2621] px-2 py-1 rounded">Modeling</span>
+                        </div>
+                        <p class="text-sm text-[#2D2621]">Combines <span class="font-semibold">Graphs (entities/relations)</span>, Time Series, and <span class="font-semibold">Embeddings</span> for semantic search and narrative abstraction.</p>
+                    </div>
+                </div>
+                <div class="layer-card bg-gray-50 p-5 rounded-xl border border-dashed border-gray-300 flex items-center">
+                    <div class="w-16 h-16 bg-gray-400 flex items-center justify-center rounded-lg mr-6 text-white text-2xl"><i class="fa-solid fa-database"></i></div>
+                    <div class="flex-grow">
+                        <div class="flex justify-between items-center mb-1">
+                            <h3 class="font-bold text-lg uppercase tracking-wider text-gray-600">Layer 1: Data Integration</h3>
+                            <span class="text-xs bg-gray-200 text-gray-600 px-2 py-1 rounded">Foundation</span>
+                        </div>
+                        <p class="text-sm text-gray-600 italic">Synthesizes <span class="font-medium">Physiological (Bio), Behavioral (Digital), and Declarative</span> data into a normalized temporal schema.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-6 flex justify-between items-center border-t border-gray-200 pt-4">
+                <div class="flex gap-8">
+                    <div class="flex items-center gap-2 text-xs uppercase tracking-widest text-[#5F6D5E]"><i class="fa-solid fa-shield-halved"></i> Privacy-First Design</div>
+                    <div class="flex items-center gap-2 text-xs uppercase tracking-widest text-[#5F6D5E]"><i class="fa-solid fa-bolt"></i> Low-Latency Updates</div>
+                    <div class="flex items-center gap-2 text-xs uppercase tracking-widest text-[#5F6D5E]"><i class="fa-solid fa-scale-balanced"></i> Holistic Inference</div>
+                </div>
+                <div class="text-xs font-serif italic text-[#D17A61]">Proprietary Architecture by Oria AI</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 9: Ethics & Privacy -->
+    <section class="slide" style="background-color: #FAF7F2;">
+        <div class="slide-inner w-full p-16 flex flex-col justify-between">
+            <header>
+                <h1 class="font-serif text-5xl text-[#2D2621] mb-4">Ethics, Privacy & Control: <span class="text-[#D17A61]">Our Commitment</span></h1>
+                <p class="text-xl text-[#5F6D5E] font-light max-w-3xl leading-relaxed">
+                    We recognize the profound responsibility of building an Evolvable Digital Self. Oria AI is designed to serve the person, not the platform.
+                </p>
+            </header>
+            <main class="grid grid-cols-3 gap-6 my-8">
+                <div class="principle-card p-6 rounded-2xl">
+                    <i class="fa-solid fa-shield-halved text-3xl text-[#D17A61] mb-4"></i>
+                    <h3 class="font-semibold text-lg mb-2">Ownership & Control</h3>
+                    <p class="text-sm text-[#5F6D5E] leading-snug">User-primary say over data inclusion, retention, access, and deletion. Supported by local-first design.</p>
+                </div>
+                <div class="principle-card p-6 rounded-2xl">
+                    <i class="fa-solid fa-magnifying-glass-chart text-3xl text-[#D17A61] mb-4"></i>
+                    <h3 class="font-semibold text-lg mb-2">Interpretability</h3>
+                    <p class="text-sm text-[#5F6D5E] leading-snug">Transparent inferences. Users understand <i>why</i> conclusions are reached, fostering trust and agency.</p>
+                </div>
+                <div class="principle-card p-6 rounded-2xl">
+                    <i class="fa-solid fa-sliders text-3xl text-[#D17A61] mb-4"></i>
+                    <h3 class="font-semibold text-lg mb-2">Granular Consent</h3>
+                    <p class="text-sm text-[#5F6D5E] leading-snug">Consent is specific to data sources and uses. The scope of the "self" remains clear to the user.</p>
+                </div>
+                <div class="principle-card p-6 rounded-2xl">
+                    <i class="fa-solid fa-user-lock text-3xl text-[#D17A61] mb-4"></i>
+                    <h3 class="font-semibold text-lg mb-2">Protection Against Misuse</h3>
+                    <p class="text-sm text-[#5F6D5E] leading-snug">Strong legal and technical safeguards protect against potential abuse by third parties or advertisers.</p>
+                </div>
+                <div class="principle-card p-6 rounded-2xl">
+                    <i class="fa-solid fa-compass text-3xl text-[#D17A61] mb-4"></i>
+                    <h3 class="font-semibold text-lg mb-2">Augmenting Agency</h3>
+                    <p class="text-sm text-[#5F6D5E] leading-snug">System supports user goals without dictating. Suggestions are invitations, not commands.</p>
+                </div>
+                <div class="principle-card p-6 rounded-2xl flex flex-col justify-center items-center text-center bg-[#D17A61] bg-opacity-5">
+                    <p class="font-serif italic text-[#D17A61] text-base px-2">"A tool for your agency, not a product that optimizes you for others."</p>
+                </div>
+            </main>
+            <footer class="bg-white bg-opacity-40 p-8 rounded-3xl border border-[#5F6D5E] border-opacity-10">
+                <div class="flex items-center space-x-8">
+                    <div class="flex-1">
+                        <h4 class="text-xs uppercase tracking-[0.2em] font-semibold text-[#5F6D5E] mb-2">Our Core Promise</h4>
+                        <p class="text-xl font-serif text-[#2D2621] whitespace-nowrap">Data sovereignty is not a feature; it is the foundation of the Evolvable Digital Self.</p>
+                    </div>
+                    <div class="flex-shrink-0 flex space-x-4">
+                        <div class="px-4 py-2 bg-[#5F6D5E] text-white rounded-full text-xs font-semibold tracking-wider">ENCRYPTION</div>
+                        <div class="px-4 py-2 bg-[#5F6D5E] text-white rounded-full text-xs font-semibold tracking-wider">LOCAL-FIRST</div>
+                        <div class="px-4 py-2 bg-[#5F6D5E] text-white rounded-full text-xs font-semibold tracking-wider">CONSENT-DRIVEN</div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </section>
+
+    <!-- Slide 10: Oria AI Difference -->
+    <section class="slide" style="background-color: #FDFBF7;">
+        <div class="slide-inner flex flex-col p-16">
+            <div class="mb-10 text-center">
+                <h1 class="serif text-6xl font-semibold mb-4">The <span class="accent-coral italic">Oria AI</span> Difference</h1>
+                <p class="text-xl text-gray-600">Shifting the paradigm from task-centric tools to human-centered intelligence.</p>
+            </div>
+            <div class="flex flex-grow gap-12 items-stretch mb-8">
+                <div class="flex-1 flex flex-col bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
+                    <div class="bg-gray-100 p-6 text-center">
+                        <h2 class="text-2xl font-bold text-gray-400 uppercase tracking-widest">Traditional AI</h2>
+                        <p class="text-sm text-gray-400 mt-1">Task-Centric Models</p>
+                    </div>
+                    <div class="flex-grow p-6 space-y-6">
+                        <div class="p-5 bg-white rounded-lg border border-gray-100 flex items-center">
+                            <i class="fa-solid fa-bullseye text-2xl text-gray-300 mr-4"></i>
+                            <p class="text-gray-500 font-medium">Efficient task processing and immediate problem solving.</p>
+                        </div>
+                        <div class="p-5 bg-white rounded-lg border border-gray-100 flex items-center">
+                            <i class="fa-solid fa-database text-2xl text-gray-300 mr-4"></i>
+                            <p class="text-gray-500 font-medium">Limited to current input (e.g., pasted text or single session).</p>
+                        </div>
+                        <div class="p-5 bg-white rounded-lg border border-gray-100 flex items-center">
+                            <i class="fa-solid fa-lightbulb text-2xl text-gray-300 mr-4"></i>
+                            <p class="text-gray-500 font-medium">Generic advice like sleep hygiene or stress management.</p>
+                        </div>
+                        <div class="p-5 bg-white rounded-lg border border-gray-100 flex items-center">
+                            <i class="fa-solid fa-brain text-2xl text-gray-300 mr-4"></i>
+                            <p class="text-gray-500 font-medium">Stateless, in-the-moment reasoning lacking personal history.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1 flex flex-col oria-card bg-white rounded-2xl overflow-hidden border-l-4 border-[#D17A61]">
+                    <div class="bg-accent-coral p-6 text-white text-center">
+                        <h2 class="text-2xl font-bold uppercase tracking-widest">Oria AI</h2>
+                        <p class="text-sm opacity-90 text-white mt-1">Human-Centered Personal AI</p>
+                    </div>
+                    <div class="flex-grow p-6 space-y-6 bg-[rgba(217,119,87,0.05)]">
+                        <div class="p-5 bg-white rounded-lg shadow-sm flex items-center border-l-4 border-accent-coral">
+                            <i class="fa-solid fa-heart-pulse text-2xl accent-coral mr-4"></i>
+                            <p class="text-gray-800 font-semibold">Empowering self-understanding and intentional living.</p>
+                        </div>
+                        <div class="p-5 bg-white rounded-lg shadow-sm flex items-center border-l-4 border-accent-coral">
+                            <i class="fa-solid fa-infinity text-2xl accent-coral mr-4"></i>
+                            <p class="text-gray-800 font-semibold">Access to longitudinal Bio-Digital data over months & years.</p>
+                        </div>
+                        <div class="p-5 bg-white rounded-lg shadow-sm flex items-center border-l-4 border-accent-coral">
+                            <i class="fa-solid fa-sparkles text-2xl accent-coral mr-4"></i>
+                            <p class="text-gray-800 font-semibold">Contextual insights linking biology to your specific life rhythm.</p>
+                        </div>
+                        <div class="p-5 bg-white rounded-lg shadow-sm flex items-center border-l-4 border-accent-coral">
+                            <i class="fa-solid fa-arrow-trend-up text-2xl accent-coral mr-4"></i>
+                            <p class="text-gray-800 font-semibold">Pattern identification and predictive personal reasoning.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center py-4 px-12 bg-white rounded-full border border-accent-coral/20 shadow-sm mx-auto">
+                <p class="serif text-2xl font-semibold italic text-[#2D2621]">"Oria AI: Your partner in a life lived with <span class="accent-coral">purpose</span>, not just efficiency."</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 11: Join the Movement -->
+    <section class="slide" style="background-color: #FAF7F2;">
+        <div class="slide-inner flex flex-col items-center justify-center p-20">
+            <div class="text-center mb-12">
+                <h1 class="font-serif text-6xl mb-6">Join the Movement</h1>
+                <p class="text-2xl text-[#5F6D5E] max-w-2xl mx-auto leading-relaxed">
+                    Shape the future of personal AI and start your journey toward a life lived with purpose.
+                </p>
+            </div>
+            <div class="flex justify-center w-full max-w-5xl mb-16">
+                <div class="cta-card p-10 rounded-2xl border border-[#E5E1DA] shadow-sm flex flex-col items-center text-center max-w-md">
+                    <div class="w-16 h-16 bg-[#D17A61] rounded-full flex items-center justify-center mb-6">
+                        <i class="fa-brands fa-apple text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-3">Download the App</h3>
+                    <p class="text-[#5F6D5E] mb-6">Oria AI is now available on the App Store. Start your journey toward intentional living.</p>
+                    <a class="px-8 py-3 bg-[#D17A61] text-white rounded-full font-semibold hover:bg-[#b86650] transition-colors" href="https://apps.apple.com/us/app/oria-ai-evolvable-personal-ai/id6758279152">Download on App Store</a>
+                </div>
+            </div>
+            <div class="w-full max-w-5xl border-t border-[#E5E1DA] pt-10 flex justify-between items-center">
+                <div class="flex gap-12">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-globe text-[#D17A61]"></i>
+                        <a class="text-lg font-medium hover:text-[#D17A61]" href="https://oria.me/">oria.me</a>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-newspaper text-[#D17A61]"></i>
+                        <a class="text-lg font-medium hover:text-[#D17A61]" href="https://oria.me/blog">oria.me/blog</a>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <p class="font-serif italic text-2xl text-[#2D2621]">Oria AI: Your partner in <span class="text-[#D17A61]">Intentional Living.</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <nav class="slide-indicator" aria-label="Slide navigation">
+        <span data-slide="1" class="active"></span>
+        <span data-slide="2"></span>
+        <span data-slide="3"></span>
+        <span data-slide="4"></span>
+        <span data-slide="5"></span>
+        <span data-slide="6"></span>
+        <span data-slide="7"></span>
+        <span data-slide="8"></span>
+        <span data-slide="9"></span>
+        <span data-slide="10"></span>
+        <span data-slide="11"></span>
+    </nav>
+    <script>
+        (function() {
+            const slides = document.querySelectorAll('.slide');
+            const indicators = document.querySelectorAll('.slide-indicator span');
+            const updateIndicator = () => {
+                const scrollY = window.scrollY;
+                const vh = window.innerHeight;
+                const current = Math.round(scrollY / vh) + 1;
+                const index = Math.min(Math.max(current, 1), slides.length) - 1;
+                indicators.forEach((ind, i) => ind.classList.toggle('active', i === index));
+            };
+            indicators.forEach((ind, i) => {
+                ind.addEventListener('click', () => {
+                    slides[i].scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+            window.addEventListener('scroll', updateIndicator, { passive: true });
+            window.addEventListener('resize', updateIndicator);
+            updateIndicator();
+        })();
+    </script>
+</body>
+</html>
