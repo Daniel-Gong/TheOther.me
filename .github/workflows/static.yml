@@ -40,7 +40,7 @@ jobs:
       - name: Prepare deployment
         run: |
           mkdir -p _site _site/.well-known
-          cp index.html privacy.html terms.html invite.html 404.html CNAME robots.txt sitemap.xml _site/
+          cp index.html privacy.html terms.html invite.html slideshow.html 404.html CNAME robots.txt sitemap.xml _site/
           [ -f _redirects ] && cp _redirects _site/
           for dir in blog assets css js admin; do
             [ -d "$dir" ] && cp -r "$dir" _site/
