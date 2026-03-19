@@ -93,4 +93,4 @@ We’re still early. The evolvable digital self is the technical backbone; Life 
 
 At Oria AI we’re building a new social paradigm around Life Flow: you grant others permission to see your authentic flow, like a GitHub contribution graph for your entire life. It’s passive, genuine, and fluid—a way to connect based on real, evolving identities.
 
-If you’re interested in being part of this early, you can [join our beta](https://testflight.apple.com/join/edVXvcNq) or [join the waitlist](/#waitlist) for updates.
+If you’re interested in being part of this early, you can [download the app on the App Store](https://apps.apple.com/us/app/oria-ai-evolvable-personal-ai/id6758279152) or [join the waitlist](/#waitlist) for updates.
