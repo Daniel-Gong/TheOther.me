@@ -516,10 +516,10 @@ h6 {
 }
 
 .more-card {
+    grid-column: 1 / -1;
     justify-content: center;
     align-items: center;
-    background-color: var(--bg-alt);
-    padding: 3rem;
+    padding: 2rem 0 1rem;
     text-align: center;
 }
 
