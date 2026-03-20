@@ -16,6 +16,10 @@
             "/": "/invite.html",
             "?": { "code": "*" },
             "comment": "Referral invite links (canonical)"
+          },
+          {
+            "/": "/u/*",
+            "comment": "Profile QR universal links"
           }
         ]
       }
