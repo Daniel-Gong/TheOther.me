@@ -1,6 +1,6 @@
 # Firebase Setup Instructions
 
-This guide will help you set up Firebase for the waitlist feature.
+This guide will help you set up Firebase for the website newsletter signup form (stored in the `waitlist` Firestore collection).
 
 ## Step 1: Create a Firebase Project
 
@@ -27,7 +27,7 @@ This guide will help you set up Firebase for the waitlist feature.
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Allow anyone to create waitlist entries (for signups)
+    // Allow anyone to create newsletter signup documents (waitlist collection)
     match /waitlist/{document=**} {
       // Allow creating documents with email validation
       allow create: if request.resource.data.email is string &&
@@ -123,31 +123,31 @@ const firebaseConfig = {
 ## Step 6: Test Your Setup
 
 1. Open your website in a browser
-2. Navigate to the waitlist section
+2. Navigate to the newsletter signup section (`/#newsletter` on the homepage)
 3. Enter an email address and submit
 4. Go to Firebase Console → Firestore Database
 5. You should see a new collection called `waitlist` with your test entry
 
 ## Optional: Set Up Email Notifications (Using Cloud Functions)
 
-If you want to send welcome emails when users join the waitlist, you can set up Firebase Cloud Functions:
+If you want to send welcome emails when users subscribe to the newsletter, you can set up Firebase Cloud Functions:
 
 1. Install Firebase CLI: `npm install -g firebase-tools`
 2. Login: `firebase login`
 3. Initialize functions: `firebase init functions`
-4. Create a function to trigger on new waitlist entries
+4. Create a function to trigger on new signup documents in the `waitlist` collection
 
-## Viewing Waitlist Entries
+## Viewing newsletter signups
 
-You can view all waitlist entries in Firebase Console:
+You can view all signup documents in Firebase Console:
 
 1. Go to **Firestore Database**
 2. Click on the `waitlist` collection
 3. You'll see all entries with email addresses and timestamps
 
-## Exporting Waitlist Data
+## Exporting signup data
 
-To export your waitlist data:
+To export your newsletter signup data:
 
 1. Go to Firestore Database
 2. Click the three dots menu → **Export collection**
@@ -155,7 +155,7 @@ To export your waitlist data:
 
 ## Security Best Practices
 
-1. **Restrict Read Access**: The security rules above prevent clients from reading the waitlist. Only authenticated admins should be able to read.
+1. **Restrict Read Access**: The security rules above prevent clients from reading signup documents. Only authenticated admins should be able to read.
 2. **Rate Limiting**: Consider implementing rate limiting in Cloud Functions to prevent spam
 3. **Email Validation**: The security rules validate email format on the server side
 4. **Monitor Usage**: Check Firebase Console → Usage and billing to monitor your usage

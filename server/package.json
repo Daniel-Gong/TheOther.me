@@ -1,7 +1,7 @@
 {
   "name": "theother-me-server",
   "version": "1.0.0",
-  "description": "Backend server for TheOther.me waitlist",
+  "description": "Backend server for TheOther.me newsletter signups",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

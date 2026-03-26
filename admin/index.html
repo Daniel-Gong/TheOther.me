@@ -41,7 +41,7 @@
         <div id="dashboard" class="container mx-auto px-4 py-8 hidden">
             <div class="bg-white rounded-lg shadow-md p-6">
                 <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-2xl font-bold">Waitlist Management</h2>
+                    <h2 class="text-2xl font-bold">Newsletter signups</h2>
                     <div class="space-x-4">
                         <button id="exportBtn" class="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
                             Export CSV
@@ -130,13 +130,13 @@
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = 'waitlist.csv';
+                a.download = 'newsletter-signups.csv';
                 document.body.appendChild(a);
                 a.click();
                 window.URL.revokeObjectURL(url);
                 a.remove();
             } catch (error) {
-                alert('Failed to export waitlist');
+                alert('Failed to export newsletter signups');
             }
         });
 
@@ -153,7 +153,7 @@
             document.getElementById('dashboard').classList.add('hidden');
         }
 
-        // Load waitlist data
+        // Load newsletter signup data
         async function loadWaitlist() {
             try {
                 const response = await fetch(`${API_URL}/waitlist`, {
@@ -163,7 +163,7 @@
                 });
 
                 if (!response.ok) {
-                    throw new Error('Failed to load waitlist');
+                    throw new Error('Failed to load newsletter signups');
                 }
 
                 const entries = await response.json();
@@ -177,7 +177,7 @@
                     </tr>
                 `).join('');
             } catch (error) {
-                alert('Failed to load waitlist');
+                alert('Failed to load newsletter signups');
                 if (error.message === 'Please authenticate as admin') {
                     showLoginForm();
                 }

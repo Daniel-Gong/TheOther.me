@@ -45,7 +45,6 @@ const NAV = `
             <div class="nav-links">
                 <a href="/#vision" class="nav-item">Vision</a>
                 <a href="/#ecosystem" class="nav-item">Ecosystem</a>
-                <a href="/#waitlist" class="nav-item">Waitlist</a>
                 <a href="/blog/" class="nav-item">Blog</a>
             </div>
             <div class="mobile-toggle"><i class="fas fa-bars"></i></div>

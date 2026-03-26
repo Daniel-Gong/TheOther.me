@@ -63,7 +63,7 @@ function showFallbackUI(code, options) {
     if (statusText) {
         statusText.textContent = code
             ? "Could not open app automatically. You can open it manually or install it first."
-            : "Invalid invite link. You can still install the app and join the waitlist.";
+            : "Invalid invite link. You can still install the app and join our newsletter on oria.me.";
     }
 
     if (code && codeChip) {

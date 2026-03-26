@@ -24,14 +24,14 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/theother-
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
-.then(() => {
-    console.log('Successfully connected to MongoDB');
-    console.log('MongoDB URI:', process.env.MONGODB_URI || 'mongodb://localhost:27017/theother-me');
-})
-.catch(err => {
-    console.error('MongoDB connection error:', err);
-    process.exit(1); // Exit if we can't connect to the database
-});
+    .then(() => {
+        console.log('Successfully connected to MongoDB');
+        console.log('MongoDB URI:', process.env.MONGODB_URI || 'mongodb://localhost:27017/theother-me');
+    })
+    .catch(err => {
+        console.error('MongoDB connection error:', err);
+        process.exit(1); // Exit if we can't connect to the database
+    });
 
 // Email transporter setup
 const transporter = nodemailer.createTransport({
@@ -106,9 +106,9 @@ const authenticateAdmin = async (req, res, next) => {
 // Routes
 app.post('/api/waitlist', async (req, res) => {
     try {
-        console.log('Received waitlist submission:', req.body);
+        console.log('Received newsletter signup:', req.body);
         const { email } = req.body;
-        
+
         if (!email) {
             console.log('No email provided');
             return res.status(400).json({ error: 'Email is required' });
@@ -124,24 +124,24 @@ app.post('/api/waitlist', async (req, res) => {
         const existingEmail = await Waitlist.findOne({ email });
         if (existingEmail) {
             console.log('Email already exists:', email);
-            return res.status(200).json({ message: 'You are already on the waitlist!' });
+            return res.status(200).json({ message: 'This email is already subscribed to the newsletter.' });
         }
 
-        // Create new waitlist entry
+        // Create new signup entry (Waitlist model / collection name unchanged)
         const waitlistEntry = new Waitlist({ email });
         await waitlistEntry.save();
-        console.log('Successfully saved email to waitlist:', email);
+        console.log('Successfully saved newsletter signup:', email);
 
         // Send confirmation email
         try {
             await transporter.sendMail({
                 from: process.env.EMAIL_USER,
                 to: email,
-                subject: 'Welcome to TheOther.me Waitlist!',
+                subject: 'Welcome to the Oria newsletter',
                 html: `
                     <h1>Welcome to TheOther.me!</h1>
-                    <p>Thank you for joining our waitlist. We'll keep you updated on our progress and let you know when we launch.</p>
-                    <p>Best regards,<br>TheOther.me Team</p>
+                    <p>Thank you for subscribing to our newsletter. You'll get product updates, early access news, and exclusive offers.</p>
+                    <p>Best regards,<br>Oria AI Team</p>
                 `
             });
             console.log('Confirmation email sent to:', email);
@@ -155,9 +155,9 @@ app.post('/api/waitlist', async (req, res) => {
             await transporter.sendMail({
                 from: process.env.EMAIL_USER,
                 to: process.env.ADMIN_EMAIL,
-                subject: 'New Waitlist Signup',
+                subject: 'New newsletter signup',
                 html: `
-                    <h1>New Waitlist Signup</h1>
+                    <h1>New newsletter signup</h1>
                     <p>Email: ${email}</p>
                     <p>Time: ${new Date().toLocaleString()}</p>
                 `
@@ -168,10 +168,10 @@ app.post('/api/waitlist', async (req, res) => {
             // Don't fail the request if email fails
         }
 
-        res.status(201).json({ message: 'Successfully joined the waitlist!' });
+        res.status(201).json({ message: 'Successfully subscribed to the newsletter!' });
     } catch (error) {
-        console.error('Error adding to waitlist:', error);
-        res.status(500).json({ error: 'Failed to join waitlist: ' + error.message });
+        console.error('Error saving newsletter signup:', error);
+        res.status(500).json({ error: 'Failed to subscribe to newsletter: ' + error.message });
     }
 });
 
@@ -180,7 +180,7 @@ app.post('/api/admin/register', async (req, res) => {
     try {
         console.log('Received admin registration request:', req.body);
         const { username, password } = req.body;
-        
+
         if (!username || !password) {
             console.log('Missing username or password');
             return res.status(400).json({ error: 'Username and password are required' });
@@ -247,14 +247,14 @@ app.get('/api/waitlist', authenticateAdmin, async (req, res) => {
         const entries = await Waitlist.find().sort({ createdAt: -1 });
         res.json(entries);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch waitlist' });
+        res.status(500).json({ error: 'Failed to fetch newsletter signups' });
     }
 });
 
 app.get('/api/waitlist/export', authenticateAdmin, async (req, res) => {
     try {
         const entries = await Waitlist.find().sort({ createdAt: -1 });
-        
+
         // Convert to CSV
         const csv = [
             ['Email', 'Date Joined'],
@@ -265,10 +265,10 @@ app.get('/api/waitlist/export', authenticateAdmin, async (req, res) => {
         ].map(row => row.join(',')).join('\n');
 
         res.setHeader('Content-Type', 'text/csv');
-        res.setHeader('Content-Disposition', 'attachment; filename=waitlist.csv');
+        res.setHeader('Content-Disposition', 'attachment; filename=newsletter-signups.csv');
         res.send(csv);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to export waitlist' });
+        res.status(500).json({ error: 'Failed to export newsletter signups' });
     }
 });
 

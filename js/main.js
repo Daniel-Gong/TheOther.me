@@ -137,7 +137,7 @@ function initializeAnimations() {
     }
 }
 
-// Waitlist form submission with Firebase
+// Newsletter signup form (Firebase)
 function initializeWaitlistForm() {
     const form = document.getElementById('waitlist-form');
     const emailInput = document.getElementById('waitlist-email');
@@ -145,7 +145,7 @@ function initializeWaitlistForm() {
     const messageDiv = document.getElementById('waitlist-message');
 
     if (!form || !emailInput || !submitButton || !messageDiv) {
-        console.error('Waitlist form elements not found');
+        console.error('Newsletter form elements not found');
         return;
     }
 
@@ -205,7 +205,7 @@ function initializeWaitlistForm() {
             const querySnapshot = await getDocs(q);
 
             if (!querySnapshot.empty) {
-                showWaitlistMessage('You are already on the waitlist.', 'success');
+                showWaitlistMessage('This email is already subscribed.', 'success');
                 emailInput.value = '';
                 submitButton.disabled = false;
                 submitButton.innerHTML = originalButtonHTML;
@@ -220,11 +220,11 @@ function initializeWaitlistForm() {
                 referralCode: referralCode || null
             });
 
-            showWaitlistMessage('Access requested over secure channel.', 'success');
+            showWaitlistMessage('Thanks! You\'re signed up. Watch your inbox for updates and offers.', 'success');
             emailInput.value = '';
 
         } catch (error) {
-            console.error('Error adding to waitlist:', error);
+            console.error('Error submitting newsletter signup:', error);
             showWaitlistMessage('A connection error occurred. Please try again.', 'error');
         } finally {
             submitButton.disabled = false;
@@ -265,7 +265,7 @@ function showWaitlistMessage(message, type) {
 document.addEventListener('DOMContentLoaded', () => {
     initializeAnimations();
     
-    // Initialize waitlist
+    // Initialize newsletter signup
     setTimeout(() => {
         initializeWaitlistForm();
     }, 100);
