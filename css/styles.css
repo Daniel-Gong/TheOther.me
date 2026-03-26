@@ -610,16 +610,17 @@ h6 {
 
 .waitlist-message {
     margin-top: 1rem;
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
     transition: opacity 0.3s ease;
 }
 
 .waitlist-message.success {
-    color: var(--accent-sage);
+    color: #3d5236;
 }
 
 .waitlist-message.error {
-    color: #d9534f;
+    color: #b71c1c;
 }
 
 .supporters-minimal {
