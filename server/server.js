@@ -278,11 +278,11 @@ app.get('/admin', (req, res) => {
 });
 
 app.get('/invite/:code', (req, res) => {
-    res.sendFile(path.join(__dirname, '../invite/index.html'));
+    res.sendFile(path.join(__dirname, '../invite.html'));
 });
 
 app.get('/invite', (req, res) => {
-    res.sendFile(path.join(__dirname, '../invite/index.html'));
+    res.sendFile(path.join(__dirname, '../invite.html'));
 });
 
 const PORT = process.env.PORT || 3000;

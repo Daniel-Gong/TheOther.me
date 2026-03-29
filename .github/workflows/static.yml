@@ -41,11 +41,11 @@ jobs:
         run: |
           mkdir -p _site _site/.well-known
           cp index.html 404.html CNAME robots.txt sitemap.xml .nojekyll _site/
-          for stub in privacy.html terms.html invite.html slideshow.html; do
-            [ -f "$stub" ] && cp "$stub" _site/
+          for f in privacy.html terms.html invite.html slideshow.html; do
+            [ -f "$f" ] && cp "$f" _site/
           done
           [ -f _redirects ] && cp _redirects _site/
-          for dir in privacy terms invite slideshow blog assets css js admin; do
+          for dir in blog assets css js admin; do
             [ -d "$dir" ] && cp -r "$dir" _site/
           done
           [ -f .well-known/apple-app-site-association ] && cp .well-known/apple-app-site-association _site/.well-known/

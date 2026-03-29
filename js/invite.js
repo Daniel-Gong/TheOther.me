@@ -143,7 +143,7 @@ function runInviteFlow() {
     let code = getCodeFromLocation();
 
     const pathname = window.location.pathname.replace(/\/$/, "") || "/";
-    if (pathname === "/invite" && !code) {
+    if ((pathname === "/invite" || pathname === "/invite.html") && !code) {
         const params = new URLSearchParams(window.location.search);
         const qCode = sanitizeReferralCode(params.get("code"));
         if (qCode) {
@@ -154,7 +154,7 @@ function runInviteFlow() {
         }
     }
 
-    if (!code && (/^\/invite\/?$/i.test(window.location.pathname) || /^\/invite\/index(?:\.html)?$/i.test(window.location.pathname))) {
+    if (!code && (/^\/invite\/?$/i.test(window.location.pathname) || /^\/invite\.html$/i.test(window.location.pathname))) {
         const search = window.location.search || "";
         window.history.replaceState({}, "", "/invite" + search);
     }
