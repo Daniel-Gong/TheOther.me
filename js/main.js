@@ -1,5 +1,11 @@
 // Constants
 const REFERRAL_STORAGE_KEY = 'oria_referral_code';
+const ORIA_RUNTIME = window.__ORIA_RUNTIME__ || {};
+const FUNCTIONS_BASE_URL = ORIA_RUNTIME.functionsBaseUrl || "";
+
+if (!FUNCTIONS_BASE_URL) {
+    throw new Error("[waitlist] Missing runtime functionsBaseUrl config.");
+}
 
 function sanitizeReferralCode(rawCode) {
     if (!rawCode) return null;
@@ -18,6 +24,38 @@ function getReferralCodeForAttribution() {
     if (pathCode) return pathCode;
 
     return sanitizeReferralCode(localStorage.getItem(REFERRAL_STORAGE_KEY));
+}
+
+function getAttributionPayload() {
+    const params = new URLSearchParams(window.location.search);
+    const utm = {
+        source: params.get("utm_source") || null,
+        medium: params.get("utm_medium") || null,
+        campaign: params.get("utm_campaign") || null,
+        term: params.get("utm_term") || null,
+        content: params.get("utm_content") || null,
+    };
+
+    return {
+        source: utm.source || "website",
+        medium: utm.medium || "organic",
+        campaign: utm.campaign || null,
+        term: utm.term,
+        content: utm.content,
+        channel: "web",
+        landingPath: window.location.pathname,
+        landingUrl: window.location.href,
+        referrer: document.referrer || null,
+    };
+}
+
+async function getAppCheckHeader() {
+    if (!window.oriaFirebase || typeof window.oriaFirebase.getAppCheckToken !== "function") {
+        return {};
+    }
+    const token = await window.oriaFirebase.getAppCheckToken();
+    if (!token) return {};
+    return { "X-Firebase-AppCheck": token };
 }
 
 // GSAP Animations (Soft Precision)
@@ -149,29 +187,6 @@ function initializeWaitlistForm() {
         return;
     }
 
-    // Wait for Firebase to be ready
-    function waitForFirebase() {
-        return new Promise((resolve, reject) => {
-            if (window.firestoreDb) {
-                resolve(window.firestoreDb);
-                return;
-            }
-
-            let attempts = 0;
-            const maxAttempts = 50;
-            const checkInterval = setInterval(() => {
-                attempts++;
-                if (window.firestoreDb) {
-                    clearInterval(checkInterval);
-                    resolve(window.firestoreDb);
-                } else if (attempts >= maxAttempts) {
-                    clearInterval(checkInterval);
-                    reject(new Error('Firebase initialization timeout. Please check your configuration.'));
-                }
-            }, 100);
-        });
-    }
-
     async function handleSubmit(e) {
         if (e) {
             e.preventDefault();
@@ -197,30 +212,37 @@ function initializeWaitlistForm() {
         messageDiv.textContent = '';
 
         try {
-            await waitForFirebase();
-            const { collection, addDoc, serverTimestamp, query, where, getDocs } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
-
-            const waitlistRef = collection(window.firestoreDb, 'waitlist');
-            const q = query(waitlistRef, where('email', '==', email));
-            const querySnapshot = await getDocs(q);
-
-            if (!querySnapshot.empty) {
-                showWaitlistMessage('This email is already subscribed.', 'success');
-                emailInput.value = '';
-                submitButton.disabled = false;
-                submitButton.innerHTML = originalButtonHTML;
-                return false;
-            }
-
             const referralCode = getReferralCodeForAttribution();
-            await addDoc(waitlistRef, {
-                email: email,
-                createdAt: serverTimestamp(),
-                source: 'website',
-                referralCode: referralCode || null
+            const attribution = getAttributionPayload();
+            const appCheckHeader = await getAppCheckHeader();
+            const response = await fetch(`${FUNCTIONS_BASE_URL}/publicJoinWaitlist`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    ...appCheckHeader,
+                },
+                body: JSON.stringify({
+                    email,
+                    referralCode: referralCode || null,
+                    attribution,
+                }),
             });
 
-            showWaitlistMessage('Thanks! You\'re signed up. Watch your inbox for updates and offers.', 'success');
+            const data = await response.json().catch(() => ({}));
+            if (!response.ok || !data.success) {
+                throw new Error(data.error || "Failed to submit waitlist");
+            }
+
+            if (typeof window.gtag === "function") {
+                window.gtag("event", "waitlist_joined_web", {
+                    status: data.alreadyOnList ? "already_on_list" : "new",
+                    source: attribution.source || "website",
+                    medium: attribution.medium || "organic",
+                    campaign: attribution.campaign || "none",
+                });
+            }
+
+            showWaitlistMessage("Thanks! You're signed up. Watch your inbox for updates and offers.", 'success');
             emailInput.value = '';
 
         } catch (error) {

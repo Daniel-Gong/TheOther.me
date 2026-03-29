@@ -1,179 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TheOther.me Admin Panel</title>
+    <title>Oria Growth Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100">
-    <div class="min-h-screen">
-        <!-- Login Form -->
-        <div id="loginForm" class="container mx-auto px-4 py-8">
-            <div class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
-                <h2 class="text-2xl font-bold mb-6 text-center">Admin Login</h2>
-                <form id="login" class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Username</label>
-                        <input type="text" id="username" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Password</label>
-                        <input type="password" id="password" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                    </div>
-                    <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                        Login
-                    </button>
-                </form>
-            </div>
-        </div>
-
-        <!-- Admin Dashboard -->
-        <div id="dashboard" class="container mx-auto px-4 py-8 hidden">
+    <div class="min-h-screen container mx-auto px-4 py-8">
+        <div class="max-w-5xl mx-auto space-y-6">
             <div class="bg-white rounded-lg shadow-md p-6">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-2xl font-bold">Newsletter signups</h2>
-                    <div class="space-x-4">
-                        <button id="exportBtn" class="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
-                            Export CSV
-                        </button>
-                        <button id="logoutBtn" class="bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
-                            Logout
-                        </button>
+                <h1 class="text-2xl font-bold mb-2">Oria Growth Admin</h1>
+                <p class="text-sm text-gray-600">Manage waitlist approvals and marketing invite codes using Firebase-secured APIs.</p>
+                <div id="authStatus" class="mt-4 text-sm text-gray-700">Not signed in</div>
+                <div class="mt-4 flex flex-wrap gap-2">
+                    <button id="googleSignInBtn" class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">Sign in with Google</button>
+                    <button id="logoutBtn" class="bg-gray-700 text-white py-2 px-4 rounded-md hover:bg-gray-800 hidden">Logout</button>
+                </div>
+            </div>
+
+            <div id="adminPanel" class="hidden space-y-6">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-xl font-semibold mb-3">Waitlist</h2>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <button id="refreshWaitlistBtn" class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">Refresh</button>
+                        <button id="approveTop10Btn" class="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700">Approve top 10 + email</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Position</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Access Code</th>
+                                </tr>
+                            </thead>
+                            <tbody id="waitlistTable" class="bg-white divide-y divide-gray-200"></tbody>
+                        </table>
                     </div>
                 </div>
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date Joined</th>
-                            </tr>
-                        </thead>
-                        <tbody id="waitlistTable" class="bg-white divide-y divide-gray-200">
-                            <!-- Table rows will be inserted here -->
-                        </tbody>
-                    </table>
+
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-xl font-semibold mb-3">Create Marketing Invite Codes</h2>
+                    <form id="createCodesForm" class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <input id="countInput" type="number" min="1" max="100" value="10" class="border rounded p-2" placeholder="Count">
+                        <input id="campaignInput" type="text" class="border rounded p-2" placeholder="Campaign name">
+                        <input id="sourceInput" type="text" class="border rounded p-2" placeholder="Source (e.g. twitter)">
+                        <input id="mediumInput" type="text" class="border rounded p-2" placeholder="Medium (e.g. social)">
+                        <input id="channelInput" type="text" class="border rounded p-2" placeholder="Channel (e.g. influencer)">
+                        <button type="submit" class="bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700">Create Codes</button>
+                    </form>
+                    <div id="createdCodes" class="mt-3 text-sm text-gray-700"></div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-xl font-semibold mb-3">Recent Invite Codes</h2>
+                    <button id="refreshCodesBtn" class="mb-3 bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">Refresh Codes</button>
+                    <div id="codesList" class="text-sm text-gray-700 space-y-1"></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        const API_URL = 'http://localhost:3000/api';
-        let token = localStorage.getItem('adminToken');
+    <script src="/js/config/runtime-config.js"></script>
+    <script type="module">
+        import { getOriaFirebase } from "/js/config/firebase-app.js";
+        import {
+            GoogleAuthProvider,
+            signInWithPopup,
+            onAuthStateChanged,
+            signOut,
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // Check if already logged in
-        if (token) {
-            showDashboard();
-        }
+        const { auth, runtime } = getOriaFirebase();
+        const apiBase = runtime.functionsBaseUrl;
 
-        // Login form submission
-        document.getElementById('login').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
+        const authStatus = document.getElementById("authStatus");
+        const adminPanel = document.getElementById("adminPanel");
+        const googleSignInBtn = document.getElementById("googleSignInBtn");
+        const logoutBtn = document.getElementById("logoutBtn");
+        const waitlistTable = document.getElementById("waitlistTable");
+        const refreshWaitlistBtn = document.getElementById("refreshWaitlistBtn");
+        const approveTop10Btn = document.getElementById("approveTop10Btn");
+        const createCodesForm = document.getElementById("createCodesForm");
+        const createdCodes = document.getElementById("createdCodes");
+        const refreshCodesBtn = document.getElementById("refreshCodesBtn");
+        const codesList = document.getElementById("codesList");
 
-            try {
-                const response = await fetch(`${API_URL}/admin/login`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ username, password })
-                });
+        let currentUser = null;
 
-                const data = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(data.error);
-                }
-
-                token = data.token;
-                localStorage.setItem('adminToken', token);
-                showDashboard();
-            } catch (error) {
-                alert(error.message);
+        async function adminFetch(path, options = {}) {
+            if (!currentUser) throw new Error("Not signed in");
+            const token = await currentUser.getIdToken(true);
+            const response = await fetch(`${apiBase}/${path}`, {
+                ...options,
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                    ...(options.headers || {}),
+                },
+            });
+            const data = await response.json().catch(() => ({}));
+            if (!response.ok || data.success === false) {
+                throw new Error(data.error || `Request failed (${response.status})`);
             }
-        });
-
-        // Logout
-        document.getElementById('logoutBtn').addEventListener('click', () => {
-            localStorage.removeItem('adminToken');
-            token = null;
-            showLoginForm();
-        });
-
-        // Export CSV
-        document.getElementById('exportBtn').addEventListener('click', async () => {
-            try {
-                const response = await fetch(`${API_URL}/waitlist/export`, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to export');
-                }
-
-                const blob = await response.blob();
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'newsletter-signups.csv';
-                document.body.appendChild(a);
-                a.click();
-                window.URL.revokeObjectURL(url);
-                a.remove();
-            } catch (error) {
-                alert('Failed to export newsletter signups');
-            }
-        });
-
-        // Show dashboard and load data
-        async function showDashboard() {
-            document.getElementById('loginForm').classList.add('hidden');
-            document.getElementById('dashboard').classList.remove('hidden');
-            await loadWaitlist();
+            return data;
         }
 
-        // Show login form
-        function showLoginForm() {
-            document.getElementById('loginForm').classList.remove('hidden');
-            document.getElementById('dashboard').classList.add('hidden');
-        }
-
-        // Load newsletter signup data
         async function loadWaitlist() {
-            try {
-                const response = await fetch(`${API_URL}/waitlist`, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to load newsletter signups');
-                }
-
-                const entries = await response.json();
-                const tableBody = document.getElementById('waitlistTable');
-                tableBody.innerHTML = entries.map(entry => `
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${entry.email}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            ${new Date(entry.createdAt).toLocaleString()}
-                        </td>
-                    </tr>
-                `).join('');
-            } catch (error) {
-                alert('Failed to load newsletter signups');
-                if (error.message === 'Please authenticate as admin') {
-                    showLoginForm();
-                }
-            }
+            const data = await adminFetch("adminListWaitlist?limit=100");
+            const rows = (data.entries || []).map((entry) => `
+                <tr>
+                    <td class="px-4 py-2 text-sm">${entry.email || ""}</td>
+                    <td class="px-4 py-2 text-sm">${entry.status || ""}</td>
+                    <td class="px-4 py-2 text-sm">${entry.position || ""}</td>
+                    <td class="px-4 py-2 text-sm font-mono">${entry.accessCode || ""}</td>
+                </tr>
+            `);
+            waitlistTable.innerHTML = rows.join("");
         }
+
+        async function loadCodes() {
+            const data = await adminFetch("adminListInviteCodes?limit=100");
+            const lines = (data.codes || []).map((item) =>
+                `<div class="border rounded px-3 py-2"><span class="font-mono">${item.code}</span> · ${item.codeType} · ${item.status} · uses ${item.uses}/${item.maxUses || "∞"}</div>`
+            );
+            codesList.innerHTML = lines.join("") || "<div>No invite codes found.</div>";
+        }
+
+        googleSignInBtn.addEventListener("click", async () => {
+            try {
+                await signInWithPopup(auth, new GoogleAuthProvider());
+            } catch (error) {
+                alert(error.message || "Sign-in failed");
+            }
+        });
+
+        logoutBtn.addEventListener("click", async () => {
+            await signOut(auth);
+        });
+
+        refreshWaitlistBtn.addEventListener("click", async () => {
+            try {
+                await loadWaitlist();
+            } catch (error) {
+                alert(error.message || "Failed to load waitlist");
+            }
+        });
+
+        approveTop10Btn.addEventListener("click", async () => {
+            try {
+                await adminFetch("adminApproveWaitlist", {
+                    method: "POST",
+                    body: JSON.stringify({ count: 10, sendEmail: true }),
+                });
+                await loadWaitlist();
+                alert("Approved top 10 waitlist entries.");
+            } catch (error) {
+                alert(error.message || "Approval failed");
+            }
+        });
+
+        createCodesForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            const payload = {
+                count: Number(document.getElementById("countInput").value || 10),
+                campaign: document.getElementById("campaignInput").value || null,
+                source: document.getElementById("sourceInput").value || null,
+                medium: document.getElementById("mediumInput").value || null,
+                channel: document.getElementById("channelInput").value || null,
+                trialDays: 7,
+            };
+            try {
+                const data = await adminFetch("adminCreateInviteCodes", {
+                    method: "POST",
+                    body: JSON.stringify(payload),
+                });
+                createdCodes.textContent = `Created ${data.codes.length} codes: ${data.codes.join(", ")}`;
+                await loadCodes();
+            } catch (error) {
+                alert(error.message || "Create codes failed");
+            }
+        });
+
+        refreshCodesBtn.addEventListener("click", async () => {
+            try {
+                await loadCodes();
+            } catch (error) {
+                alert(error.message || "Failed to load codes");
+            }
+        });
+
+        onAuthStateChanged(auth, async (user) => {
+            currentUser = user;
+            if (!user) {
+                authStatus.textContent = "Not signed in";
+                adminPanel.classList.add("hidden");
+                googleSignInBtn.classList.remove("hidden");
+                logoutBtn.classList.add("hidden");
+                return;
+            }
+
+            authStatus.textContent = `Signed in as ${user.email || user.uid}`;
+            googleSignInBtn.classList.add("hidden");
+            logoutBtn.classList.remove("hidden");
+            adminPanel.classList.remove("hidden");
+
+            try {
+                await loadWaitlist();
+                await loadCodes();
+            } catch (error) {
+                adminPanel.classList.add("hidden");
+                authStatus.textContent = `${authStatus.textContent} (no admin access)`;
+                alert(error.message || "You do not have admin permissions.");
+            }
+        });
     </script>
 </body>
 </html> 

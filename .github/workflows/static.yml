@@ -37,6 +37,37 @@ jobs:
       - name: Build blog
         run: npm run build:blog
 
+      - name: Generate runtime config
+        env:
+          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          FIREBASE_AUTH_DOMAIN: ${{ vars.FIREBASE_AUTH_DOMAIN }}
+          FIREBASE_PROJECT_ID: ${{ vars.FIREBASE_PROJECT_ID }}
+          FIREBASE_STORAGE_BUCKET: ${{ vars.FIREBASE_STORAGE_BUCKET }}
+          FIREBASE_MESSAGING_SENDER_ID: ${{ vars.FIREBASE_MESSAGING_SENDER_ID }}
+          FIREBASE_APP_ID: ${{ vars.FIREBASE_APP_ID }}
+          FIREBASE_MEASUREMENT_ID: ${{ vars.FIREBASE_MEASUREMENT_ID }}
+          FIREBASE_FUNCTIONS_REGION: ${{ vars.FIREBASE_FUNCTIONS_REGION }}
+          FIREBASE_FUNCTIONS_BASE_URL: ${{ vars.FIREBASE_FUNCTIONS_BASE_URL }}
+          FIREBASE_APP_CHECK_SITE_KEY: ${{ vars.FIREBASE_APP_CHECK_SITE_KEY }}
+        run: |
+          mkdir -p js/config
+          cat > js/config/runtime-config.js <<EOF
+          window.__ORIA_RUNTIME__ = {
+            firebaseConfig: {
+              apiKey: "${FIREBASE_API_KEY}",
+              authDomain: "${FIREBASE_AUTH_DOMAIN}",
+              projectId: "${FIREBASE_PROJECT_ID}",
+              storageBucket: "${FIREBASE_STORAGE_BUCKET}",
+              messagingSenderId: "${FIREBASE_MESSAGING_SENDER_ID}",
+              appId: "${FIREBASE_APP_ID}",
+              measurementId: "${FIREBASE_MEASUREMENT_ID}",
+            },
+            functionsRegion: "${FIREBASE_FUNCTIONS_REGION:-us-central1}",
+            functionsBaseUrl: "${FIREBASE_FUNCTIONS_BASE_URL}",
+            appCheckSiteKey: "${FIREBASE_APP_CHECK_SITE_KEY}",
+          };
+          EOF
+
       - name: Prepare deployment
         run: |
           mkdir -p _site _site/.well-known

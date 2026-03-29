@@ -20,6 +20,9 @@ Thumbs.db
 # Build output (generated during deploy)
 _site/
 
+# Local runtime config (generated in CI or created locally)
+js/config/runtime-config.js
+
 # Logs and temp
 *.log
 npm-debug.log*

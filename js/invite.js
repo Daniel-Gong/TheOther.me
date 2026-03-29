@@ -2,6 +2,12 @@ const REFERRAL_STORAGE_KEY = "oria_referral_code";
 const REFERRAL_TS_STORAGE_KEY = "oria_referral_code_ts";
 const APP_STORE_URL = "https://apps.apple.com/us/app/oria-ai-evolvable-personal-ai/id6758279152";
 const DEEPLINK_FALLBACK_DELAY_MS = 1500;
+const ORIA_RUNTIME = window.__ORIA_RUNTIME__ || {};
+const FUNCTIONS_BASE_URL = ORIA_RUNTIME.functionsBaseUrl || "";
+
+if (!FUNCTIONS_BASE_URL) {
+    throw new Error("[invite] Missing runtime functionsBaseUrl config.");
+}
 
 function isWeChatBrowser() {
     const ua = typeof navigator !== "undefined" ? navigator.userAgent : "";
@@ -139,7 +145,52 @@ function buildCanonicalPath(code) {
     return "/invite" + search;
 }
 
-function runInviteFlow() {
+function addMissingUtmParams(attribution) {
+    if (!attribution || typeof attribution !== "object") return false;
+
+    const params = new URLSearchParams(window.location.search);
+    const mapping = {
+        utm_source: attribution.source,
+        utm_medium: attribution.medium,
+        utm_campaign: attribution.campaign,
+        utm_term: attribution.term,
+        utm_content: attribution.content,
+    };
+
+    let changed = false;
+    Object.keys(mapping).forEach((key) => {
+        const value = mapping[key];
+        if (!params.get(key) && value) {
+            params.set(key, String(value));
+            changed = true;
+        }
+    });
+
+    if (changed) {
+        const qs = params.toString();
+        const next = window.location.pathname + (qs ? "?" + qs : "");
+        window.history.replaceState({}, "", next);
+    }
+    return changed;
+}
+
+async function validateInviteForLanding(code) {
+    let appCheckHeader = {};
+    if (window.oriaFirebase && typeof window.oriaFirebase.getAppCheckToken === "function") {
+        const token = await window.oriaFirebase.getAppCheckToken();
+        if (token) {
+            appCheckHeader = { "X-Firebase-AppCheck": token };
+        }
+    }
+    const endpoint = `${FUNCTIONS_BASE_URL}/validateInviteForLanding?code=${encodeURIComponent(code)}`;
+    const response = await fetch(endpoint, { method: "GET", headers: appCheckHeader });
+    if (!response.ok) {
+        throw new Error(`validateInviteForLanding failed with status ${response.status}`);
+    }
+    return response.json();
+}
+
+async function runInviteFlow() {
     let code = getCodeFromLocation();
 
     const pathname = window.location.pathname.replace(/\/$/, "") || "/";
@@ -174,8 +225,39 @@ function runInviteFlow() {
         return;
     }
 
+    let validated = null;
+    try {
+        validated = await validateInviteForLanding(code);
+    } catch (error) {
+        console.warn("[invite] validation request failed, continuing in fallback-safe mode.", error);
+    }
+
+    if (validated && validated.valid === false) {
+        trackEvent("invite_landing_viewed", {
+            valid_code: false,
+            invalid_reason: validated.reason || "invalid",
+            code,
+            wechat,
+        });
+        showFallbackUI(null, { wechat });
+        return;
+    }
+
+    if (validated && validated.attribution) {
+        const injected = addMissingUtmParams(validated.attribution);
+        if (injected) {
+            trackEvent("invite_utm_injected", { code });
+        }
+    }
+
     setStoredReferralCode(code);
-    trackEvent("invite_landing_viewed", { valid_code: true, code, wechat });
+    trackEvent("invite_landing_viewed", {
+        valid_code: true,
+        validation_state: validated ? "verified" : "unverified",
+        code,
+        wechat,
+        code_type: validated?.codeType || "unknown",
+    });
 
     if (wechat) {
         trackEvent("invite_wechat_in_app", { code });
