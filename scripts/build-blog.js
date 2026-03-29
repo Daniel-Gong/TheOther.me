@@ -78,8 +78,8 @@ const FOOTER = `
             <div class="footer-bottom">
                 <div class="footer-copy">&copy; 2026 TheOther Intelligence LLC.</div>
                 <div class="footer-legal">
-                    <a href="/privacy.html">Privacy</a>
-                    <a href="/terms.html">Terms</a>
+                    <a href="/privacy">Privacy</a>
+                    <a href="/terms">Terms</a>
                 </div>
             </div>
         </div>
@@ -279,9 +279,9 @@ function buildSitemap(posts) {
   const urls = [
     { loc: `${BASE_URL}/`, changefreq: 'weekly', priority: '1.0' },
     { loc: `${BASE_URL}/blog/`, changefreq: 'weekly', priority: '0.9' },
-    { loc: `${BASE_URL}/privacy.html`, changefreq: 'monthly', priority: '0.5' },
-    { loc: `${BASE_URL}/terms.html`, changefreq: 'monthly', priority: '0.5' },
-    { loc: `${BASE_URL}/slideshow.html`, changefreq: 'monthly', priority: '0.4' },
+    { loc: `${BASE_URL}/privacy`, changefreq: 'monthly', priority: '0.5' },
+    { loc: `${BASE_URL}/terms`, changefreq: 'monthly', priority: '0.5' },
+    { loc: `${BASE_URL}/slideshow`, changefreq: 'monthly', priority: '0.4' },
   ];
 
   for (const post of posts) {
