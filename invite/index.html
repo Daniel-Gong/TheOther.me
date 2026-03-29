@@ -4,33 +4,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oria profile link</title>
+    <title>You are invited to Oria AI</title>
     <meta name="robots" content="noindex, nofollow">
-    <meta name="description" content="Open this profile in the Oria AI app.">
-    <meta id="apple-itunes-meta" name="apple-itunes-app" content="app-id=6758279152">
-    <link rel="icon" href="assets/favicon.png" type="image/png">
-    <meta property="og:title" content="Oria profile">
-    <meta property="og:description" content="Open this profile in the Oria AI app.">
+    <meta name="description" content="Open Oria AI with your invite code or continue on web.">
+    <link rel="icon" href="/assets/favicon.png" type="image/png">
+    <!-- Open Graph (iMessage, WhatsApp, etc.) -->
+    <meta property="og:title" content="You are invited to Oria AI">
+    <meta property="og:description" content="Open Oria AI with your invite code or continue on web.">
     <meta property="og:image" content="https://oria.me/assets/og-image.png">
-    <meta property="og:url" content="https://oria.me/">
+    <meta property="og:url" content="https://oria.me/invite">
     <meta property="og:type" content="website">
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Oria profile">
-    <meta name="twitter:description" content="Open this profile in the Oria AI app.">
+    <meta name="twitter:title" content="You are invited to Oria AI">
+    <meta name="twitter:description" content="Open Oria AI with your invite code or continue on web.">
     <meta name="twitter:image" content="https://oria.me/assets/og-image.png">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 
 <body class="invite-page">
     <main class="invite-card">
-        <p>Oria AI</p>
-        <h1>Open this profile</h1>
+        <p>Oria AI Invite</p>
+        <h1>You are invited</h1>
         <p id="status-text">Trying to open Oria app...</p>
+        <div id="code-chip" class="invite-code hidden"></div>
 
         <div id="wechat-notice" class="invite-wechat-notice hidden"></div>
 
         <div id="fallback-actions" class="invite-actions hidden">
-            <a id="open-app-btn" class="invite-btn invite-btn-primary" href="#">Open in app</a>
+            <a id="open-app-btn" class="invite-btn invite-btn-primary" href="#">Open App</a>
             <button type="button" id="copy-link-btn" class="invite-btn hidden">Copy link</button>
             <a id="testflight-btn" class="invite-btn"
                 href="https://apps.apple.com/us/app/oria-ai-evolvable-personal-ai/id6758279152" target="_blank"
@@ -41,7 +43,7 @@
         <p class="invite-hint" id="hint-text">If the app is installed, it should open automatically.</p>
     </main>
 
-    <script src="js/profile.js"></script>
+    <script src="/js/invite.js"></script>
 </body>
 
 </html>

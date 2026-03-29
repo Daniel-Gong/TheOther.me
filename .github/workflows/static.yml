@@ -40,12 +40,18 @@ jobs:
       - name: Prepare deployment
         run: |
           mkdir -p _site _site/.well-known
-          cp index.html privacy.html terms.html invite.html slideshow.html 404.html CNAME robots.txt sitemap.xml _site/
+          cp index.html 404.html CNAME robots.txt sitemap.xml .nojekyll _site/
+          for stub in privacy.html terms.html invite.html slideshow.html; do
+            [ -f "$stub" ] && cp "$stub" _site/
+          done
           [ -f _redirects ] && cp _redirects _site/
-          for dir in blog assets css js admin; do
+          for dir in privacy terms invite slideshow blog assets css js admin; do
             [ -d "$dir" ] && cp -r "$dir" _site/
           done
           [ -f .well-known/apple-app-site-association ] && cp .well-known/apple-app-site-association _site/.well-known/
+
+      - name: Inject Google Analytics
+        run: npm run inject:gtag
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

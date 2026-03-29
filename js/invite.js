@@ -18,8 +18,11 @@ function sanitizeReferralCode(rawCode) {
 
 function getCodeFromLocation() {
     const pathMatch = window.location.pathname.match(/^\/invite\/([^/?#]+)/i);
-    const pathCode = sanitizeReferralCode(pathMatch ? pathMatch[1] : null);
-    if (pathCode) return pathCode;
+    const segment = pathMatch ? pathMatch[1] : null;
+    if (segment && !/^index(?:\.html)?$/i.test(segment)) {
+        const pathCode = sanitizeReferralCode(segment);
+        if (pathCode) return pathCode;
+    }
 
     const queryCode = sanitizeReferralCode(new URLSearchParams(window.location.search).get("code"));
     if (queryCode) return queryCode;
@@ -128,15 +131,41 @@ function fallbackCopyLink(url, btn) {
     document.body.removeChild(input);
 }
 
+function buildCanonicalPath(code) {
+    const search = window.location.search || "";
+    if (code) {
+        return "/invite/" + code + search;
+    }
+    return "/invite" + search;
+}
+
 function runInviteFlow() {
-    const code = getCodeFromLocation();
+    let code = getCodeFromLocation();
+
+    const pathname = window.location.pathname.replace(/\/$/, "") || "/";
+    if (pathname === "/invite" && !code) {
+        const params = new URLSearchParams(window.location.search);
+        const qCode = sanitizeReferralCode(params.get("code"));
+        if (qCode) {
+            params.delete("code");
+            const qs = params.toString() ? "?" + params.toString() : "";
+            window.history.replaceState({}, "", "/invite/" + qCode + qs);
+            code = qCode;
+        }
+    }
+
+    if (!code && (/^\/invite\/?$/i.test(window.location.pathname) || /^\/invite\/index(?:\.html)?$/i.test(window.location.pathname))) {
+        const search = window.location.search || "";
+        window.history.replaceState({}, "", "/invite" + search);
+    }
+
     const deeplinkUrl = code ? `theotherme://invite/${code}` : null;
-    const canonicalPath = code ? `/invite.html?code=${encodeURIComponent(code)}` : "/invite.html";
-    const canonicalUrl = new URL(canonicalPath, window.location.origin).toString();
+    const canonicalPath = buildCanonicalPath(code);
     const wechat = isWeChatBrowser();
 
-    if (window.location.href !== canonicalUrl) {
-        window.history.replaceState({}, "", canonicalUrl);
+    const current = window.location.pathname + window.location.search;
+    if (current !== canonicalPath) {
+        window.history.replaceState({}, "", canonicalPath);
     }
 
     if (!code) {

@@ -37,6 +37,15 @@ function isoDate(dateInput) {
   return `${y}-${m}-${day}`;
 }
 
+function escapeXml(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
 const NAV = `
     <!-- Minimal Navigation -->
     <nav class="navbar">
@@ -69,8 +78,8 @@ const FOOTER = `
             <div class="footer-bottom">
                 <div class="footer-copy">&copy; 2026 TheOther Intelligence LLC.</div>
                 <div class="footer-legal">
-                    <a href="/privacy.html">Privacy</a>
-                    <a href="/terms.html">Terms</a>
+                    <a href="/privacy">Privacy</a>
+                    <a href="/terms">Terms</a>
                 </div>
             </div>
         </div>
@@ -270,8 +279,9 @@ function buildSitemap(posts) {
   const urls = [
     { loc: `${BASE_URL}/`, changefreq: 'weekly', priority: '1.0' },
     { loc: `${BASE_URL}/blog/`, changefreq: 'weekly', priority: '0.9' },
-    { loc: `${BASE_URL}/privacy.html`, changefreq: 'monthly', priority: '0.5' },
-    { loc: `${BASE_URL}/terms.html`, changefreq: 'monthly', priority: '0.5' },
+    { loc: `${BASE_URL}/privacy`, changefreq: 'monthly', priority: '0.5' },
+    { loc: `${BASE_URL}/terms`, changefreq: 'monthly', priority: '0.5' },
+    { loc: `${BASE_URL}/slideshow`, changefreq: 'monthly', priority: '0.4' },
   ];
 
   for (const post of posts) {
@@ -285,7 +295,7 @@ function buildSitemap(posts) {
 
   const urlEntries = urls
     .map((u) => {
-      let entry = `  <url>\n    <loc>${u.loc}</loc>\n    <changefreq>${u.changefreq}</changefreq>\n    <priority>${u.priority}</priority>`;
+      let entry = `  <url>\n    <loc>${escapeXml(u.loc)}</loc>\n    <changefreq>${u.changefreq}</changefreq>\n    <priority>${u.priority}</priority>`;
       if (u.lastmod) {
         entry += `\n    <lastmod>${u.lastmod}</lastmod>`;
       }

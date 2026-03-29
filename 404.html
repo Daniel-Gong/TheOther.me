@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirecting...</title>
-    <!-- Open Graph for /invite/* links (crawlers get 404.html before redirect) -->
+    <!-- Open Graph for /invite/* when crawlers hit 404 before client runs -->
     <meta property="og:title" content="You are invited to Oria AI">
     <meta property="og:description" content="Open Oria AI with your invite code or continue on web.">
     <meta property="og:image" content="https://oria.me/assets/og-image.png">
-    <meta property="og:url" content="https://oria.me/invite.html">
+    <meta property="og:url" content="https://oria.me/invite">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="You are invited to Oria AI">
@@ -23,8 +23,18 @@
             var path = window.location.pathname || "";
             var match = path.match(/^\/invite\/([^/?#]+)/i);
             if (match && match[1]) {
-                var code = encodeURIComponent(match[1]);
-                window.location.replace("/invite.html?code=" + code);
+                fetch("/invite/index.html")
+                    .then(function (r) { return r.text(); })
+                    .then(function (html) {
+                        document.open();
+                        document.write(html);
+                        document.close();
+                    })
+                    .catch(function () {
+                        var q = new URLSearchParams(window.location.search);
+                        q.set("code", match[1]);
+                        window.location.replace("/invite/index.html?" + q.toString());
+                    });
                 return;
             }
             window.location.replace("/");

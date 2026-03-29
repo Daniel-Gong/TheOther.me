@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build:blog": "node scripts/build-blog.js"
+    "build:blog": "node scripts/build-blog.js",
+    "inject:gtag": "node scripts/inject-gtag.js"
   },
   "devDependencies": {
     "gray-matter": "^4.0.3",

@@ -15,7 +15,7 @@
           {
             "/": "/invite.html",
             "?": { "code": "*" },
-            "comment": "Referral invite links (canonical)"
+            "comment": "Referral invite links (legacy query; redirects to /invite/{code})"
           },
           {
             "/": "/u/*",
