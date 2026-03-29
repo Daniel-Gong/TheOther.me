@@ -127,23 +127,55 @@ h6 {
     font-family: var(--font-heading);
 }
 
-/* Navbar */
-.navbar {
+/* Site header (supporter line + navbar) */
+.site-header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    padding: 2rem 0;
     z-index: 100;
-    transition: all 0.4s ease;
+    transition: background 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease;
 }
 
-.navbar.scrolled {
-    padding: 1rem 0;
+.site-header:has(.navbar.scrolled) {
     background: rgba(253, 252, 251, 0.85);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(17, 17, 17, 0.05);
+}
+
+.supporter-line {
+    margin: 0;
+    padding: 0.5rem 4vw 0;
+    text-align: center;
+    font-size: clamp(0.6875rem, 1.35vw, 0.8125rem);
+    font-weight: 400;
+    line-height: 1.45;
+    color: var(--text-secondary);
+    letter-spacing: 0.01em;
+}
+
+.supporter-line a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+    text-decoration-thickness: 1px;
+    transition: color 0.3s ease;
+}
+
+.supporter-line a:hover {
+    color: var(--text-primary);
+}
+
+/* Navbar */
+.navbar {
+    position: relative;
+    padding: 1.25rem 0 2rem;
+    transition: padding 0.4s ease;
+}
+
+.navbar.scrolled {
+    padding: 0.75rem 0 1rem;
 }
 
 .nav-container {
@@ -192,7 +224,7 @@ h6 {
     flex-direction: column;
     justify-content: center;
     position: relative;
-    padding-top: 5rem;
+    padding-top: 7rem;
 }
 
 .hero-title {
@@ -720,7 +752,7 @@ h6 {
     }
 
     .hero {
-        padding-top: 8rem;
+        padding-top: 9.5rem;
     }
 
     .hero-actions {
