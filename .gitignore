@@ -1,14 +1,11 @@
 # Dependencies
-node_modules/
+node_modules
 
 # Environment and secrets
 .env
 .env.local
 .env.*.local
 *.env
-
-# Server (backend - not deployed to GitHub Pages)
-server/node_modules/
 
 # OS and editor
 .DS_Store
