@@ -18,6 +18,22 @@ For `codeType = user`, admins often need user-level values, not only code-level 
 
 ## Collections and documents
 
+## `newsletterSubscribers/{emailHash}`
+
+Website newsletter-only list. This is intentionally separate from waitlist.
+
+Typical fields:
+
+- `email`, `emailHash`
+- `status` (`"subscribed"`)
+- `referralCode` (optional)
+- `attribution` (`source/medium/campaign/term/content/channel/landingPath/landingUrl/referrer`)
+- `subscribedAt`, `updatedAt`
+
+Writer:
+
+- `waitlist.ts` via `POST /publicJoinNewsletter`
+
 ## `referralCodes/{code}`
 
 Used by marketing, waitlist approvals, and user-generated referrals.
@@ -85,7 +101,7 @@ Typical fields:
 
 ## `waitlist/{emailHash}`
 
-Website waitlist/newsletter queue and approval status.
+Waitlist queue and approval status (not newsletter signup).
 
 Typical fields:
 

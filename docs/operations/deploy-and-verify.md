@@ -22,23 +22,26 @@ From `../TheOtherME/backend/functions`:
 
 ## Smoke tests
 
-1. **Homepage waitlist submit**
+1. **Homepage newsletter submit**
    - Submit email on `/#newsletter`.
-   - Verify success response and entry in Firestore `waitlist`.
+   - Verify success response and entry in Firestore `newsletterSubscribers`.
    - Verify invalid email or excessive retries are blocked.
-2. **Invite validation**
+2. **Waitlist intake**
+   - Trigger waitlist flow via `publicJoinWaitlist`.
+   - Verify entry lands in Firestore `waitlist`.
+3. **Invite validation**
    - Open `/invite/<code>`.
    - Verify invalid code is blocked and valid code deep-links/fallbacks correctly.
    - Verify request succeeds with valid App Check token.
-3. **Admin auth**
+4. **Admin auth**
    - Sign in at `/admin/`.
    - Verify waitlist load + create marketing codes works.
    - Verify invite codes are split into marketing/waitlist/user sections.
    - Verify user-code max usage does not incorrectly display as infinite when `maxInvites` exists.
    - Verify edit/revoke/hard-delete actions behave as expected.
-4. **Email flow**
+5. **Email flow**
    - Approve waitlist entries and confirm email send status updates.
-5. **Invite attribution + trial**
+6. **Invite attribution + trial**
    - Open `/invite/<validCode>` with no UTM params and confirm URL gets expected `utm_*`.
    - Confirm returned trial value aligns with `benefit.trialDays` (fallback 7 when absent).
 

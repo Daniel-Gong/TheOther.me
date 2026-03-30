@@ -186,6 +186,14 @@ function addMissingUtmParams(attribution) {
 }
 
 async function validateInviteForLanding(code) {
+    if (!window.oriaFirebase) {
+        try {
+            await import("/js/config/firebase-app.js");
+        } catch (error) {
+            console.warn("[invite] Failed to initialize firebase-app module for App Check.", error);
+        }
+    }
+
     let appCheckHeader = {};
     if (window.oriaFirebase && typeof window.oriaFirebase.getAppCheckToken === "function") {
         const token = await window.oriaFirebase.getAppCheckToken();

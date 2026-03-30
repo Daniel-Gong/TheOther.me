@@ -4,9 +4,43 @@ All endpoints are Firebase Functions under `functionsBaseUrl`.
 
 ## Public endpoints
 
+### `POST /publicJoinNewsletter`
+
+Purpose: website newsletter intake (separate from waitlist queue).
+
+Headers:
+
+- `X-Firebase-AppCheck: <token>` (required)
+
+Request body:
+
+```json
+{
+  "email": "user@example.com",
+  "referralCode": "ABC123",
+  "attribution": {
+    "source": "twitter",
+    "medium": "social",
+    "campaign": "spring_launch",
+    "term": null,
+    "content": null,
+    "channel": "web",
+    "landingPath": "/",
+    "landingUrl": "https://oria.me/",
+    "referrer": "https://x.com/"
+  }
+}
+```
+
+Response fields:
+
+- `success`
+- `alreadySubscribed`
+- `emailHash`
+
 ### `POST /publicJoinWaitlist`
 
-Purpose: website waitlist/newsletter intake.
+Purpose: waitlist intake (for waitlist flow, separate from newsletter).
 
 Headers:
 

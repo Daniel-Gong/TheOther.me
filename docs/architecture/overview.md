@@ -30,7 +30,8 @@ Use one Firebase project (`theotherme-33e92`) for:
 
 ## Data collections
 
-- `waitlist/{emailHash}`: waitlist/newsletter entries plus attribution and status.
+- `newsletterSubscribers/{emailHash}`: website newsletter-only subscribers.
+- `waitlist/{emailHash}`: waitlist entries plus attribution and status.
 - `referralCodes/{code}`: user, waitlist, and marketing invite codes.
 
 ## Deep data model

@@ -215,7 +215,7 @@ function initializeWaitlistForm() {
             const referralCode = getReferralCodeForAttribution();
             const attribution = getAttributionPayload();
             const appCheckHeader = await getAppCheckHeader();
-            const response = await fetch(`${FUNCTIONS_BASE_URL}/publicJoinWaitlist`, {
+            const response = await fetch(`${FUNCTIONS_BASE_URL}/publicJoinNewsletter`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -234,8 +234,8 @@ function initializeWaitlistForm() {
             }
 
             if (typeof window.gtag === "function") {
-                window.gtag("event", "waitlist_joined_web", {
-                    status: data.alreadyOnList ? "already_on_list" : "new",
+                window.gtag("event", "newsletter_subscribed_web", {
+                    status: data.alreadySubscribed ? "already_subscribed" : "new",
                     source: attribution.source || "website",
                     medium: attribution.medium || "organic",
                     campaign: attribution.campaign || "none",
