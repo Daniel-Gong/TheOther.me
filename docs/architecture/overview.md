@@ -32,3 +32,9 @@ Use one Firebase project (`theotherme-33e92`) for:
 
 - `waitlist/{emailHash}`: waitlist/newsletter entries plus attribution and status.
 - `referralCodes/{code}`: user, waitlist, and marketing invite codes.
+
+## Deep data model
+
+For full Firestore schema, source-of-truth rules, and admin normalization details, see:
+
+- [Firestore Data Model](./firestore-data-model.md)

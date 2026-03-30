@@ -145,22 +145,33 @@ function buildCanonicalPath(code) {
     return "/invite" + search;
 }
 
+function pickAttributionValue(attribution, ...keys) {
+    for (const key of keys) {
+        const value = attribution?.[key];
+        if (value === null || value === undefined) continue;
+        const normalized = String(value).trim();
+        if (normalized) return normalized;
+    }
+    return null;
+}
+
 function addMissingUtmParams(attribution) {
     if (!attribution || typeof attribution !== "object") return false;
 
     const params = new URLSearchParams(window.location.search);
     const mapping = {
-        utm_source: attribution.source,
-        utm_medium: attribution.medium,
-        utm_campaign: attribution.campaign,
-        utm_term: attribution.term,
-        utm_content: attribution.content,
+        utm_source: pickAttributionValue(attribution, "source", "utm_source"),
+        utm_medium: pickAttributionValue(attribution, "medium", "utm_medium"),
+        utm_campaign: pickAttributionValue(attribution, "campaign", "utm_campaign"),
+        utm_term: pickAttributionValue(attribution, "term", "utm_term"),
+        utm_content: pickAttributionValue(attribution, "content", "utm_content"),
     };
 
     let changed = false;
     Object.keys(mapping).forEach((key) => {
         const value = mapping[key];
-        if (!params.get(key) && value) {
+        const existing = params.get(key);
+        if ((!existing || !String(existing).trim()) && value) {
             params.set(key, String(value));
             changed = true;
         }

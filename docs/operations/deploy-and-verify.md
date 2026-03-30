@@ -33,8 +33,14 @@ From `../TheOtherME/backend/functions`:
 3. **Admin auth**
    - Sign in at `/admin/`.
    - Verify waitlist load + create marketing codes works.
+   - Verify invite codes are split into marketing/waitlist/user sections.
+   - Verify user-code max usage does not incorrectly display as infinite when `maxInvites` exists.
+   - Verify edit/revoke/hard-delete actions behave as expected.
 4. **Email flow**
    - Approve waitlist entries and confirm email send status updates.
+5. **Invite attribution + trial**
+   - Open `/invite/<validCode>` with no UTM params and confirm URL gets expected `utm_*`.
+   - Confirm returned trial value aligns with `benefit.trialDays` (fallback 7 when absent).
 
 ## Rollback notes
 

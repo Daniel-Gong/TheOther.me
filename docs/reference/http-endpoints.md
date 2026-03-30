@@ -72,6 +72,22 @@ Response (example):
 - `POST /adminCreateInviteCodes`
 - `GET /adminListInviteCodes?limit=100`
 - `POST /adminUpdateInviteCodeStatus`
+- `POST /adminDeleteInviteCode`
+
+### Admin invite-code payload notes
+
+- `adminCreateInviteCodes` supports:
+  - `count` (number of codes to create)
+  - generated marketing codes are 6-character uppercase alphanumeric
+  - `maxUses` (`0` or omitted means unlimited)
+  - `trialDays` (1-60)
+  - `source`, `medium`, `campaign`, `term`, `content`, `channel` attribution fields
+- `adminListInviteCodes` returns per code:
+  - `code`, `status`, `codeType`, `uses`, `maxUses`, `trialDays`, `attribution`
+  - for `codeType=user`, when `referralCodes/{code}.maxUses` is absent, max usage is derived from `users/{uid}/referral/info.maxInvites` and usage from `invitesUsed`
+- `adminUpdateInviteCodeStatus` supports editing:
+  - `status`, `maxUses`, `trialDays`, `attribution`
+- `adminDeleteInviteCode` hard-deletes `referralCodes/{code}`.
 
 ## Backend source of truth
 

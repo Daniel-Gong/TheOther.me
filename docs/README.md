@@ -5,6 +5,7 @@ This folder contains the Firebase-unified growth stack docs for `oria.me`.
 ## Start Here
 
 - [Architecture Overview](./architecture/overview.md)
+- [Firestore Data Model](./architecture/firestore-data-model.md)
 - [Firebase Project Setup](./setup/firebase-project.md)
 - [Admin Access Setup](./setup/admin-access.md)
 - [HTTP Endpoints Reference](./reference/http-endpoints.md)

@@ -42,22 +42,78 @@
                 </div>
 
                 <div class="bg-white rounded-lg shadow-md p-6">
-                    <h2 class="text-xl font-semibold mb-3">Create Marketing Invite Codes</h2>
+                    <h2 class="text-xl font-semibold mb-3">Create Marketing Invite Code</h2>
                     <form id="createCodesForm" class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                        <input id="countInput" type="number" min="1" max="100" value="10" class="border rounded p-2" placeholder="Count">
-                        <input id="campaignInput" type="text" class="border rounded p-2" placeholder="Campaign name">
+                        <div class="flex items-center gap-2">
+                            <input id="createUnlimitedInput" type="checkbox" class="h-4 w-4">
+                            <label for="createUnlimitedInput" class="text-sm text-gray-700">Unlimited uses</label>
+                        </div>
+                        <input id="maxUsesInput" type="number" min="1" value="1" class="border rounded p-2" placeholder="Max uses">
+                        <input id="trialDaysInput" type="number" min="1" max="60" value="7" class="border rounded p-2" placeholder="Trial days">
+                        <input id="campaignInput" type="text" class="border rounded p-2" placeholder="Campaign">
                         <input id="sourceInput" type="text" class="border rounded p-2" placeholder="Source (e.g. twitter)">
                         <input id="mediumInput" type="text" class="border rounded p-2" placeholder="Medium (e.g. social)">
+                        <input id="termInput" type="text" class="border rounded p-2" placeholder="Term (optional)">
+                        <input id="contentInput" type="text" class="border rounded p-2" placeholder="Content (optional)">
                         <input id="channelInput" type="text" class="border rounded p-2" placeholder="Channel (e.g. influencer)">
-                        <button type="submit" class="bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700">Create Codes</button>
+                        <button type="submit" class="bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700">Create Code</button>
                     </form>
                     <div id="createdCodes" class="mt-3 text-sm text-gray-700"></div>
                 </div>
 
                 <div class="bg-white rounded-lg shadow-md p-6">
-                    <h2 class="text-xl font-semibold mb-3">Recent Invite Codes</h2>
-                    <button id="refreshCodesBtn" class="mb-3 bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">Refresh Codes</button>
-                    <div id="codesList" class="text-sm text-gray-700 space-y-1"></div>
+                    <h2 class="text-xl font-semibold mb-3">Invite Codes</h2>
+                    <div class="mb-3 flex flex-wrap items-center gap-2">
+                        <button id="refreshCodesBtn" class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">Refresh Codes</button>
+                        <label class="inline-flex items-center gap-2 text-sm text-gray-700">
+                            <input id="showInactiveCodesInput" type="checkbox" class="h-4 w-4">
+                            Show inactive/revoked
+                        </label>
+                    </div>
+
+                    <div id="editCodePanel" class="hidden mb-4 rounded border border-blue-200 bg-blue-50 p-3">
+                        <h3 class="font-semibold text-blue-900 mb-2">Edit Invite Code</h3>
+                        <form id="editCodeForm" class="grid grid-cols-1 md:grid-cols-3 gap-2">
+                            <input id="editCodeInput" type="text" readonly class="border rounded p-2 bg-gray-100 font-mono">
+                            <select id="editStatusInput" class="border rounded p-2">
+                                <option value="active">active</option>
+                                <option value="paused">paused</option>
+                                <option value="revoked">revoked</option>
+                                <option value="expired">expired</option>
+                            </select>
+                            <div class="flex items-center gap-2">
+                                <input id="editUnlimitedInput" type="checkbox" class="h-4 w-4">
+                                <label for="editUnlimitedInput" class="text-sm text-gray-700">Unlimited uses</label>
+                            </div>
+                            <input id="editMaxUsesInput" type="number" min="1" class="border rounded p-2" placeholder="Max uses">
+                            <input id="editTrialDaysInput" type="number" min="1" max="60" class="border rounded p-2" placeholder="Trial days">
+                            <input id="editSourceInput" type="text" class="border rounded p-2" placeholder="source">
+                            <input id="editMediumInput" type="text" class="border rounded p-2" placeholder="medium">
+                            <input id="editCampaignInput" type="text" class="border rounded p-2" placeholder="campaign">
+                            <input id="editTermInput" type="text" class="border rounded p-2" placeholder="term">
+                            <input id="editContentInput" type="text" class="border rounded p-2" placeholder="content">
+                            <input id="editChannelInput" type="text" class="border rounded p-2" placeholder="channel">
+                            <div class="flex gap-2">
+                                <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">Save</button>
+                                <button id="cancelEditCodeBtn" type="button" class="bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div id="codesSections" class="space-y-4 text-sm text-gray-700">
+                        <div>
+                            <h3 class="font-semibold mb-1">Marketing</h3>
+                            <div id="codesMarketingList" class="space-y-2"></div>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold mb-1">Waitlist</h3>
+                            <div id="codesWaitlistList" class="space-y-2"></div>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold mb-1">User</h3>
+                            <div id="codesUserList" class="space-y-2"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -86,9 +142,174 @@
         const createCodesForm = document.getElementById("createCodesForm");
         const createdCodes = document.getElementById("createdCodes");
         const refreshCodesBtn = document.getElementById("refreshCodesBtn");
-        const codesList = document.getElementById("codesList");
+        const showInactiveCodesInput = document.getElementById("showInactiveCodesInput");
+        const codesMarketingList = document.getElementById("codesMarketingList");
+        const codesWaitlistList = document.getElementById("codesWaitlistList");
+        const codesUserList = document.getElementById("codesUserList");
+        const createUnlimitedInput = document.getElementById("createUnlimitedInput");
+        const maxUsesInput = document.getElementById("maxUsesInput");
+        const trialDaysInput = document.getElementById("trialDaysInput");
+        const termInput = document.getElementById("termInput");
+        const contentInput = document.getElementById("contentInput");
+        const editCodePanel = document.getElementById("editCodePanel");
+        const editCodeForm = document.getElementById("editCodeForm");
+        const editCodeInput = document.getElementById("editCodeInput");
+        const editStatusInput = document.getElementById("editStatusInput");
+        const editUnlimitedInput = document.getElementById("editUnlimitedInput");
+        const editMaxUsesInput = document.getElementById("editMaxUsesInput");
+        const editTrialDaysInput = document.getElementById("editTrialDaysInput");
+        const editSourceInput = document.getElementById("editSourceInput");
+        const editMediumInput = document.getElementById("editMediumInput");
+        const editCampaignInput = document.getElementById("editCampaignInput");
+        const editTermInput = document.getElementById("editTermInput");
+        const editContentInput = document.getElementById("editContentInput");
+        const editChannelInput = document.getElementById("editChannelInput");
+        const cancelEditCodeBtn = document.getElementById("cancelEditCodeBtn");
 
         let currentUser = null;
+        let codeItems = [];
+        let activeEditCode = null;
+
+        function normalizeCodeType(codeType) {
+            const value = String(codeType || "").toLowerCase();
+            if (value === "marketing") return "marketing";
+            if (value === "waitlist") return "waitlist";
+            if (value === "user_generated" || value === "user") return "user";
+            return "user";
+        }
+
+        function normalizeNumber(value, fallback = 0) {
+            const n = Number(value);
+            return Number.isFinite(n) ? n : fallback;
+        }
+
+        function normalizeNullableString(value) {
+            if (value === null || value === undefined) return null;
+            const trimmed = String(value).trim();
+            return trimmed ? trimmed : null;
+        }
+
+        function normalizeCodeItem(item) {
+            const uses = Math.max(0, normalizeNumber(item.uses, 0));
+            const rawMaxUses = item.maxUses;
+            const normalizedMaxUses = rawMaxUses === null || rawMaxUses === undefined
+                ? null
+                : Math.max(0, normalizeNumber(rawMaxUses, 0));
+            const maxUses = normalizedMaxUses;
+            const trialDays = Math.max(1, normalizeNumber(item.trialDays ?? item.benefit?.trialDays, 7));
+            const attribution = item.attribution && typeof item.attribution === "object" ? item.attribution : {};
+            return {
+                code: String(item.code || ""),
+                status: String(item.status || "active"),
+                codeType: normalizeCodeType(item.codeType),
+                uses,
+                maxUses,
+                trialDays,
+                attribution: {
+                    source: normalizeNullableString(attribution.source),
+                    medium: normalizeNullableString(attribution.medium),
+                    campaign: normalizeNullableString(attribution.campaign),
+                    term: normalizeNullableString(attribution.term),
+                    content: normalizeNullableString(attribution.content),
+                    channel: normalizeNullableString(attribution.channel),
+                },
+                createdAt: item.createdAt || null,
+            };
+        }
+
+        function formatMaxUses(maxUses) {
+            return maxUses === null ? "∞" : String(maxUses);
+        }
+
+        function shouldShowCode(item) {
+            if (showInactiveCodesInput.checked) return true;
+            return item.status === "active";
+        }
+
+        function renderCodeLine(item) {
+            const attrs = item.attribution || {};
+            const attrSummary = [
+                attrs.source ? `src=${attrs.source}` : null,
+                attrs.medium ? `med=${attrs.medium}` : null,
+                attrs.campaign ? `camp=${attrs.campaign}` : null,
+                attrs.channel ? `channel=${attrs.channel}` : null,
+            ].filter(Boolean).join(" · ");
+            const toggleLabel = item.status === "active" ? "Revoke" : "Activate";
+            return `
+                <div class="border rounded px-3 py-2">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="font-mono">${item.code}</span>
+                        <span>· ${item.status}</span>
+                        <span>· uses ${item.uses}/${formatMaxUses(item.maxUses)}</span>
+                        <span>· trial ${item.trialDays}d</span>
+                    </div>
+                    <div class="text-xs text-gray-600 mt-1">${attrSummary || "No attribution fields set."}</div>
+                    <div class="mt-2 flex flex-wrap gap-2">
+                        <button data-action="edit" data-code="${item.code}" class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">Edit</button>
+                        <button data-action="toggle" data-code="${item.code}" class="bg-yellow-600 text-white px-3 py-1 rounded hover:bg-yellow-700">${toggleLabel}</button>
+                        <button data-action="delete" data-code="${item.code}" class="bg-red-700 text-white px-3 py-1 rounded hover:bg-red-800">Hard Delete</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderCodeSection(target, items) {
+            const rows = items.filter(shouldShowCode).map(renderCodeLine);
+            target.innerHTML = rows.join("") || "<div class=\"text-gray-500\">No invite codes found.</div>";
+        }
+
+        function renderCodes() {
+            const marketing = [];
+            const waitlist = [];
+            const user = [];
+            codeItems.forEach((item) => {
+                if (item.codeType === "marketing") marketing.push(item);
+                else if (item.codeType === "waitlist") waitlist.push(item);
+                else user.push(item);
+            });
+            renderCodeSection(codesMarketingList, marketing);
+            renderCodeSection(codesWaitlistList, waitlist);
+            renderCodeSection(codesUserList, user);
+        }
+
+        function findCodeItem(code) {
+            return codeItems.find((item) => item.code === code) || null;
+        }
+
+        function setUnlimitedInput(checkbox, numberInput) {
+            numberInput.disabled = checkbox.checked;
+            if (checkbox.checked) {
+                numberInput.value = "";
+                numberInput.placeholder = "Unlimited";
+            } else if (!numberInput.value) {
+                numberInput.value = "1";
+                numberInput.placeholder = "Max uses";
+            }
+        }
+
+        function openEditPanel(item) {
+            activeEditCode = item.code;
+            editCodeInput.value = item.code;
+            editStatusInput.value = item.status || "active";
+            editUnlimitedInput.checked = item.maxUses === null;
+            editMaxUsesInput.value = item.maxUses === null ? "" : String(item.maxUses);
+            editTrialDaysInput.value = String(item.trialDays || 7);
+            editSourceInput.value = item.attribution?.source || "";
+            editMediumInput.value = item.attribution?.medium || "";
+            editCampaignInput.value = item.attribution?.campaign || "";
+            editTermInput.value = item.attribution?.term || "";
+            editContentInput.value = item.attribution?.content || "";
+            editChannelInput.value = item.attribution?.channel || "";
+            setUnlimitedInput(editUnlimitedInput, editMaxUsesInput);
+            editCodePanel.classList.remove("hidden");
+        }
+
+        function closeEditPanel() {
+            activeEditCode = null;
+            editCodePanel.classList.add("hidden");
+            editCodeForm.reset();
+            setUnlimitedInput(editUnlimitedInput, editMaxUsesInput);
+        }
 
         async function adminFetch(path, options = {}) {
             if (!currentUser) throw new Error("Not signed in");
@@ -123,10 +344,8 @@
 
         async function loadCodes() {
             const data = await adminFetch("adminListInviteCodes?limit=100");
-            const lines = (data.codes || []).map((item) =>
-                `<div class="border rounded px-3 py-2"><span class="font-mono">${item.code}</span> · ${item.codeType} · ${item.status} · uses ${item.uses}/${item.maxUses || "∞"}</div>`
-            );
-            codesList.innerHTML = lines.join("") || "<div>No invite codes found.</div>";
+            codeItems = (data.codes || []).map(normalizeCodeItem);
+            renderCodes();
         }
 
         googleSignInBtn.addEventListener("click", async () => {
@@ -164,24 +383,44 @@
 
         createCodesForm.addEventListener("submit", async (event) => {
             event.preventDefault();
+            const unlimited = createUnlimitedInput.checked;
+            const maxUses = unlimited ? 0 : Math.max(1, normalizeNumber(maxUsesInput.value, 1));
             const payload = {
-                count: Number(document.getElementById("countInput").value || 10),
-                campaign: document.getElementById("campaignInput").value || null,
-                source: document.getElementById("sourceInput").value || null,
-                medium: document.getElementById("mediumInput").value || null,
-                channel: document.getElementById("channelInput").value || null,
-                trialDays: 7,
+                count: 1,
+                maxUses,
+                trialDays: Math.max(1, normalizeNumber(trialDaysInput.value, 7)),
+                campaign: normalizeNullableString(document.getElementById("campaignInput").value),
+                source: normalizeNullableString(document.getElementById("sourceInput").value),
+                medium: normalizeNullableString(document.getElementById("mediumInput").value),
+                term: normalizeNullableString(termInput.value),
+                content: normalizeNullableString(contentInput.value),
+                channel: normalizeNullableString(document.getElementById("channelInput").value),
             };
             try {
                 const data = await adminFetch("adminCreateInviteCodes", {
                     method: "POST",
                     body: JSON.stringify(payload),
                 });
-                createdCodes.textContent = `Created ${data.codes.length} codes: ${data.codes.join(", ")}`;
+                const code = Array.isArray(data.codes) && data.codes.length ? data.codes[0] : "";
+                createdCodes.textContent = code
+                    ? `Created code ${code} · max uses ${formatMaxUses(maxUses > 0 ? maxUses : null)} · length ${String(code).length}`
+                    : "Created code successfully.";
+                createCodesForm.reset();
+                createUnlimitedInput.checked = true;
+                setUnlimitedInput(createUnlimitedInput, maxUsesInput);
+                trialDaysInput.value = "7";
                 await loadCodes();
             } catch (error) {
                 alert(error.message || "Create codes failed");
             }
+        });
+
+        createUnlimitedInput.addEventListener("change", () => {
+            setUnlimitedInput(createUnlimitedInput, maxUsesInput);
+        });
+
+        editUnlimitedInput.addEventListener("change", () => {
+            setUnlimitedInput(editUnlimitedInput, editMaxUsesInput);
         });
 
         refreshCodesBtn.addEventListener("click", async () => {
@@ -189,6 +428,85 @@
                 await loadCodes();
             } catch (error) {
                 alert(error.message || "Failed to load codes");
+            }
+        });
+
+        showInactiveCodesInput.addEventListener("change", () => {
+            renderCodes();
+        });
+
+        document.getElementById("codesSections").addEventListener("click", async (event) => {
+            const target = event.target.closest("button[data-action]");
+            if (!target) return;
+            const action = target.dataset.action;
+            const code = target.dataset.code;
+            if (!code) return;
+            const item = findCodeItem(code);
+            if (!item) return;
+
+            try {
+                if (action === "edit") {
+                    openEditPanel(item);
+                    return;
+                }
+                if (action === "toggle") {
+                    const nextStatus = item.status === "active" ? "revoked" : "active";
+                    await adminFetch("adminUpdateInviteCodeStatus", {
+                        method: "POST",
+                        body: JSON.stringify({ code: item.code, status: nextStatus }),
+                    });
+                    await loadCodes();
+                    return;
+                }
+                if (action === "delete") {
+                    const confirmed = window.confirm(`Hard delete code ${item.code}? This cannot be undone.`);
+                    if (!confirmed) return;
+                    await adminFetch("adminDeleteInviteCode", {
+                        method: "POST",
+                        body: JSON.stringify({ code: item.code }),
+                    });
+                    if (activeEditCode === item.code) closeEditPanel();
+                    await loadCodes();
+                }
+            } catch (error) {
+                alert(error.message || "Code action failed");
+            }
+        });
+
+        cancelEditCodeBtn.addEventListener("click", () => {
+            closeEditPanel();
+        });
+
+        editCodeForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            if (!activeEditCode) return;
+
+            const unlimited = editUnlimitedInput.checked;
+            const maxUses = unlimited ? 0 : Math.max(1, normalizeNumber(editMaxUsesInput.value, 1));
+            const payload = {
+                code: activeEditCode,
+                status: editStatusInput.value,
+                maxUses,
+                trialDays: Math.max(1, normalizeNumber(editTrialDaysInput.value, 7)),
+                attribution: {
+                    source: normalizeNullableString(editSourceInput.value),
+                    medium: normalizeNullableString(editMediumInput.value),
+                    campaign: normalizeNullableString(editCampaignInput.value),
+                    term: normalizeNullableString(editTermInput.value),
+                    content: normalizeNullableString(editContentInput.value),
+                    channel: normalizeNullableString(editChannelInput.value),
+                },
+            };
+
+            try {
+                await adminFetch("adminUpdateInviteCodeStatus", {
+                    method: "POST",
+                    body: JSON.stringify(payload),
+                });
+                closeEditPanel();
+                await loadCodes();
+            } catch (error) {
+                alert(error.message || "Failed to save invite code");
             }
         });
 
@@ -208,6 +526,9 @@
             adminPanel.classList.remove("hidden");
 
             try {
+                createUnlimitedInput.checked = true;
+                setUnlimitedInput(createUnlimitedInput, maxUsesInput);
+                setUnlimitedInput(editUnlimitedInput, editMaxUsesInput);
                 await loadWaitlist();
                 await loadCodes();
             } catch (error) {
