@@ -80,6 +80,7 @@ jobs:
             [ -d "$dir" ] && cp -r "$dir" _site/
           done
           [ -f .well-known/apple-app-site-association ] && cp .well-known/apple-app-site-association _site/.well-known/
+          [ -f .well-known/microsoft-identity-association.json ] && cp .well-known/microsoft-identity-association.json _site/.well-known/
 
       - name: Inject Google Analytics
         run: npm run inject:gtag
