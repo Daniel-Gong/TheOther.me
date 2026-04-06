@@ -67,6 +67,11 @@ function initializeAnimations() {
         const tl = gsap.timeline();
         
         if (document.querySelector('.hero-title')) {
+            const showcase = document.querySelector('.hero-showcase-img');
+            if (showcase) {
+                gsap.set(showcase, { opacity: 0, y: 36, scale: 0.97 });
+            }
+
             tl.fromTo('.hero-title .line-1', 
                 { y: 40, opacity: 0 }, 
                 { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out', delay: 0.2 }
@@ -86,6 +91,15 @@ function initializeAnimations() {
                 { opacity: 1, duration: 1, ease: 'power2.out' },
                 "-=0.4"
             );
+
+            if (showcase) {
+                tl.fromTo(
+                    showcase,
+                    { opacity: 0, y: 36, scale: 0.97 },
+                    { opacity: 1, y: 0, scale: 1, duration: 1.15, ease: 'power3.out' },
+                    '>'
+                );
+            }
         }
 
         // Subtle parallax for gradient orbs
