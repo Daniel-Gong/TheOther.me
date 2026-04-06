@@ -2,18 +2,18 @@
 <html lang="en">
 
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oria AI - Your Evolvable Digital Self</title>
     <link rel="canonical" href="https://oria.me/" />
     <meta name="description"
-        content="Oria AI is an evolvable digital self that synthesizes the fragmented data of your life into unified, actionable wisdom.">
+        content="Oria AI is an evolvable personal AI that synthesizes the fragmented data of your life into unified, actionable wisdom.">
     <meta name="keywords"
         content="Oria AI, personal AI, life insights, health, calendar, notes, AI companion, self-discovery">
     <link rel="icon" href="assets/favicon.png" type="image/png">
 
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Oria AI - Your Evolvable Digital Self">
+    <meta property="og:title" content="Oria AI - Your Evolvable Personal AI">
     <meta property="og:description" content="Sythesizing fragmented data of your life into unified, actionable wisdom.">
     <meta property="og:image" content="https://oria.me/assets/og-image.png">
     <meta property="og:url" content="https://oria.me/">
@@ -21,7 +21,7 @@
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Oria AI - Your Evolvable Digital Self">
+    <meta name="twitter:title" content="Oria AI - Your Evolvable Personal AI">
     <meta name="twitter:description"
         content="Sythesizing fragmented data of your life into unified, actionable wisdom.">
     <meta name="twitter:image" content="https://oria.me/assets/og-image.png">
@@ -42,26 +42,71 @@
     <!-- Runtime + Firebase config -->
     <script src="js/config/runtime-config.js"></script>
     <script type="module" src="js/config/firebase-app.js"></script>
-    <!-- Schema.org JSON-LD -->
+    <!-- Schema.org JSON-LD: Organization, WebSite, SoftwareApplication, FAQPage -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
         {
           "@type": "Organization",
+          "@id": "https://oria.me/#organization",
           "name": "Oria AI",
           "url": "https://oria.me",
-          "logo": "https://oria.me/assets/favicon.png"
+          "logo": "https://oria.me/assets/favicon.png",
+          "description": "Oria AI is an evolvable personal AI that synthesizes the fragmented data of your life into unified, actionable wisdom.",
+          "sameAs": [
+            "https://x.com/OriaAI_official",
+            "https://www.linkedin.com/company/theother-intelligence/"
+          ]
         },
         {
           "@type": "WebSite",
+          "@id": "https://oria.me/#website",
           "name": "Oria AI",
           "url": "https://oria.me",
+          "publisher": { "@id": "https://oria.me/#organization" },
           "potentialAction": {
             "@type": "SearchAction",
             "target": "https://oria.me/blog/?q={search_term_string}",
             "query-input": "required name=search_term_string"
           }
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://oria.me/#softwareapplication",
+          "name": "Oria AI",
+          "applicationCategory": "LifestyleApplication",
+          "operatingSystem": "Web, iOS, Android",
+          "description": "An evolvable digital self that synthesizes your life data into actionable wisdom.",
+          "url": "https://oria.me",
+          "publisher": { "@id": "https://oria.me/#organization" },
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://oria.me/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is Oria AI?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Oria AI is an evolvable digital self that connects your health, productivity, memory, and social data to provide unified, actionable life guidance."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How does Oria AI work?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Oria AI integrates with your existing apps and devices, synthesizes your personal data, and evolves its guidance based on your patterns and goals."
+              }
+            }
+          ]
         }
       ]
     }
@@ -96,6 +141,7 @@
                     <a href="#vision" class="nav-item">Vision</a>
                     <a href="#ecosystem" class="nav-item">Ecosystem</a>
                     <a href="/blog/" class="nav-item">Blog</a>
+                    <a href="#newsletter" class="nav-item">Newsletter</a>
                 </div>
                 <div class="mobile-toggle"><i class="fas fa-bars"></i></div>
             </div>
@@ -110,7 +156,7 @@
                 <span class="line-2">An intuitive self.</span>
             </h1>
             <p class="hero-subtitle">
-                Oria AI is an evolvable digital self of you that synthesizes the fragmented data of your life into
+                Oria AI is an evolvable personal AI that synthesizes the fragmented data of your life into
                 unified, actionable wisdom.
             </p>
             <div class="hero-actions">
@@ -226,17 +272,20 @@
                 <!-- BLOG_TEASER_START -->
                 <article class="editorial-card">
                     <div class="editorial-meta">Mar 7, 2026</div>
-                    <h3 class="editorial-title"><a href="/blog/human-centered-personal-ai.html">Human-Centered Personal AI: Building Around the Person, Not the Task</a></h3>
+                    <h3 class="editorial-title"><a href="/blog/human-centered-personal-ai.html">Human-Centered Personal
+                            AI: Building Around the Person, Not the Task</a></h3>
                     <a href="/blog/human-centered-personal-ai.html" class="editorial-link">Read essay</a>
                 </article>
                 <article class="editorial-card">
                     <div class="editorial-meta">Feb 28, 2026</div>
-                    <h3 class="editorial-title"><a href="/blog/bio-digital-synthesis-frontier-of-health.html">Why Bio-Digital Synthesis Is the Frontier of Personal Health and Wellness Insights</a></h3>
+                    <h3 class="editorial-title"><a href="/blog/bio-digital-synthesis-frontier-of-health.html">Why
+                            Bio-Digital Synthesis Is the Frontier of Personal Health and Wellness Insights</a></h3>
                     <a href="/blog/bio-digital-synthesis-frontier-of-health.html" class="editorial-link">Read essay</a>
                 </article>
                 <article class="editorial-card">
                     <div class="editorial-meta">Feb 21, 2026</div>
-                    <h3 class="editorial-title"><a href="/blog/life-flow.html">Life Flow: From Psychology to a New Social Paradigm</a></h3>
+                    <h3 class="editorial-title"><a href="/blog/life-flow.html">Life Flow: From Psychology to a New
+                            Social Paradigm</a></h3>
                     <a href="/blog/life-flow.html" class="editorial-link">Read essay</a>
                 </article>
                 <!-- BLOG_TEASER_END -->
