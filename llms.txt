@@ -8,6 +8,8 @@ Oria AI is offered by TheOther Intelligence LLC. The canonical public site is ht
 
 - [Home](https://oria.me/): Marketing site and product overview for Oria AI.
 - [Blog](https://oria.me/blog/): Long-form articles on personal AI, health, and intentional living.
+- [About](https://oria.me/about): Who builds Oria AI (TheOther Intelligence LLC), mission, and ecosystem context.
+- [Contact](https://oria.me/contact): Company details, email contacts, and official social channels.
 - [Privacy policy](https://oria.me/privacy): Privacy practices and how to reach the privacy team.
 - [Terms of service](https://oria.me/terms): Legal terms for use of the site and services.
 

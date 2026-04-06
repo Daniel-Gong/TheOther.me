@@ -165,6 +165,8 @@ const NAV = `
                 <a href="/#vision" class="nav-item">Vision</a>
                 <a href="/#ecosystem" class="nav-item">Ecosystem</a>
                 <a href="/blog/" class="nav-item">Blog</a>
+                <a href="/about" class="nav-item">About</a>
+                <a href="/contact" class="nav-item">Contact</a>
                 <a href="/#newsletter" class="nav-item">Newsletter</a>
             </div>
             <div class="mobile-toggle"><i class="fas fa-bars"></i></div>
@@ -189,6 +191,8 @@ const FOOTER = `
             <div class="footer-bottom">
                 <div class="footer-copy">&copy; 2026 TheOther Intelligence LLC.</div>
                 <div class="footer-legal">
+                    <a href="/about">About</a>
+                    <a href="/contact">Contact</a>
                     <a href="/privacy">Privacy</a>
                     <a href="/terms">Terms</a>
                 </div>
@@ -393,6 +397,8 @@ function buildSitemap(posts) {
     { loc: `${BASE_URL}/blog/`, changefreq: 'weekly', priority: '0.9' },
     { loc: `${BASE_URL}/privacy`, changefreq: 'monthly', priority: '0.5' },
     { loc: `${BASE_URL}/terms`, changefreq: 'monthly', priority: '0.5' },
+    { loc: `${BASE_URL}/about`, changefreq: 'monthly', priority: '0.6' },
+    { loc: `${BASE_URL}/contact`, changefreq: 'monthly', priority: '0.6' },
     { loc: `${BASE_URL}/slideshow`, changefreq: 'monthly', priority: '0.4' },
   ];
 
