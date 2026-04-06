@@ -1,0 +1,41 @@
+# Oria AI
+
+> Oria AI is an evolvable personal AI that synthesizes the fragmented data of your life into unified, actionable wisdom.
+
+Oria AI is offered by TheOther Intelligence LLC. The canonical public site is https://oria.me/. Paths under `/admin/` are operational tools and are blocked in robots.txt; crawlers and training systems should treat them as non-public.
+
+## Primary pages
+
+- [Home](https://oria.me/): Marketing site and product overview for Oria AI.
+- [Blog](https://oria.me/blog/): Long-form articles on personal AI, health, and intentional living.
+- [Privacy policy](https://oria.me/privacy): Privacy practices and how to reach the privacy team.
+- [Terms of service](https://oria.me/terms): Legal terms for use of the site and services.
+
+## Blog articles
+
+- [Human-centered personal AI](https://oria.me/blog/human-centered-personal-ai.html): Human-centered design themes for personal AI.
+- [Bio-digital synthesis: frontier of health](https://oria.me/blog/bio-digital-synthesis-frontier-of-health.html): Bio-digital synthesis and health.
+- [Life flow](https://oria.me/blog/life-flow.html): Life flow and integration of daily data.
+- [Intentional living](https://oria.me/blog/intentional-living.html): Intentional living with personal AI support.
+- [What is an evolvable digital self?](https://oria.me/blog/what-is-evolvable-digital-self.html): Concept of an evolvable digital self.
+
+## Other public URLs
+
+- [Slideshow](https://oria.me/slideshow): Slide-style presentation page.
+
+## Machine-readable site metadata
+
+- [robots.txt](https://oria.me/robots.txt): Crawler directives (`/admin/` is disallowed).
+- [Sitemap](https://oria.me/sitemap.xml): XML sitemap of public URLs.
+
+## Social and community
+
+- [X (Twitter)](https://x.com/OriaAI_official)
+- [LinkedIn](https://www.linkedin.com/company/theother-intelligence/)
+- [Instagram](https://instagram.com/oriaai.official)
+- [Discord](https://discord.gg/Vxzb2NW9nx)
+
+## Contact
+
+- Privacy: privacy@theother.me
+- Legal: legal@theother.me
