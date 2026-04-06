@@ -253,11 +253,11 @@ h6 {
 }
 
 .hero-title {
-    font-size: clamp(3rem, 8vw, 7.5rem);
+    font-size: clamp(2.25rem, 5vw, 4.75rem);
     font-weight: 200;
     line-height: 1.05;
     letter-spacing: -0.03em;
-    margin-bottom: 3rem;
+    margin-bottom: 2.25rem;
     display: flex;
     flex-direction: column;
 }
@@ -272,12 +272,12 @@ h6 {
 }
 
 .hero-subtitle {
-    font-size: clamp(1.125rem, 2vw, 1.5rem);
+    font-size: clamp(1rem, 1.65vw, 1.25rem);
     font-weight: 300;
     color: var(--text-secondary);
     max-width: 650px;
     line-height: 1.5;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
 }
 
 .hero-actions {
