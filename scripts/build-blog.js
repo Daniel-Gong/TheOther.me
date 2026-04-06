@@ -11,6 +11,27 @@ const BLOG_TEASER_START = '                <!-- BLOG_TEASER_START -->';
 const BLOG_TEASER_END = '                <!-- BLOG_TEASER_END -->';
 const BLOG_TEASER_MAX = 3;
 const BASE_URL = 'https://oria.me';
+const ORG_ID = `${BASE_URL}/#organization`;
+
+const ORGANIZATION_NODE = {
+  '@type': 'Organization',
+  '@id': ORG_ID,
+  name: 'Oria AI',
+  legalName: 'TheOther Intelligence LLC',
+  url: BASE_URL,
+  logo: {
+    '@type': 'ImageObject',
+    url: `${BASE_URL}/assets/favicon.png`,
+  },
+  sameAs: [
+    'https://x.com/OriaAI_official',
+    'https://www.linkedin.com/company/theother-intelligence/',
+    'https://instagram.com/oriaai.official',
+    'https://discord.gg/Vxzb2NW9nx',
+  ],
+  description:
+    'Oria AI builds evolvable personal AI that synthesizes longitudinal life data into unified, actionable insight—with explicit user agency, privacy, and consent.',
+};
 
 function escapeHtml(s) {
   if (typeof s !== 'string') return '';
@@ -35,6 +56,95 @@ function isoDate(dateInput) {
   const m = String(d.getUTCMonth() + 1).padStart(2, '0');
   const day = String(d.getUTCDate()).padStart(2, '0');
   return `${y}-${m}-${day}`;
+}
+
+function normalizeFrontmatterAuthor(raw) {
+  if (raw == null || raw === '') return null;
+  if (typeof raw === 'string') {
+    const t = raw.trim();
+    return t ? { name: t } : null;
+  }
+  if (typeof raw === 'object' && raw.name != null && String(raw.name).trim()) {
+    const name = String(raw.name).trim();
+    const jobTitle = raw.jobTitle != null ? String(raw.jobTitle).trim() : '';
+    const url = raw.url != null ? String(raw.url).trim() : '';
+    let sameAs = raw.sameAs;
+    if (typeof sameAs === 'string') sameAs = [sameAs];
+    if (!Array.isArray(sameAs)) sameAs = [];
+    sameAs = sameAs.map((s) => String(s).trim()).filter(Boolean);
+    return {
+      name,
+      jobTitle: jobTitle || undefined,
+      url: url || undefined,
+      sameAs: sameAs.length ? sameAs : undefined,
+    };
+  }
+  return null;
+}
+
+function articleAuthorProfileUrl(personAuthor) {
+  if (!personAuthor) return BASE_URL;
+  if (personAuthor.url) return personAuthor.url;
+  if (personAuthor.sameAs && personAuthor.sameAs[0]) return personAuthor.sameAs[0];
+  return BASE_URL;
+}
+
+function buildArticleAuthorMetaContent(profileUrl) {
+  const u = profileUrl && String(profileUrl).trim() ? String(profileUrl).trim() : BASE_URL;
+  return escapeHtml(u);
+}
+
+function buildAuthorBylineHtml(personAuthor) {
+  const orgName = 'Oria AI';
+  const orgLegal = 'TheOther Intelligence LLC';
+  const orgUrl = escapeHtml(BASE_URL);
+  if (personAuthor) {
+    const nameEsc = escapeHtml(personAuthor.name);
+    const roleEsc = personAuthor.jobTitle ? escapeHtml(personAuthor.jobTitle) : '';
+    const linkStart = personAuthor.url
+      ? `<a href="${escapeHtml(personAuthor.url)}" class="blog-post-byline-author" rel="author">`
+      : '<span class="blog-post-byline-author">';
+    const linkEnd = personAuthor.url ? '</a>' : '</span>';
+    const rolePart = roleEsc ? `<span class="blog-post-byline-role">, ${roleEsc}</span>` : '';
+    return `<p class="blog-post-byline">${linkStart}${nameEsc}${linkEnd}${rolePart} · <a href="${orgUrl}" class="blog-post-byline-org-link">${escapeHtml(orgName)}</a><span class="blog-post-byline-org">, ${escapeHtml(orgLegal)}</span></p>`;
+  }
+  return `<p class="blog-post-byline">By <a href="${orgUrl}" rel="author">${escapeHtml(orgName)}</a><span class="blog-post-byline-org">, ${escapeHtml(orgLegal)}</span></p>`;
+}
+
+function buildBlogPostingSchemaGraph(post, dateIso, postUrl, personAuthor) {
+  const graph = [ORGANIZATION_NODE];
+  let authorRef = { '@id': ORG_ID };
+
+  if (personAuthor) {
+    const authorId = `${postUrl}#author`;
+    const personNode = {
+      '@type': 'Person',
+      '@id': authorId,
+      name: personAuthor.name,
+      worksFor: { '@id': ORG_ID },
+    };
+    if (personAuthor.jobTitle) personNode.jobTitle = personAuthor.jobTitle;
+    if (personAuthor.url) personNode.url = personAuthor.url;
+    if (personAuthor.sameAs && personAuthor.sameAs.length) personNode.sameAs = personAuthor.sameAs;
+    graph.push(personNode);
+    authorRef = { '@id': authorId };
+  }
+
+  graph.push({
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.description,
+    datePublished: dateIso,
+    url: postUrl,
+    image: `${BASE_URL}/assets/og-image.png`,
+    author: authorRef,
+    publisher: { '@id': ORG_ID },
+  });
+
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': graph,
+  });
 }
 
 function escapeXml(s) {
@@ -113,6 +223,7 @@ function getPostTemplate() {
     <meta property="og:image" content="{{baseUrl}}/assets/og-image.png">
     <meta property="og:type" content="article">
     <meta property="article:published_time" content="{{dateIso}}">
+{{articleAuthorMeta}}
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{titleEsc}}">
@@ -140,7 +251,10 @@ ${NAV}
                 Back to Blog
             </a>
             <header class="blog-post-header">
-                <time datetime="{{dateIso}}" class="blog-post-date">{{dateFormatted}}</time>
+                <div class="blog-post-meta-row">
+                    <time datetime="{{dateIso}}" class="blog-post-date">{{dateFormatted}}</time>
+                </div>
+                {{authorByline}}
                 <h1 class="blog-post-title">{{title}}</h1>
                 <p class="blog-post-lead">{{lead}}</p>
             </header>
@@ -231,16 +345,11 @@ function buildPost(post, template) {
   const lead = post.lead != null ? escapeHtml(post.lead) : descriptionEsc;
   const body = marked.parse(post.content);
   const postUrl = `${BASE_URL}/blog/${post.slug}.html`;
-
-  const blogPostingSchema = JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    headline: post.title,
-    description: post.description,
-    datePublished: dateIso,
-    url: postUrl,
-    author: { '@type': 'Organization', name: 'Oria AI' },
-  });
+  const personAuthor = normalizeFrontmatterAuthor(post.author);
+  const profileUrl = articleAuthorProfileUrl(personAuthor);
+  const articleAuthorMeta = `    <meta property="article:author" content="${buildArticleAuthorMetaContent(profileUrl)}">`;
+  const authorByline = buildAuthorBylineHtml(personAuthor);
+  const blogPostingSchema = buildBlogPostingSchemaGraph(post, dateIso, postUrl, personAuthor);
 
   return template
     .replace(/\{\{titleEsc\}\}/g, titleEsc)
@@ -252,6 +361,8 @@ function buildPost(post, template) {
     .replace(/\{\{body\}\}/g, body)
     .replace(/\{\{postUrl\}\}/g, postUrl)
     .replace(/\{\{baseUrl\}\}/g, BASE_URL)
+    .replace(/\{\{articleAuthorMeta\}\}/g, articleAuthorMeta)
+    .replace(/\{\{authorByline\}\}/g, authorByline)
     .replace(/\{\{blogPostingSchema\}\}/g, blogPostingSchema);
 }
 
@@ -352,6 +463,7 @@ function main() {
       date: data.date,
       description: data.description || '',
       lead: data.lead,
+      author: data.author,
       content: content.trim(),
     });
   }

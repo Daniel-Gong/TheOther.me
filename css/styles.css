@@ -1007,12 +1007,44 @@ h6 {
     margin-bottom: 4rem;
 }
 
+.blog-post-meta-row {
+    margin-bottom: 0.5rem;
+}
+
+.blog-post-meta-row .blog-post-date {
+    margin-bottom: 0;
+}
+
 .blog-post-date {
     display: block;
     font-size: 0.875rem;
     color: var(--text-tertiary);
     font-family: monospace;
     margin-bottom: 1.5rem;
+}
+
+.blog-post-byline {
+    font-size: 0.9375rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin: 0 0 1.25rem 0;
+}
+
+.blog-post-byline a {
+    color: var(--text-primary);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+    text-decoration-color: rgba(17, 17, 17, 0.35);
+}
+
+.blog-post-byline a:hover {
+    text-decoration-color: rgba(17, 17, 17, 0.65);
+}
+
+.blog-post-byline-org {
+    color: var(--text-tertiary);
+    font-weight: 300;
 }
 
 .blog-post-title {
