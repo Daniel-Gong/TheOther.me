@@ -1153,110 +1153,106 @@ h6 {
 }
 
 .blog-post-related {
-    margin-top: 4rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--accent-blue);
+    margin-top: 5rem;
+    padding-top: 3rem;
 }
 
-.blog-post-related h3 {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--text-primary);
+.blog-post-related h2 {
+    font-size: 2rem;
+    font-weight: 300;
+    margin-bottom: 3rem;
+    letter-spacing: -0.01em;
+}
+
+.blog-post-related-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem;
+}
+
+.blog-post-related-card {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 1rem;
+}
+
+.blog-post-related-title {
+    font-size: 1.25rem;
+    font-weight: 300;
+    line-height: 1.4;
     margin-bottom: 1.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
 }
 
-.blog-post-related ul {
-    list-style: none;
-}
-
-.blog-post-related li {
-    margin-bottom: 0.75rem;
-}
-
-.blog-post-related a {
-    color: var(--text-secondary);
+.blog-post-related-title a {
+    color: var(--text-primary);
     text-decoration: none;
-    transition: color 0.3s ease;
-    font-size: 0.95rem;
 }
 
-.blog-post-related a:hover {
+.blog-post-related-title a:hover {
     color: var(--accent-sage);
-    text-decoration: underline;
+}
+
+.blog-post-related-link {
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-primary);
+    text-decoration: none;
+    margin-top: auto;
+    position: relative;
+    align-self: flex-start;
+    transition: color 0.3s ease;
+}
+
+.blog-post-related-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    right: 0;
+    left: 0;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s ease;
+}
+
+.blog-post-related-card:hover .blog-post-related-link::after {
+    transform: scaleX(1);
+    transform-origin: left;
 }
 
 .blog-post-cta {
-    margin-top: 4rem;
-    padding: 3rem 2.5rem;
-    background: linear-gradient(135deg, rgba(163, 177, 155, 0.1) 0%, rgba(244, 235, 208, 0.1) 100%);
-    border: 1px solid var(--accent-sage);
-    border-radius: 8px;
+    margin-top: 5rem;
+    padding: 2.5rem;
+    background-color: var(--bg-alt);
+    border-radius: 4px;
     text-align: center;
 }
 
-.blog-post-cta h3 {
-    font-size: 1.5rem;
-    font-weight: 600;
+.blog-post-cta-text {
+    font-size: 1.125rem;
+    font-weight: 300;
     color: var(--text-primary);
-    margin-bottom: 0.75rem;
-}
-
-.blog-post-cta>p {
-    color: var(--text-secondary);
-    margin-bottom: 2rem;
-    font-size: 1rem;
-}
-
-.blog-post-cta-actions {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
     margin-bottom: 1.5rem;
+    line-height: 1.5;
 }
 
-.cta-button {
-    padding: 0.875rem 1.75rem;
-    border-radius: 4px;
+.blog-post-cta-link {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--text-primary);
+    color: var(--bg-canvas);
     text-decoration: none;
     font-weight: 500;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+    border-radius: 3px;
     transition: all 0.3s ease;
-    display: inline-block;
-    cursor: pointer;
-    border: none;
 }
 
-.cta-button-primary {
-    background-color: var(--text-primary);
-    color: var(--bg-canvas);
-}
-
-.cta-button-primary:hover {
+.blog-post-cta-link:hover {
     background-color: var(--accent-sage);
-    color: var(--bg-canvas);
-}
-
-.cta-button-secondary {
-    background-color: transparent;
-    color: var(--text-primary);
-    border: 1.5px solid var(--text-primary);
-}
-
-.cta-button-secondary:hover {
-    background-color: var(--text-primary);
-    color: var(--bg-canvas);
-}
-
-.blog-post-cta-note {
-    font-size: 0.875rem;
-    color: var(--text-tertiary);
-}
-
-.blog-post-cta-note strong {
-    color: var(--text-secondary);
 }
 
 /* Invite Page */

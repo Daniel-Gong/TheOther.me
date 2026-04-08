@@ -128,27 +128,25 @@ function buildRelatedArticlesHtml(relatedSlugs, allPosts) {
     .map((p) => {
       const titleEsc = escapeHtml(p.title);
       const url = `/blog/${p.slug}.html`;
-      return `                <li><a href="${url}">${titleEsc}</a></li>`;
+      return `                <article class="blog-post-related-card">
+                    <h3 class="blog-post-related-title"><a href="${url}">${titleEsc}</a></h3>
+                    <a href="${url}" class="blog-post-related-link">Read article</a>
+                </article>`;
     })
     .join('\n');
 
-  return `            <aside class="blog-post-related">
-                <h3>Related Articles</h3>
-                <ul>
+  return `            <section class="blog-post-related">
+                <h2>Related Reading</h2>
+                <div class="blog-post-related-grid">
 ${relatedItems}
-                </ul>
-            </aside>`;
+                </div>
+            </section>`;
 }
 
 function buildCtaHtml() {
   return `            <aside class="blog-post-cta">
-                <h3>Try Oria AI</h3>
-                <p>Ready to build your evolvable digital self? Start your journey today.</p>
-                <div class="blog-post-cta-actions">
-                    <a href="/invite/PTUM9J" class="cta-button cta-button-primary">Access Invite</a>
-                    <a href="https://apps.apple.com/us/app/oria-ai-evolvable-personal-ai/id6758279152" target="_blank" rel="noopener noreferrer" class="cta-button cta-button-secondary">Download App</a>
-                </div>
-                <p class="blog-post-cta-note">Use code <strong>PTUM9J</strong> to bypass the waitlist</p>
+                <p class="blog-post-cta-text">Ready to explore your evolvable digital self?</p>
+                <a href="/invite/PTUM9J" class="blog-post-cta-link">Access with code PTUM9J</a>
             </aside>`;
 }
 
@@ -304,8 +302,8 @@ ${NAV}
             <div class="blog-post-body">
 {{body}}
             </div>
-{{relatedArticles}}
 {{cta}}
+{{relatedArticles}}
         </div>
     </article>
 ${FOOTER}
