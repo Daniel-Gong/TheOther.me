@@ -86,10 +86,10 @@ function initializeAnimations() {
                 { y: 0, opacity: 1, duration: 1, ease: 'power2.out' },
                 "-=0.6"
             )
-            .fromTo('.hero-actions',
-                { opacity: 0 },
-                { opacity: 1, duration: 1, ease: 'power2.out' },
-                "-=0.4"
+            .fromTo('.home-invite-panel-hero',
+                { y: 20, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out' },
+                "-=0.35"
             );
 
             if (showcase) {
@@ -125,6 +125,7 @@ function initializeAnimations() {
             '.app-category',
             '.journey-step',
             '.editorial-card',
+            '.home-invite-panel-end',
             '.resolution-title',
             '.resolution-desc',
             '.minimal-form'

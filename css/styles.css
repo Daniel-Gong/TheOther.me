@@ -339,6 +339,172 @@ h6 {
     display: block;
 }
 
+.home-invite-panel {
+    position: relative;
+    overflow: hidden;
+    margin-top: 2.5rem;
+    padding: clamp(1.5rem, 2.4vw, 2.5rem);
+    border: 1px solid rgba(17, 17, 17, 0.08);
+    border-radius: 28px;
+    background:
+        radial-gradient(circle at top right, rgba(244, 235, 208, 0.78), transparent 34%),
+        radial-gradient(circle at bottom left, rgba(163, 177, 155, 0.22), transparent 36%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(247, 247, 245, 0.92));
+    box-shadow: 0 30px 80px rgba(17, 17, 17, 0.08);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+.home-invite-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(120deg, rgba(255, 255, 255, 0.36), transparent 30% 70%, rgba(255, 255, 255, 0.2)),
+        linear-gradient(180deg, rgba(17, 17, 17, 0.03), transparent 40%);
+    pointer-events: none;
+}
+
+.home-invite-panel-hero {
+    max-width: 720px;
+}
+
+.home-invite-panel-end {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.resolution .home-invite-panel-end {
+    text-align: left;
+    margin-bottom: 4rem;
+}
+
+.home-invite-header,
+.home-invite-body,
+.home-invite-actions,
+.home-invite-meta {
+    position: relative;
+    z-index: 1;
+}
+
+.home-invite-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.home-invite-eyebrow {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+.home-invite-code {
+    flex-shrink: 0;
+    padding: 0.55rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid rgba(17, 17, 17, 0.1);
+    background: rgba(253, 252, 251, 0.86);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.home-invite-title {
+    max-width: 14ch;
+    font-size: clamp(1.8rem, 3vw, 3rem);
+    font-weight: 250;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+}
+
+.home-invite-desc {
+    max-width: 60ch;
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--text-secondary);
+}
+
+.home-invite-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+.home-invite-primary,
+.home-invite-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0.85rem 1.35rem;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.home-invite-primary {
+    background: var(--text-primary);
+    color: var(--bg-canvas);
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.home-invite-primary:hover {
+    transform: translateY(-1px);
+    background: var(--accent-dark);
+}
+
+.home-invite-secondary {
+    border: 1px solid rgba(17, 17, 17, 0.14);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.home-invite-secondary:hover {
+    transform: translateY(-1px);
+    border-color: rgba(17, 17, 17, 0.28);
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.home-invite-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin-top: 1.75rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.home-invite-meta span {
+    position: relative;
+    padding-left: 1rem;
+}
+
+.home-invite-meta span::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 0.35rem;
+    height: 0.35rem;
+    border-radius: 50%;
+    background: rgba(163, 177, 155, 0.95);
+    transform: translateY(-50%);
+}
+
 .app-store-badge-small {
     height: 36px;
     display: block;
@@ -829,6 +995,29 @@ h6 {
         flex-direction: column;
         align-items: flex-start;
         gap: 1rem;
+    }
+
+    .home-invite-panel {
+        border-radius: 24px;
+    }
+
+    .home-invite-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .home-invite-title {
+        max-width: none;
+    }
+
+    .home-invite-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .home-invite-primary,
+    .home-invite-secondary {
+        width: 100%;
     }
 
     .vision,
