@@ -140,6 +140,18 @@ ${relatedItems}
             </aside>`;
 }
 
+function buildCtaHtml() {
+  return `            <aside class="blog-post-cta">
+                <h3>Try Oria AI</h3>
+                <p>Ready to build your evolvable digital self? Start your journey today.</p>
+                <div class="blog-post-cta-actions">
+                    <a href="/invite/PTUM9J" class="cta-button cta-button-primary">Access Invite</a>
+                    <a href="https://apps.apple.com/us/app/oria-ai-evolvable-personal-ai/id6758279152" target="_blank" rel="noopener noreferrer" class="cta-button cta-button-secondary">Download App</a>
+                </div>
+                <p class="blog-post-cta-note">Use code <strong>PTUM9J</strong> to bypass the waitlist</p>
+            </aside>`;
+}
+
 function buildBlogPostingSchemaGraph(post, dateIso, postUrl, personAuthor) {
   const graph = [ORGANIZATION_NODE];
   let authorRef = { '@id': ORG_ID };
@@ -293,6 +305,7 @@ ${NAV}
 {{body}}
             </div>
 {{relatedArticles}}
+{{cta}}
         </div>
     </article>
 ${FOOTER}
@@ -383,6 +396,7 @@ function buildPost(post, template, allPosts) {
   const authorByline = buildAuthorBylineHtml(personAuthor);
   const blogPostingSchema = buildBlogPostingSchemaGraph(post, dateIso, postUrl, personAuthor);
   const relatedArticles = buildRelatedArticlesHtml(post.related, allPosts);
+  const cta = buildCtaHtml();
 
   return template
     .replace(/\{\{titleEsc\}\}/g, titleEsc)
@@ -397,6 +411,7 @@ function buildPost(post, template, allPosts) {
     .replace(/\{\{articleAuthorMeta\}\}/g, articleAuthorMeta)
     .replace(/\{\{authorByline\}\}/g, authorByline)
     .replace(/\{\{relatedArticles\}\}/g, relatedArticles)
+    .replace(/\{\{cta\}\}/g, cta)
     .replace(/\{\{blogPostingSchema\}\}/g, blogPostingSchema);
 }
 

@@ -1187,6 +1187,78 @@ h6 {
     text-decoration: underline;
 }
 
+.blog-post-cta {
+    margin-top: 4rem;
+    padding: 3rem 2.5rem;
+    background: linear-gradient(135deg, rgba(163, 177, 155, 0.1) 0%, rgba(244, 235, 208, 0.1) 100%);
+    border: 1px solid var(--accent-sage);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.blog-post-cta h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+}
+
+.blog-post-cta>p {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    font-size: 1rem;
+}
+
+.blog-post-cta-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.cta-button {
+    padding: 0.875rem 1.75rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+    cursor: pointer;
+    border: none;
+}
+
+.cta-button-primary {
+    background-color: var(--text-primary);
+    color: var(--bg-canvas);
+}
+
+.cta-button-primary:hover {
+    background-color: var(--accent-sage);
+    color: var(--bg-canvas);
+}
+
+.cta-button-secondary {
+    background-color: transparent;
+    color: var(--text-primary);
+    border: 1.5px solid var(--text-primary);
+}
+
+.cta-button-secondary:hover {
+    background-color: var(--text-primary);
+    color: var(--bg-canvas);
+}
+
+.blog-post-cta-note {
+    font-size: 0.875rem;
+    color: var(--text-tertiary);
+}
+
+.blog-post-cta-note strong {
+    color: var(--text-secondary);
+}
+
 /* Invite Page */
 .invite-page {
     display: grid;
