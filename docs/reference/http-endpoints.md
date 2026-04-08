@@ -2,6 +2,13 @@
 
 All endpoints are Firebase Functions under `functionsBaseUrl`.
 
+For canonical backend contract ownership and implementation context, also read:
+
+- [TheOtherME backend function contracts](../../../TheOtherME/docs/backend/function-contracts.md)
+- [TheOtherME integration guide](../../../TheOtherME/docs/integrations/oria-me.md)
+
+This page stays focused on the website/admin consumer view.
+
 ## Public endpoints
 
 ### `POST /publicJoinNewsletter`
@@ -125,6 +132,7 @@ Response (example):
 
 ## Backend source of truth
 
-- `../TheOtherME/backend/functions/src/waitlist.ts`
-- `../TheOtherME/backend/functions/src/referral.ts`
-- `../TheOtherME/backend/functions/src/growthAdmin.ts`
+- `../../../TheOtherME/docs/backend/function-contracts.md`
+- `../../../TheOtherME/backend/functions/src/waitlist.ts`
+- `../../../TheOtherME/backend/functions/src/referral.ts`
+- `../../../TheOtherME/backend/functions/src/growthAdmin.ts`
