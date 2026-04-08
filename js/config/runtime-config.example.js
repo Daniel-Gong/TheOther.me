@@ -6,7 +6,6 @@ window.__ORIA_RUNTIME__ = {
     storageBucket: "YOUR_FIREBASE_STORAGE_BUCKET",
     messagingSenderId: "YOUR_FIREBASE_MESSAGING_SENDER_ID",
     appId: "YOUR_FIREBASE_APP_ID",
-    measurementId: "YOUR_FIREBASE_MEASUREMENT_ID",
   },
   functionsRegion: "us-central1",
   functionsBaseUrl: "https://us-central1-YOUR_PROJECT_ID.cloudfunctions.net",

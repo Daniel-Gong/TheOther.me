@@ -25,6 +25,10 @@ const files = walkHtml(SITE_DIR);
 let count = 0;
 
 for (const file of files) {
+  const relative = path.relative(SITE_DIR, file);
+  const segments = relative.split(path.sep);
+  if (segments[0] === 'admin') continue;
+
   const html = fs.readFileSync(file, 'utf8');
   if (html.includes('googletagmanager.com')) continue;
 
@@ -32,7 +36,7 @@ for (const file of files) {
   const injected = html.replace('<head>', `<head>\n    ${indented}`);
 
   if (injected === html) {
-    console.warn(`  [warn] no <head> tag in ${path.relative(SITE_DIR, file)}`);
+    console.warn(`  [warn] no <head> tag in ${relative}`);
     continue;
   }
 

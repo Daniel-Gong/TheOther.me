@@ -1,7 +1,6 @@
 import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getFunctions } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-functions.js";
-import { getAnalytics, isSupported as isAnalyticsSupported } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
 import {
   initializeAppCheck,
   ReCaptchaV3Provider,
@@ -17,18 +16,6 @@ const auth = getAuth(app);
 const functions = getFunctions(app, runtime.functionsRegion || "us-central1");
 const appCheckSiteKey = runtime.appCheckSiteKey || "";
 let appCheck = null;
-
-let analytics = null;
-isAnalyticsSupported()
-  .then((supported) => {
-    if (supported) {
-      analytics = getAnalytics(app);
-      window.oriaFirebase.analytics = analytics;
-    }
-  })
-  .catch(() => {
-    // Ignore analytics init errors for unsupported contexts.
-  });
 
 if (appCheckSiteKey) {
   try {
@@ -59,7 +46,6 @@ window.oriaFirebase = {
   functions,
   appCheck,
   getAppCheckToken,
-  analytics,
   runtime,
 };
 
@@ -67,4 +53,4 @@ export function getOriaFirebase() {
   return window.oriaFirebase;
 }
 
-export { app, auth, functions, appCheck, getAppCheckToken, analytics, runtime };
+export { app, auth, functions, appCheck, getAppCheckToken, runtime };
