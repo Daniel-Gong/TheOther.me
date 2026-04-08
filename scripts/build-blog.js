@@ -111,6 +111,35 @@ function buildAuthorBylineHtml(personAuthor) {
   return `<p class="blog-post-byline">By <a href="${orgUrl}" rel="author">${escapeHtml(orgName)}</a><span class="blog-post-byline-org">, ${escapeHtml(orgLegal)}</span></p>`;
 }
 
+function buildRelatedArticlesHtml(relatedSlugs, allPosts) {
+  if (!relatedSlugs || !Array.isArray(relatedSlugs) || relatedSlugs.length === 0) {
+    return '';
+  }
+
+  const relatedPosts = relatedSlugs
+    .map((slug) => allPosts.find((p) => p.slug === slug))
+    .filter((p) => p); // filter out undefined
+
+  if (relatedPosts.length === 0) {
+    return '';
+  }
+
+  const relatedItems = relatedPosts
+    .map((p) => {
+      const titleEsc = escapeHtml(p.title);
+      const url = `/blog/${p.slug}.html`;
+      return `                <li><a href="${url}">${titleEsc}</a></li>`;
+    })
+    .join('\n');
+
+  return `            <aside class="blog-post-related">
+                <h3>Related Articles</h3>
+                <ul>
+${relatedItems}
+                </ul>
+            </aside>`;
+}
+
 function buildBlogPostingSchemaGraph(post, dateIso, postUrl, personAuthor) {
   const graph = [ORGANIZATION_NODE];
   let authorRef = { '@id': ORG_ID };
@@ -263,6 +292,7 @@ ${NAV}
             <div class="blog-post-body">
 {{body}}
             </div>
+{{relatedArticles}}
         </div>
     </article>
 ${FOOTER}
@@ -339,7 +369,7 @@ ${FOOTER}
 </html>`;
 }
 
-function buildPost(post, template) {
+function buildPost(post, template, allPosts) {
   const titleEsc = escapeHtml(post.title);
   const descriptionEsc = escapeHtml(post.description);
   const dateFormatted = formatDate(post.date);
@@ -352,6 +382,7 @@ function buildPost(post, template) {
   const articleAuthorMeta = `    <meta property="article:author" content="${buildArticleAuthorMetaContent(profileUrl)}">`;
   const authorByline = buildAuthorBylineHtml(personAuthor);
   const blogPostingSchema = buildBlogPostingSchemaGraph(post, dateIso, postUrl, personAuthor);
+  const relatedArticles = buildRelatedArticlesHtml(post.related, allPosts);
 
   return template
     .replace(/\{\{titleEsc\}\}/g, titleEsc)
@@ -365,6 +396,7 @@ function buildPost(post, template) {
     .replace(/\{\{baseUrl\}\}/g, BASE_URL)
     .replace(/\{\{articleAuthorMeta\}\}/g, articleAuthorMeta)
     .replace(/\{\{authorByline\}\}/g, authorByline)
+    .replace(/\{\{relatedArticles\}\}/g, relatedArticles)
     .replace(/\{\{blogPostingSchema\}\}/g, blogPostingSchema);
 }
 
@@ -461,6 +493,12 @@ function main() {
       console.warn(`Skipping ${file}: missing title or date`);
       continue;
     }
+
+    let related = [];
+    if (data.related) {
+      related = Array.isArray(data.related) ? data.related : [data.related];
+    }
+
     posts.push({
       slug,
       title: data.title,
@@ -468,6 +506,7 @@ function main() {
       description: data.description || '',
       lead: data.lead,
       author: data.author,
+      related: related,
       content: content.trim(),
     });
   }
@@ -478,7 +517,7 @@ function main() {
   const indexTemplate = getIndexTemplate();
 
   for (const post of posts) {
-    const html = buildPost(post, postTemplate);
+    const html = buildPost(post, postTemplate, posts);
     const outPath = path.join(BLOG_DIR, `${post.slug}.html`);
     fs.writeFileSync(outPath, html, 'utf8');
     console.log('Wrote', outPath);

@@ -399,8 +399,30 @@ h6 {
     font-weight: 300;
 }
 
+.section-subtitle a {
+    color: var(--text-secondary);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: color 0.3s ease;
+}
+
+.section-subtitle a:hover {
+    color: var(--accent-sage);
+}
+
 .vision-content p {
     margin-bottom: 2rem;
+}
+
+.vision-content a {
+    color: var(--text-primary);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: color 0.3s ease;
+}
+
+.vision-content a:hover {
+    color: var(--accent-sage);
 }
 
 .body-large {
@@ -503,6 +525,17 @@ h6 {
     color: rgba(253, 252, 251, 0.7);
     line-height: 1.5;
     font-weight: 300;
+}
+
+.step-desc a {
+    color: rgba(253, 252, 251, 0.9);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: color 0.3s ease;
+}
+
+.step-desc a:hover {
+    color: var(--bg-canvas);
 }
 
 /* Philosophy Section */
@@ -1117,6 +1150,41 @@ h6 {
 
 .blog-post-body a:hover {
     color: var(--accent-sage);
+}
+
+.blog-post-related {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--accent-blue);
+}
+
+.blog-post-related h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.blog-post-related ul {
+    list-style: none;
+}
+
+.blog-post-related li {
+    margin-bottom: 0.75rem;
+}
+
+.blog-post-related a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.blog-post-related a:hover {
+    color: var(--accent-sage);
+    text-decoration: underline;
 }
 
 /* Invite Page */

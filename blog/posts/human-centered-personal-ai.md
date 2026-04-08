@@ -4,6 +4,10 @@ date: 2026-03-07
 description: "Why the next generation of personal AI will be built around the person, not the task. A design-oriented look at human-centered digital selves and how they change life planning, self-understanding, and well-being."
 slug: human-centered-personal-ai
 lead: "Most AI today is tool-centric: it helps you complete tasks. A human-centered digital self inverts that—it is built around you over time, so that technology supports self-understanding, intentional living, and life decisions rather than just the next action."
+related:
+  - what-is-evolvable-digital-self
+  - intentional-living
+  - life-flow
 ---
 
 ## The Dominant Model: AI as Task Machine

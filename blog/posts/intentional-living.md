@@ -4,6 +4,10 @@ date: 2026-02-14
 description: "Why Oria is built around the idea of intentional living: making choices from self-understanding rather than defaulting to reaction and habit."
 slug: intentional-living
 lead: "Intentional living means making choices from clarity about who you are and what you want—rather than drifting on defaults. At Oria AI we build tools that support that clarity: an evolvable digital self that reflects you back, so you can live more intentionally."
+related:
+  - what-is-evolvable-digital-self
+  - human-centered-personal-ai
+  - life-flow
 ---
 ## Introduction
 
