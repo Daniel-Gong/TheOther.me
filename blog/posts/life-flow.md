@@ -4,6 +4,9 @@ date: 2026-02-21
 description: "What Life Flow means in psychology, why curated social personas fall short, and how Oria AI is building a new way to connect through authentic, evolving identity—like a GitHub contribution graph for your entire life."
 slug: life-flow
 lead: "Life Flow is the continuous, authentic stream of how you actually live—not the persona you perform. We explore the concept in psychology, its implications for social media, why it matters today, and how Oria is building a new paradigm where you grant others permission to see your real, evolving life."
+related:
+  - human-centered-personal-ai
+  - intentional-living
 ---
 
 ## Introduction

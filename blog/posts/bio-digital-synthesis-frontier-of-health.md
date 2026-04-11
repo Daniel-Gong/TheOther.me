@@ -4,6 +4,9 @@ date: 2026-02-28
 description: "Oria AI believes bio-digital synthesis—the integration of biological and digital data into a unified, evolving model—is where the next generation of personal health and wellness insights will come from."
 slug: bio-digital-synthesis-frontier-of-health
 lead: "Bio-digital synthesis is the integration of biological signals (sleep, heart rate, activity, biomarkers) with digital context (calendar, behavior, environment) into a single, evolving model. At Oria AI we believe it's the frontier of personal health and wellness insights—and the foundation for an evolvable digital self that truly reflects you."
+related:
+  - what-is-evolvable-digital-self
+  - intentional-living
 ---
 
 ## Introduction
