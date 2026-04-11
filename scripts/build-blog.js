@@ -146,7 +146,7 @@ ${relatedItems}
 function buildCtaHtml() {
   return `            <aside class="blog-post-cta">
                 <p class="blog-post-cta-text">Ready to explore your evolvable digital self?</p>
-                <a href="/invite/PTUM9J" class="blog-post-cta-link">Access with code PTUM9J</a>
+                <a href="https://apps.apple.com/us/app/oria-ai-evolvable-personal-ai/id6758279152" class="blog-post-cta-link">Access with code PTUM9J</a>
             </aside>`;
 }
 
