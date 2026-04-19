@@ -19,6 +19,10 @@ Thumbs.db
 
 # Build output (generated during deploy)
 _site/
+app/dist/
+
+# App portal local env (see app/.env.example)
+app/.env.local
 
 # Local runtime config (generated in CI or created locally)
 js/config/runtime-config.js

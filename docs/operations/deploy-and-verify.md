@@ -19,6 +19,7 @@ From `../TheOtherME/backend/functions`:
   - `js/config/runtime-config.js`
   - `js/config/firebase-app.js`
   - updated `js/main.js`, `js/invite.js`, `admin/index.html`
+  - **`app/index.html`** and **`app/assets/*`** (Vite app portal under `/app/`)
 
 ## Smoke tests
 
@@ -44,6 +45,9 @@ From `../TheOtherME/backend/functions`:
 6. **Invite attribution + trial**
    - Open `/invite/<validCode>` with no UTM params and confirm URL gets expected `utm_*`.
    - Confirm returned trial value aligns with `benefit.trialDays` (fallback 7 when absent).
+7. **App portal**
+   - Open `https://oria.me/app/#/login`, sign in with a test user (email or Google).
+   - Confirm `/#/notes` loads and a test note round-trips with the iOS app (same Firestore path).
 
 ## Rollback notes
 

@@ -16,6 +16,7 @@ Backend contract internals are canonical in the sibling backend repo:
 - [Admin Access Setup](./setup/admin-access.md)
 - [HTTP Endpoints Reference](./reference/http-endpoints.md)
 - [Deploy and Verify](./operations/deploy-and-verify.md)
+- [App portal (Vite)](../app/README.md) — authenticated `/app/` surface
 
 ## Ownership Split
 

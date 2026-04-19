@@ -211,6 +211,21 @@ h6 {
     color: var(--text-primary);
 }
 
+.nav-item--login {
+    padding: 0.4rem 1rem;
+    border: 1px solid var(--text-secondary);
+    border-radius: 999px;
+    color: var(--text-primary);
+    transition:
+        color 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.nav-item--login:hover {
+    border-color: var(--text-primary);
+    color: var(--text-primary);
+}
+
 .mobile-toggle {
     display: none;
     font-size: 1.5rem;

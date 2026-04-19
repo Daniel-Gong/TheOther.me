@@ -21,6 +21,13 @@
     <script>
         (function () {
             var path = window.location.pathname || "";
+            // GitHub Pages has no SPA rewrite: deep links under /app/* → hash routes.
+            if (path === "/app" || path.startsWith("/app/")) {
+                var tail = path.replace(/^\/app\/?/, "").replace(/\/+$/, "");
+                var hashPath = tail ? ("/" + tail) : "/";
+                window.location.replace("/app/#" + hashPath + window.location.search);
+                return;
+            }
             var match = path.match(/^\/invite\/([^/?#]+)/i);
             if (match && match[1]) {
                 fetch("/invite.html")

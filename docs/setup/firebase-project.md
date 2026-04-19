@@ -6,8 +6,8 @@
 
 ## Required console setup
 
-1. Ensure `oria.me` and `www.oria.me` are in Firebase Auth authorized domains.
-2. Ensure a Web App exists in this same project (used by website runtime config).
+1. **Firebase Auth → Authorized domains:** include `localhost` (dev), `oria.me`, `www.oria.me`, and **`app.oria.me`** if that subdomain points at this site. The **app portal** is served from `https://oria.me/app/` on GitHub Pages; the browser origin is still `https://oria.me`.
+2. Ensure a Web App exists in this same project (used by `js/config/runtime-config.js` and the Vite portal’s `VITE_*` build-time env in CI).
 3. Ensure Cloud Functions + Firestore are enabled.
 4. Ensure `RESEND_API_KEY` secret is set for Functions.
 
@@ -33,6 +33,7 @@ For local/dev preview:
 
 - `_redirects` is not used by GitHub Pages.
 - Dynamic invite URLs (`/invite/<code>`) are handled by `404.html` fallback + `invite.html` bootstrap logic.
+- Deep links under `/app/*` redirect to the SPA hash router (`/app/#/…`) via the same `404.html` script.
 
 ## Required CI variables/secrets for runtime config generation
 
