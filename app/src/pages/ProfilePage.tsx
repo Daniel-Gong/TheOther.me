@@ -122,10 +122,6 @@ export function ProfilePage() {
   return (
     <div className="page">
       <h1>Profile</h1>
-      <p className="muted">
-        Username is read-only on the web (changing it requires the app’s username claim flow). Other fields match{" "}
-        <code>{`users/{uid}/profile/info`}</code>.
-      </p>
       {error ? <p className="error">{error}</p> : null}
       {message ? <p className="success">{message}</p> : null}
       {loading ? (
