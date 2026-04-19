@@ -9,7 +9,11 @@ import {
 } from "react";
 import {
   GoogleAuthProvider,
+  OAuthProvider,
+  browserLocalPersistence,
+  browserSessionPersistence,
   onAuthStateChanged,
+  setPersistence,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
@@ -17,15 +21,31 @@ import {
 } from "firebase/auth";
 import { getFirebaseAuth } from "../firebase";
 
-type AuthContextValue = {
+/** `local` survives browser restarts (IndexedDB). `session` clears when the tab/window session ends. */
+export type SignInPersistence = "local" | "session";
+
+export type AuthContextValue = {
   user: User | null;
   ready: boolean;
-  signInEmail: (email: string, password: string) => Promise<void>;
-  signInGoogle: () => Promise<void>;
+  signInEmail: (email: string, password: string, persistence: SignInPersistence) => Promise<void>;
+  signInGoogle: (persistence: SignInPersistence) => Promise<void>;
+  signInApple: (persistence: SignInPersistence) => Promise<void>;
   logOut: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextValue | null>(null);
+
+/**
+ * Increment when sign-in or persistence rules change. On mismatch, the client runs one `signOut()`
+ * so older long-lived Firebase sessions do not skip the login screen after policy updates.
+ */
+const AUTH_CLIENT_MIGRATION_VERSION = "2";
+const AUTH_CLIENT_VERSION_KEY = "oria_web_auth_client_version";
+
+async function applyPersistence(persistence: SignInPersistence) {
+  const auth = getFirebaseAuth();
+  await setPersistence(auth, persistence === "local" ? browserLocalPersistence : browserSessionPersistence);
+}
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -33,18 +53,45 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const auth = getFirebaseAuth();
-    return onAuthStateChanged(auth, (u) => {
-      setUser(u);
-      setReady(true);
-    });
+    let unsubscribe: (() => void) | undefined;
+
+    void (async () => {
+      try {
+        if (localStorage.getItem(AUTH_CLIENT_VERSION_KEY) !== AUTH_CLIENT_MIGRATION_VERSION) {
+          await signOut(auth);
+          localStorage.setItem(AUTH_CLIENT_VERSION_KEY, AUTH_CLIENT_MIGRATION_VERSION);
+        }
+      } catch {
+        // ignore; listener still attached
+      }
+      unsubscribe = onAuthStateChanged(auth, (u) => {
+        setUser(u);
+        setReady(true);
+      });
+    })();
+
+    return () => {
+      unsubscribe?.();
+    };
   }, []);
 
-  const signInEmail = useCallback(async (email: string, password: string) => {
+  const signInEmail = useCallback(async (email: string, password: string, persistence: SignInPersistence) => {
+    await applyPersistence(persistence);
     await signInWithEmailAndPassword(getFirebaseAuth(), email, password);
   }, []);
 
-  const signInGoogle = useCallback(async () => {
+  const signInGoogle = useCallback(async (persistence: SignInPersistence) => {
+    await applyPersistence(persistence);
     const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: "select_account" });
+    await signInWithPopup(getFirebaseAuth(), provider);
+  }, []);
+
+  const signInApple = useCallback(async (persistence: SignInPersistence) => {
+    await applyPersistence(persistence);
+    const provider = new OAuthProvider("apple.com");
+    provider.addScope("email");
+    provider.addScope("name");
     await signInWithPopup(getFirebaseAuth(), provider);
   }, []);
 
@@ -53,8 +100,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const value = useMemo(
-    () => ({ user, ready, signInEmail, signInGoogle, logOut }),
-    [user, ready, signInEmail, signInGoogle, logOut],
+    () => ({ user, ready, signInEmail, signInGoogle, signInApple, logOut }),
+    [user, ready, signInEmail, signInGoogle, signInApple, logOut],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

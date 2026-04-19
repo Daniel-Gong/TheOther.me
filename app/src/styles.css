@@ -405,6 +405,33 @@ input.readonly {
   margin-top: 1.25rem;
 }
 
+.login-stay-row {
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+  margin: 0 0 1.1rem;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+
+.login-stay-row input {
+  width: auto;
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+}
+
+.login-oauth-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.login-hint {
+  margin-top: 1.15rem;
+  line-height: 1.45;
+}
+
 .divider {
   text-align: center;
   color: var(--text-tertiary);

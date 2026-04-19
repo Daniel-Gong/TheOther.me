@@ -1,13 +1,44 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
+/** Matches `HomeGreetingHeaderView.greetingText` in the iOS app (local hour + first word of display name). */
+function homeGreetingAt(date: Date, displayName: string | null | undefined): string {
+  const trimmed = displayName?.trim();
+  const name = trimmed ? (trimmed.split(/\s+/)[0] ?? "there") : "there";
+  const hour = date.getHours();
+  let period: string;
+  if (hour >= 5 && hour < 12) period = "Good Morning";
+  else if (hour >= 12 && hour < 17) period = "Good Afternoon";
+  else if (hour >= 17 && hour < 22) period = "Good Evening";
+  else period = "Good Night";
+  return `${period}, ${name}!`;
+}
+
+/** Matches `HomeGreetingHeaderView.formattedDate` (`EEEE, MMMM d`). */
+function formattedHomeDate(date: Date): string {
+  return new Intl.DateTimeFormat(undefined, { weekday: "long", month: "long", day: "numeric" }).format(date);
+}
+
 export function HomePage() {
   const { user } = useAuth();
+  const [now, setNow] = useState(() => new Date());
+
+  useEffect(() => {
+    const id = window.setInterval(() => setNow(new Date()), 60_000);
+    return () => window.clearInterval(id);
+  }, []);
+
+  const greeting = homeGreetingAt(now, user?.displayName);
+  const dateLine = formattedHomeDate(now);
+
   return (
     <div className="page page-wide">
       <header className="page-hero">
-        <p className="eyebrow">Signed in</p>
-        <h1 className="page-title">Welcome back</h1>
+        <h1 className="page-title">{greeting}</h1>
+        <p className="small muted" style={{ margin: "0 0 1rem" }}>
+          {dateLine}
+        </p>
         <p className="page-lede muted">
           You are <strong>{user?.email ?? user?.uid}</strong>. Everything here mirrors your Oria iOS app — notes, moments,
           insights, and memories in one calm surface.
