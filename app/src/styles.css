@@ -401,15 +401,11 @@ input.readonly {
   letter-spacing: -0.02em;
 }
 
-.login-footer-link {
-  margin-top: 1.25rem;
-}
-
 .login-stay-row {
   display: flex;
   gap: 0.65rem;
   align-items: flex-start;
-  margin: 0 0 1.1rem;
+  margin: 1rem 0 0;
   font-size: 0.82rem;
   line-height: 1.45;
   color: var(--text-secondary);
@@ -427,9 +423,12 @@ input.readonly {
   gap: 0.55rem;
 }
 
-.login-hint {
-  margin-top: 1.15rem;
-  line-height: 1.45;
+.login-oauth-first {
+  margin-top: 1rem;
+}
+
+.login-email-form {
+  margin: 0;
 }
 
 .divider {
@@ -446,10 +445,21 @@ input.readonly {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 1.1rem;
+  align-items: stretch;
+}
+
+.tile-grid > li {
+  display: flex;
+  min-width: 0;
 }
 
 .tile {
-  display: block;
+  flex: 1;
+  width: 100%;
+  height: 12.5rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
   text-decoration: none;
   color: inherit;
   border-radius: var(--radius-lg);
@@ -474,12 +484,17 @@ input.readonly {
   margin: 0 0 0.4rem;
   font-size: 1.05rem;
   font-weight: 500;
+  flex-shrink: 0;
 }
 
 .tile p {
+  flex: 1 1 auto;
   margin: 0;
   font-size: 0.88rem;
   color: var(--text-secondary);
+  line-height: 1.45;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 .note-list {
@@ -544,7 +559,7 @@ details summary {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 0.5rem 1rem;
   padding: 1.1rem 1.35rem;
   font-weight: 500;
@@ -861,14 +876,6 @@ details summary {
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
-}
-
-.insight-raw-wrap {
-  margin-top: 1.25rem;
-}
-
-.insight-raw-wrap > summary {
-  margin-bottom: 0.35rem;
 }
 
 /* Moments */

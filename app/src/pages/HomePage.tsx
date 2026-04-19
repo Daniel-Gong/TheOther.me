@@ -40,7 +40,7 @@ export function HomePage() {
           {dateLine}
         </p>
         <p className="page-lede muted">
-          You are <strong>{user?.email ?? user?.uid}</strong>. Everything here mirrors your Oria iOS app — notes, moments,
+          Everything here mirrors your Oria iOS app — notes, moments,
           insights, and memories in one calm surface.
         </p>
       </header>

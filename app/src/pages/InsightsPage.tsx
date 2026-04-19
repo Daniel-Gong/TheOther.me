@@ -60,7 +60,7 @@ export function InsightsPage() {
       <header className="page-hero">
         <p className="eyebrow">Your data</p>
         <h1 className="page-title">Insights</h1>
-        <p className="page-lede muted">Cached insight documents from Firestore, shown the same spirit as the iOS app — not raw dumps.</p>
+        <p className="page-lede muted">Cached insight documents from Firestore, in the same spirit as the iOS app.</p>
       </header>
       {error ? <p className="error">{error}</p> : null}
       {loading ? <p className="muted">Loading…</p> : null}
@@ -69,15 +69,10 @@ export function InsightsPage() {
         {rows.map((r) => (
           <details key={r.id} className="insight-disclosure editorial-card">
             <summary className="insight-disclosure-summary">
-              <span className="insight-disclosure-title">{INSIGHT_LABELS[r.id] ?? r.id}</span>
-              <span className="insight-disclosure-id muted small">{r.id}</span>
+              <span className="insight-disclosure-title">{INSIGHT_LABELS[r.id] ?? "Insight"}</span>
             </summary>
             <div className="insight-disclosure-body">
               <InsightDocumentBody categoryId={r.id} data={r.data} />
-              <details className="insight-raw-wrap">
-                <summary className="muted small">Technical JSON</summary>
-                <pre className="json-pre">{JSON.stringify(r.data, null, 2)}</pre>
-              </details>
             </div>
           </details>
         ))}

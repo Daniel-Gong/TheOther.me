@@ -67,17 +67,16 @@ export function LoginPage() {
     <div className="login-page">
       <div className="login-card card">
         <h1>Sign in</h1>
-        <p className="muted">Use the same account as the Oria iOS app. Choose how long this browser should remember you.</p>
-        <label className="login-stay-row">
-          <input
-            type="checkbox"
-            checked={staySignedIn}
-            onChange={(e) => setStaySignedIn(e.target.checked)}
-            disabled={busy}
-          />
-          <span>Remember this browser after I close it (uses device storage; not the same as “silent” Chrome login)</span>
-        </label>
-        <form className="stack" onSubmit={(e) => void onSubmit(e)}>
+        <div className="login-oauth-row login-oauth-first">
+          <button type="button" className="btn secondary" disabled={busy} onClick={() => void onGoogle()}>
+            Continue with Google
+          </button>
+          <button type="button" className="btn secondary" disabled={busy} onClick={() => void onApple()}>
+            Continue with Apple
+          </button>
+        </div>
+        <div className="divider">or</div>
+        <form className="stack login-email-form" onSubmit={(e) => void onSubmit(e)}>
           <label className="field">
             <span>Email</span>
             <input
@@ -100,25 +99,18 @@ export function LoginPage() {
           </label>
           {error ? <p className="error">{error}</p> : null}
           <button type="submit" className="btn primary" disabled={busy}>
-            {busy ? "Signing in…" : "Sign in with email"}
+            {busy ? "Signing in…" : "Sign in"}
           </button>
         </form>
-        <div className="divider">or</div>
-        <div className="login-oauth-row">
-          <button type="button" className="btn secondary" disabled={busy} onClick={() => void onGoogle()}>
-            Continue with Google
-          </button>
-          <button type="button" className="btn secondary" disabled={busy} onClick={() => void onApple()}>
-            Continue with Apple
-          </button>
-        </div>
-        <p className="muted small login-hint">
-          If you land on the app already signed in, this device kept a past Oria web session. Use <strong>Sign out</strong> in
-          the header to switch accounts, or clear site data for oria.me in Chrome settings.
-        </p>
-        <p className="muted small login-footer-link">
-          <a href="https://oria.me/">Back to oria.me</a>
-        </p>
+        <label className="login-stay-row">
+          <input
+            type="checkbox"
+            checked={staySignedIn}
+            onChange={(e) => setStaySignedIn(e.target.checked)}
+            disabled={busy}
+          />
+          <span>Remember me on this device</span>
+        </label>
       </div>
     </div>
   );
