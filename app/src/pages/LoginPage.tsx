@@ -73,7 +73,7 @@ export function LoginPage() {
         <button type="button" className="btn secondary" disabled={busy} onClick={() => void onGoogle()}>
           Continue with Google
         </button>
-        <p className="muted small" style={{ marginTop: "1.25rem" }}>
+        <p className="muted small login-footer-link">
           <a href="https://oria.me/">Back to oria.me</a>
         </p>
       </div>

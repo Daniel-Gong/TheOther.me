@@ -15,12 +15,18 @@ export function Shell({ children }: { children: ReactNode }) {
   const { user, logOut } = useAuth();
   return (
     <div className="shell">
+      <div className="app-background" aria-hidden="true">
+        <div className="gradient-orb orb-sage" />
+        <div className="gradient-orb orb-gold" />
+        <div className="gradient-orb orb-blue" />
+        <div className="noise-overlay" />
+      </div>
       <header className="shell-header">
-        <div className="shell-brand">
-          <span className="shell-logo">Oria</span>
-          <span className="shell-sub">App</span>
-        </div>
-        <nav className="shell-nav">
+        <a className="shell-brand" href="#/">
+          <span className="shell-logo">Oria AI</span>
+          <span className="shell-sub">Web</span>
+        </a>
+        <nav className="shell-nav" aria-label="Main">
           {links.map(({ to, label }) => (
             <NavLink
               key={to}
@@ -33,7 +39,10 @@ export function Shell({ children }: { children: ReactNode }) {
           ))}
         </nav>
         <div className="shell-user">
-          <span className="muted small">{user?.email ?? user?.uid}</span>
+          <a className="shell-site-link muted small" href="https://oria.me/" target="_blank" rel="noreferrer">
+            oria.me
+          </a>
+          <span className="muted small shell-email">{user?.email ?? user?.uid}</span>
           <button type="button" className="btn ghost" onClick={() => void logOut()}>
             Sign out
           </button>

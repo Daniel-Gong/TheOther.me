@@ -4,11 +4,15 @@ import { useAuth } from "../context/AuthContext";
 export function HomePage() {
   const { user } = useAuth();
   return (
-    <div className="page">
-      <h1>Welcome</h1>
-      <p className="muted">
-        Signed in as <strong>{user?.email ?? user?.uid}</strong>. Open a section below — data syncs with your iPhone app.
-      </p>
+    <div className="page page-wide">
+      <header className="page-hero">
+        <p className="eyebrow">Signed in</p>
+        <h1 className="page-title">Welcome back</h1>
+        <p className="page-lede muted">
+          You are <strong>{user?.email ?? user?.uid}</strong>. Everything here mirrors your Oria iOS app — notes, moments,
+          insights, and memories in one calm surface.
+        </p>
+      </header>
       <ul className="tile-grid">
         <li>
           <Link className="tile" to="/notes">
