@@ -20,6 +20,7 @@ Oria AI is offered by TheOther Intelligence LLC. The canonical public site is ht
 - [Life flow](https://oria.me/blog/life-flow.html): Life flow and integration of daily data.
 - [Intentional living](https://oria.me/blog/intentional-living.html): Intentional living with personal AI support.
 - [What is an evolvable digital self?](https://oria.me/blog/what-is-evolvable-digital-self.html): Concept of an evolvable digital self.
+- [Behavioral science and behavioral AI for life coaching](https://oria.me/blog/behavioral-science-behavioral-ai-life-coaching.html): How Oria uses behavioral science to design coaching-shaped personal AI (longitudinal, person-centered) around the evolvable digital self.
 
 ## Other public URLs
 
